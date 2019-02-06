@@ -1,8 +1,8 @@
 
 import * as path from 'path';
-import { IEnvironmentDefinition, ISemConfig } from './schema/ISemConfig';
+import { IEnvironmentDefinition, ISdaConfig } from './schema/ISdaConfig';
 
-export default function getEnvironment(config: ISemConfig, currentDir: string, configDir: string): {
+export default function getEnvironment(config: ISdaConfig, currentDir: string, configDir: string): {
   def: IEnvironmentDefinition,
   name: string,
   path: string

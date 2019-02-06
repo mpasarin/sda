@@ -1,4 +1,4 @@
-export interface ISemConfig {
+export interface ISdaConfig {
   definitions: { [id: string]: IEnvironmentDefinition };
   /**
    * Map to define the different environments managed by this file.

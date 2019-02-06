@@ -1,7 +1,7 @@
 {
-  "name": "sem",
+  "name": "sda",
   "version": "0.0.1",
-  "description": "Simple environment manager",
+  "description": "Software development assistant",
   "main": "lib/start.js",
   "files": [
     "lib/**/*"
@@ -10,26 +10,26 @@
     "lint": "tslint -p tsconfig.json",
     "build": "tsc",
     "test": "jest --config jest.config.js",
-    "try": "npm run build && npm link && sem test && npm unlink"
+    "try": "npm run build && npm link && sda test && npm unlink"
   },
   "bin": {
-    "sem": "lib/start.js"
+    "sda": "lib/start.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mpasarin/sem.git"
+    "url": "git+https://github.com/mpasarin/sda.git"
   },
   "keywords": [
-    "sem",
+    "sda",
     "environment",
     "manager"
   ],
   "author": "Marc Pasarin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mpasarin/sem/issues"
+    "url": "https://github.com/mpasarin/sda/issues"
   },
-  "homepage": "https://github.com/mpasarin/sem#readme",
+  "homepage": "https://github.com/mpasarin/sda#readme",
   "devDependencies": {
     "@types/jest": "^24.0.0",
     "@types/node": "^8.10.39",

@@ -1,4 +1,4 @@
-import { ICommandDefinition, IEnvironmentDefinition } from './schema/ISemConfig';
+import { ICommandDefinition, IEnvironmentDefinition } from './schema/ISdaConfig';
 
 export default function getCommand(def: IEnvironmentDefinition, cmdName: string): ICommandDefinition {
   let command = def.commands[cmdName];

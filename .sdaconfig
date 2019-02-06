@@ -1,9 +1,9 @@
 {
   "definitions": {
-    "sem": {
+    "sda": {
       "commands": {
         "build": "npm run lint && npm run build && npm run test",
-        "test": "echo Running 'sem dummy' && sem dummy && echo Running 'sem failtest' && sem failtest",
+        "test": "echo Running 'sda dummy' && sda dummy && echo Running 'sda failtest' && sda failtest",
         "dummy": "echo Test successful",
         "testCmd": {
           "cmd": "cd",
@@ -13,9 +13,9 @@
     }
   },
   "environments": {
-    "sem": {
+    "sda": {
       "path": ".",
-      "definition": "sem"
+      "definition": "sda"
     }
   }
 }

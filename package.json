@@ -1,0 +1,41 @@
+{
+  "name": "sem",
+  "version": "0.0.1",
+  "description": "Simple environment manager",
+  "main": "lib/start.js",
+  "files": [
+    "lib/**/*"
+  ],
+  "scripts": {
+    "lint": "tslint -p tsconfig.json",
+    "build": "tsc",
+    "test": "jest --config jest.config.js",
+    "try": "npm run build && npm link && sem test && npm unlink"
+  },
+  "bin": {
+    "sem": "lib/start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpasarin/sem.git"
+  },
+  "keywords": [
+    "sem",
+    "environment",
+    "manager"
+  ],
+  "author": "Marc Pasarin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mpasarin/sem/issues"
+  },
+  "homepage": "https://github.com/mpasarin/sem#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^8.10.39",
+    "jest": "^24.1.0",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  }
+}

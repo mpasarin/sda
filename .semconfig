@@ -1,0 +1,21 @@
+{
+  "definitions": {
+    "sem": {
+      "commands": {
+        "build": "npm run lint && npm run build && npm run test",
+        "test": "echo Running 'sem dummy' && sem dummy && echo Running 'sem failtest' && sem failtest",
+        "dummy": "echo Test successful",
+        "testCmd": {
+          "cmd": "cd",
+          "cwd": "C:\\"
+        }
+      }
+    }
+  },
+  "environments": {
+    "sem": {
+      "path": ".",
+      "definition": "sem"
+    }
+  }
+}

@@ -1,9 +1,9 @@
 
 import * as path from 'path';
-import { IConfig, IEnvironmentDefinition } from './interfaces/IConfig';
+import { IConfig, ITemplate } from './interfaces/IConfig';
 
 export default function getEnvironment(config: IConfig, currentDir: string): {
-  def: IEnvironmentDefinition,
+  def: ITemplate,
   name: string,
   path: string
 } {
@@ -13,12 +13,12 @@ export default function getEnvironment(config: IConfig, currentDir: string): {
     const envPath = env.path;
     const relativePath = path.relative(envPath, currentDir);
     if (!relativePath || relativePath.indexOf('..') !== 0) { // We are in the environment root folder, or inside it
-      if (!config.definitions[env.definition]) {
+      if (!config.templates[env.template]) {
         throw new Error('Definition does not exist');
       }
 
       return {
-        def: config.definitions[env.definition],
+        def: config.templates[env.template],
         name: envName,
         path: envPath
       };

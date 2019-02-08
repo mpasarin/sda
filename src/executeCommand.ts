@@ -1,14 +1,14 @@
 import * as child_process from 'child_process';
-import { ICommandDefinition } from './interfaces/IConfig';
+import { ICommand } from './interfaces/IConfig';
 
-export default function executeCommand(command: ICommandDefinition, envPath: string): void {
-  child_process.exec(command.cmd, { cwd: command.cwd || envPath }, (error, stdout, stderr) => {
-    if (!error) {
-      console.log(stdout);
-    } else {
-      console.error('Error: ' + error.message);
-      console.error('Output: ' + stdout);
-      console.error('Error: ' + stderr);
-    }
-  });
+const MAX_BUFFER = 20 * 1024 * 1024; // 20 MB
+
+export default function executeCommand(command: ICommand, envPath: string): void {
+  if (typeof command.cmd === 'string') {
+    command.cmd = [command.cmd];
+  }
+
+  for (const cmd of command.cmd) {
+    child_process.execSync(cmd, { cwd: command.cwd || envPath, stdio: 'inherit', maxBuffer: MAX_BUFFER });
+  }
 }

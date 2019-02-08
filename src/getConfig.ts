@@ -14,8 +14,8 @@ export default function getConfig(rootDir: string): IConfig {
 
 function generateConfigFile(filePaths: string[]): IConfig {
   const combinedConfig: IConfig = {
-    definitions: {},
-    environments: {}
+    environments: {},
+    templates: {}
   }; // Empty config
   for (const filePath of filePaths) {
     const configFile = fs.readFileSync(filePath, 'utf8');

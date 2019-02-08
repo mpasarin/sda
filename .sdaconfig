@@ -1,9 +1,14 @@
 {
-  "definitions": {
+  "templates": {
     "sda": {
       "commands": {
         "build": "npm run lint && npm run build && npm run test",
-        "test": "echo Running 'sda dummy' && sda dummy && echo Running 'sda failtest' && sda failtest",
+        "test": [
+          "echo Running 'sda dummy'", 
+          "sda dummy", 
+          "echo Running 'sda failtest'", 
+          "sda failtest"
+        ],
         "dummy": "echo Test successful",
         "testCmd": {
           "cmd": "cd",
@@ -15,7 +20,7 @@
   "environments": {
     "sda": {
       "path": ".",
-      "definition": "sda"
+      "template": "sda"
     }
   }
 }

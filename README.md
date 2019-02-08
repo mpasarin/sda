@@ -12,9 +12,9 @@ same, a developer can define it's own set of commands.
 # install sda
 npm install -g sda
 
-# set up your .sdaconfig in your root folder
+# set up your .sdaconfig file
 
-# run sda within your root folder
+# run sda inside of your environment
 sda <command>
 ```
 
@@ -25,8 +25,8 @@ The file must be named `.sdaconfig` and be in a folder containing the different 
 
 ```json
 {
-  "definitions": {
-    "<definitionId>": {
+  "templates": {
+    "<templateId>": {
       "commands": {
         "<quickCommand>": "echo quick command",
         "<cliCommand>": {
@@ -39,7 +39,7 @@ The file must be named `.sdaconfig` and be in a folder containing the different 
   "environments": {
     "<myEnvironment>": {
       "path": "<pathToEnvironmentRoot>",
-      "definition": "<definitionId>"
+      "template": "<templateId>"
     }
   }
 }

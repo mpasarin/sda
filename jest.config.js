@@ -16,6 +16,5 @@ module.exports = {
     "json",
     "node"
   ],
-  collectCoverage: true,
-  mapCoverage: true
+  collectCoverage: true
 }

@@ -9,10 +9,10 @@ import getEnvironment from './getEnvironment';
 try {
   // Find sem config
   const currentDir: string = path.normalize(process.cwd());
-  const { config, configDir } = getConfig(currentDir);
+  const config = getConfig(currentDir);
 
   // Find actual environment
-  const { def: envDef, name: envName, path: envPath } = getEnvironment(config, currentDir, configDir);
+  const { def: envDef, name: envName, path: envPath } = getEnvironment(config, currentDir);
 
   // Run command
   const cmdName = process.argv[2]; // 0 is node, 1 is sem itself, 2 is the actual param

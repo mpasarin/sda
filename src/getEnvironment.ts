@@ -1,8 +1,8 @@
 
 import * as path from 'path';
-import { IEnvironmentDefinition, ISdaConfig } from './schema/ISdaConfig';
+import { IConfig, IEnvironmentDefinition } from './interfaces/IConfig';
 
-export default function getEnvironment(config: ISdaConfig, currentDir: string, configDir: string): {
+export default function getEnvironment(config: IConfig, currentDir: string): {
   def: IEnvironmentDefinition,
   name: string,
   path: string
@@ -10,8 +10,8 @@ export default function getEnvironment(config: ISdaConfig, currentDir: string, c
   for (const envName of Object.keys(config.environments)) {
     const env = config.environments[envName];
 
-    const fullPath = path.resolve(configDir, env.path);
-    const relativePath = path.relative(fullPath, currentDir);
+    const envPath = env.path;
+    const relativePath = path.relative(envPath, currentDir);
     if (!relativePath || relativePath.indexOf('..') !== 0) { // We are in the environment root folder, or inside it
       if (!config.definitions[env.definition]) {
         throw new Error('Definition does not exist');
@@ -20,7 +20,7 @@ export default function getEnvironment(config: ISdaConfig, currentDir: string, c
       return {
         def: config.definitions[env.definition],
         name: envName,
-        path: fullPath
+        path: envPath
       };
     }
   }

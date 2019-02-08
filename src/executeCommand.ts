@@ -1,5 +1,5 @@
 import * as child_process from 'child_process';
-import { ICommandDefinition } from './schema/ISdaConfig';
+import { ICommandDefinition } from './interfaces/IConfig';
 
 export default function executeCommand(command: ICommandDefinition, envPath: string): void {
   child_process.exec(command.cmd, { cwd: command.cwd || envPath }, (error, stdout, stderr) => {

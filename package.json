@@ -32,10 +32,14 @@
   "homepage": "https://github.com/mpasarin/sda#readme",
   "devDependencies": {
     "@types/jest": "^24.0.0",
+    "@types/lodash": "^4.14.120",
     "@types/node": "^8.10.39",
     "jest": "^24.1.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.11"
   }
 }

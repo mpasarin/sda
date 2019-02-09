@@ -1,12 +1,12 @@
 export interface IConfig {
-  templates: { [id: string]: ITemplate };
+  templates: { [id: string]: IConfigTemplate };
   /**
    * Map to define the different environments managed by this file.
    */
-  environments: { [name: string]: IEnvironment };
+  environments: { [name: string]: IConfigEnvironment };
 }
 
-export interface IEnvironment {
+export interface IConfigEnvironment {
   /**
    * Path to the root of the environment. Either relative to the config file or absolute.
    */
@@ -14,23 +14,23 @@ export interface IEnvironment {
   /**
    * Template id for this environment.
    */
-  template: string;
+  templateId: string;
 }
 
-export interface ITemplate {
+export interface IConfigTemplate {
   /**
    * Map to define the different commands.
    * Key: Command name
    * Value: Either the command to execute as a string, or a command definition.
    */
-  commands: { [name: string]: string | string[] | ICommand };
+  commands: { [name: string]: string | string[] | IConfigCommand };
 }
 
 /**
  * Command definition.
  * Includes the command to execute and, additionally, other parameters.
  */
-export interface ICommand {
+export interface IConfigCommand {
   /**
    * Command to execute
    */

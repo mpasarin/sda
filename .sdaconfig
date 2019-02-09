@@ -20,7 +20,7 @@
   "environments": {
     "sda": {
       "path": ".",
-      "template": "sda"
+      "templateId": "sda"
     }
   }
 }

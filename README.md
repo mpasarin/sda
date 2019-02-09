@@ -29,17 +29,25 @@ The file must be named `.sdaconfig` and be in a folder containing the different 
     "<templateId>": {
       "commands": {
         "<quickCommand>": "echo quick command",
-        "<cliCommand>": {
+        "<multipleCommands>": [
+          "echo first command",
+          "echo second command"
+        ],
+        "<commandInFolder>": {
           "cmd": "pwd",
+          "cwd": "C:\\"
+        },
+        "<multipleCommandsInFolder>": {
+          "cmd": ["pwd", "echo second command"],
           "cwd": "C:\\"
         }
       }
     }
   },
   "environments": {
-    "<myEnvironment>": {
+    "<environmentId>": {
       "path": "<pathToEnvironmentRoot>",
-      "template": "<templateId>"
+      "templateId": "<templateId>"
     }
   }
 }

@@ -54,7 +54,6 @@ function findConfigFilePaths(dir: string): string[] {
     const fileName = path.join(dir, configFileName);
     if (fs.existsSync(fileName)) {
       paths.push(fileName);
-      console.log(`Found file at ${fileName}`);
     }
     dir = path.normalize(path.join(dir, '..'));
   } while (dir !== root);

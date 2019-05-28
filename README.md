@@ -20,8 +20,11 @@ sda <command>
 
 ### Options
 `sda <command>` runs a specific command in the current environment.
+
 `sda <command1> <command2>` runs multiple commands, one after the other, in the current environment.
+
 `sda <environment> <command>` runs a command in a specific environment.
+
 `sda -a <command>` / `sda --all <command>` runs a command in all environments.
 
 ## Configuration file

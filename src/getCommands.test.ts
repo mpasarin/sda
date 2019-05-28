@@ -1,5 +1,10 @@
 import getCommands from '../src/getCommands';
+import Log from './Log';
 import { env } from './test/Constants';
+
+beforeAll(() => {
+  Log.isEnabled = false;
+});
 
 test('get an inline command', () => {
   const cmd = getCommands(env, ['inlineCommand']);

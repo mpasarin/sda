@@ -15,9 +15,7 @@ describe('getEnvironment', () => {
   });
 
   test('get the environment from the arguments after the command', () => {
-    const env = getEnvironment(config, '', ['aCommand', 'testEnv']);
-    expect(env.id).toBe('testEnv');
-    expect(env.template.id).toBe(env.templateId);
+    expect(() => getEnvironment(config, '', ['aCommand', 'testEnv'])).toThrow();
   });
 
   test('get the environment from inside env path', () => {

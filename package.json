@@ -7,7 +7,7 @@
     "lib/**/*"
   ],
   "scripts": {
-    "build": "tslint -p tsconfig.json && tsc",
+    "build": "tslint -p tsconfig.json && tsc && npm run test",
     "test": "jest --config jest.config.js",
     "try": "npm run build && npm link && sda test && npm unlink"
   },

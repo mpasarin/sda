@@ -1,9 +1,14 @@
 export default class Log {
+  public static isEnabled: boolean = true;
   public static log(message: string) {
-    console.log(message);
+    if (Log.isEnabled) {
+      console.log(message);
+    }
   }
 
   public static error(message: string) {
-    console.error(message);
+    if (Log.isEnabled) {
+      console.error(message);
+    }
   }
 }

@@ -4,13 +4,12 @@ import { IEnvironment, INamed } from './interfaces';
 import { IConfig, IConfigEnvironment } from './interfaces/IConfig';
 import withId from './interfaces/withId';
 
-export default function getEnvironment(config: IConfig, currentDir: string, args: string[]): IEnvironment {
+export function getEnvironment(config: IConfig, currentDir: string, args: string[]): IEnvironment {
   let environment: INamed<IConfigEnvironment> | undefined;
-  // Find environment from the arguments
-  for (const arg of args) {
-    if (config.environments[arg]) {
-      environment = withId(arg, config.environments[arg]);
-    }
+  // Find environment as the first argument
+  const arg = args[0];
+  if (config.environments[arg]) {
+    environment = withId(arg, config.environments[arg]);
   }
 
   // Find environments from the current path
@@ -37,4 +36,16 @@ export default function getEnvironment(config: IConfig, currentDir: string, args
     ...environment,
     template: withId(environment.templateId, config.templates[environment.templateId])
   };
+}
+
+export function getAllEnvironments(config: IConfig): IEnvironment[] {
+  const envs: IEnvironment[] = [];
+  Object.keys(config.environments).forEach((envId) => {
+    const env = withId(envId, config.environments[envId]);
+    envs.push({
+      ...env,
+      template: withId(env.templateId, config.templates[env.templateId])
+    });
+  });
+  return envs;
 }

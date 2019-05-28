@@ -1,5 +1,5 @@
-import { IEnvironment, ITemplate } from '../src/interfaces';
-import { IConfig } from '../src/interfaces/IConfig';
+import { IEnvironment, ITemplate } from '../interfaces';
+import { IConfig } from '../interfaces/IConfig';
 
 export const template: ITemplate = {
   commands: {

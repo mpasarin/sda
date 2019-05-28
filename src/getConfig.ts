@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as path from 'path';
 import { IConfig } from './interfaces/IConfig';
+import Log from './Log';
 
 const configFileName = '.sdaconfig';
 
@@ -23,7 +24,7 @@ function generateConfigFile(filePaths: string[]): IConfig {
       const config: IConfig = JSON.parse(configFile);
       _.merge(combinedConfig, replaceWithAbsolutePaths(config, filePath));
     } catch (error) {
-      console.log(`WARNING: File "${filePath}" is invalid.`);
+      Log.log(`WARNING: File "${filePath}" is invalid.`);
     }
   }
 

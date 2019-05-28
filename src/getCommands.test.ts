@@ -1,5 +1,5 @@
 import getCommands from '../src/getCommands';
-import { env } from './Constants';
+import { env } from './test/Constants';
 
 test('get an inline command', () => {
   const cmd = getCommands(env, ['inlineCommand']);
@@ -32,7 +32,8 @@ test('get a command with folder', () => {
 });
 
 test('get a non-existing command', () => {
-  expect(() => getCommands(env, ['nonExistingCommand'])).toThrow();
+  const cmd = getCommands(env, ['nonExistingCommand']);
+  expect(cmd.length).toBe(0);
 });
 
 test('get two commands', () => {
@@ -40,4 +41,16 @@ test('get two commands', () => {
   expect(cmd.length).toBe(2);
   expect(cmd[0].cmd).toEqual(['inline']);
   expect(cmd[1].cmd).toEqual(['regular']);
+});
+
+test('get an existing and a non-existing commands', () => {
+  const cmd = getCommands(env, ['inlineCommand', 'nonExistingCommand']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['inline']);
+});
+
+test('get a non-existing and an existing commands', () => {
+  const cmd = getCommands(env, ['nonExistingCommand', 'inlineCommand']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['inline']);
 });

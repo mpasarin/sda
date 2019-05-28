@@ -1,21 +1,23 @@
 import { isArray, isString } from 'util';
-import { ICommand, IEnvironment } from './interfaces';
-import { IConfigTemplate } from './interfaces/IConfig';
+import { ICommand, IEnvironment, ITemplate } from './interfaces';
+import Log from './Log';
 
 export default function getCommands(environment: IEnvironment, commandNames: string[]): ICommand[] {
   const cmds: ICommand[] = [];
   for (const cmdName of commandNames) {
-    if (cmdName !== environment.id) {
-      cmds.push(getCommand(environment.template!, cmdName));
+    const cmd = getCommand(environment.template, cmdName);
+    if (cmd) {
+      cmds.push(cmd);
     }
   }
   return cmds;
 }
 
-function getCommand(template: IConfigTemplate, cmdName: string): ICommand {
+function getCommand(template: ITemplate, cmdName: string): ICommand | undefined {
   let command = template.commands[cmdName];
   if (!command) {
-    throw new Error(`Command "${cmdName}" does not exist`);
+    Log.error(`Command "${cmdName}" not found in template "${template.id}"`);
+    return undefined;
   }
 
   // Fix up shorthand for commands

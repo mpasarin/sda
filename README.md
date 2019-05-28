@@ -5,7 +5,7 @@ sda is a command-line tool that intends to simplify life of a software developer
 with different tools and processes, at the same time.
 
 For a single project, using `npm` commands or `gulp` can be a better option, but for managing different projects at the
-same, a developer can define it's own set of commands.
+same time, a developer can define their own set of commands.
 
 ## Usage
 ```sh
@@ -17,6 +17,12 @@ npm install -g sda
 # run sda inside of your environment
 sda <command>
 ```
+
+### Options
+`sda <command>` runs a specific command in the current environment.
+`sda <command1> <command2>` runs multiple commands, one after the other, in the current environment.
+`sda <environment> <command>` runs a command in a specific environment.
+`sda -a <command>` / `sda --all <command>` runs a command in all environments.
 
 ## Configuration file
 A config file defines the different environment definitions, and the environments that are supported.

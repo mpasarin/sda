@@ -1,14 +1,13 @@
 {
   "name": "sda",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Software development assistant",
   "main": "lib/start.js",
   "files": [
     "lib/**/*"
   ],
   "scripts": {
-    "lint": "tslint -p tsconfig.json",
-    "build": "tsc",
+    "build": "tslint -p tsconfig.json && tsc",
     "test": "jest --config jest.config.js",
     "try": "npm run build && npm link && sda test && npm unlink"
   },

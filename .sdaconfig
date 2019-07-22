@@ -10,6 +10,7 @@
           "sda failtest"
         ],
         "dummy": "echo Test successful",
+        "throw": "node -e \"throw new Error('Expected error')\"",
         "testCmd": {
           "cmd": "cd",
           "cwd": "C:\\"
@@ -19,6 +20,10 @@
   },
   "environments": {
     "sda": {
+      "path": ".",
+      "templateId": "sda"
+    },
+    "sda-copy": {
       "path": ".",
       "templateId": "sda"
     }

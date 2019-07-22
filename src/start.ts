@@ -10,7 +10,7 @@ import { IConfig } from './interfaces/IConfig';
 import Log from './Log';
 
 try {
-  // Find sem config
+  // Find config file
   const currentDir: string = path.normalize(process.cwd());
   const config = getConfig(currentDir);
 
@@ -42,7 +42,11 @@ function runInAllEnvironments(config: IConfig, args: string[]) {
   const envs = getAllEnvironments(config);
 
   envs.forEach((env) => {
-    runCommands(env, args);
+    try {
+      runCommands(env, args);
+    } catch (error) {
+      Log.error(`Error: Failed to run in environment "${env.id}". Inner error: ${error.message}`);
+    }
   });
 }
 

@@ -55,8 +55,10 @@ function replaceWithAbsolutePaths(config: Partial<IConfig>, configFilePath: stri
   if (config.environments) {
     const dir = path.parse(configFilePath).dir;
     for (const key of Object.keys(config.environments)) {
-      const env = config.environments[key];
-      env.path = path.join(dir, env.path);
+      if (!path.isAbsolute) {
+        const env = config.environments[key];
+        env.path = path.join(dir, env.path);
+      }
     }
   }
   return config;

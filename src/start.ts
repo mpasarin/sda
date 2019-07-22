@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import * as path from 'path';
+import getConfig from './config/getConfig';
 import executeCommands from './executeCommands';
 import getCommands from './getCommands';
-import getConfig from './getConfig';
 import { getAllEnvironments, getEnvironment } from './getEnvironment';
 import { IEnvironment } from './interfaces';
 import { IConfig } from './interfaces/IConfig';

@@ -12,7 +12,7 @@ same time, a developer can define their own set of commands.
 # install sda
 npm install -g sda
 
-# set up your sdaconfig.json file
+# set up your sdaconfig.json file in your user home folder
 
 # run sda inside of your environment
 sda <command>
@@ -28,9 +28,13 @@ sda <command>
 `sda -a <command>` / `sda --all <command>` runs a command in all environments.
 
 ## Configuration file
-A config file defines the different environment definitions, and the environments that are supported.
+A config file defines the different environment definitions and the environments that are supported.
 
-The file must be named `sdaconfig.json` and be in a folder containing the different environments.
+A config file must be named `sdaconfig.json` and be in a parent folder containing the different environments or the user home folder.
+
+The user home config file takes precedence over other ones.
+
+### Schema
 
 ```json
 {

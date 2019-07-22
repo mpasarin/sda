@@ -34,9 +34,13 @@ export interface IConfigCommand {
   /**
    * Command to execute
    */
-  cmd: string | string[];
+  cmd?: string | string[];
   /**
    * Directory to run the command on
    */
   cwd?: string;
+  /**
+   * File path of script containing commands to run
+   */
+  filePath?: string;
 }

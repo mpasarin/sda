@@ -1,4 +1,5 @@
 import * as child_process from 'child_process';
+import fs from 'fs';
 import { ICommand, IEnvironment } from './interfaces';
 import Log from './Log';
 
@@ -11,8 +12,15 @@ export default function executeCommands(commands: ICommand[], environment: IEnvi
 }
 
 function executeCommand(command: ICommand, environment: IEnvironment): void {
+  if (command.filePath) {
+    Log.log(`Executing command from file at path:"${command.filePath}" in environment "${environment.id}"`);
+    const fileCmd = fs.readFileSync(command.filePath, 'utf8');
+    child_process.execSync(fileCmd, { cwd: command.cwd || environment.path, stdio: 'inherit', maxBuffer: MAX_BUFFER });
+  }
   Log.log(`Executing command "${command.id}" in environment "${environment.id}"`);
-  for (const cmd of command.cmd) {
-    child_process.execSync(cmd, { cwd: command.cwd || environment.path, stdio: 'inherit', maxBuffer: MAX_BUFFER });
+  if (command.cmd) {
+    for (const cmd of command.cmd) {
+      child_process.execSync(cmd, { cwd: command.cwd || environment.path, stdio: 'inherit', maxBuffer: MAX_BUFFER });
+    }
   }
 }

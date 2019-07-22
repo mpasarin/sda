@@ -5,9 +5,13 @@ import * as path from 'path';
 import { IConfig } from './interfaces/IConfig';
 import Log from './Log';
 
-const configFileName = '.sdaconfig';
+const configFileName = 'sdaconfig.json';
+const previousConfigFileName = '.sdaconfig';
 
 export default function getConfig(rootDir: string): IConfig {
+  // Warn about old config file name for backwards compatibility
+  warnOldConfigFilePaths(rootDir);
+
   const paths = findConfigFilePaths(rootDir);
   const config = generateConfigFile(paths);
   return config;
@@ -60,4 +64,30 @@ function findConfigFilePaths(dir: string): string[] {
   } while (dir !== root);
 
   return paths;
+}
+
+/**
+ * Warn about old configuration files. Browses from the input folder path up to the root folder.
+ * @param dir - Directory to start browsing up
+ */
+function warnOldConfigFilePaths(dir: string): void {
+  dir = path.normalize(dir);
+  let foundOldFiles = false;
+  const root: string = path.parse(dir).root;
+  do {
+    const fileName = path.join(dir, previousConfigFileName);
+    if (fs.existsSync(fileName)) {
+      if (!foundOldFiles) {
+        Log.log('');
+        Log.log('!!!!! WARNING !!!!!');
+      }
+      foundOldFiles = true;
+      Log.log(`Old config file found in "${fileName}". Please rename to "${configFileName}".`);
+    }
+    dir = path.normalize(path.join(dir, '..'));
+  } while (dir !== root);
+  if (foundOldFiles) {
+    Log.log('!!!!! WARNING !!!!!');
+    Log.log('');
+  }
 }

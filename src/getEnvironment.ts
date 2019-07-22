@@ -19,6 +19,7 @@ export function getEnvironment(config: IConfig, currentDir: string, args: string
       const relativePath = path.relative(currentEnv.path, currentDir);
       if (!relativePath || relativePath.indexOf('..') !== 0) { // We are in the environment root folder, or inside it
         environment = withId(currentEnvName, currentEnv);
+        break;
       }
     }
   }

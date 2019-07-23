@@ -1,10 +1,9 @@
-
 import * as fs from 'fs';
 import _ from 'lodash';
-import * as path from 'path';
 import { IConfig } from '../interfaces/IConfig';
 import Log from '../Log';
 import getConfigPaths from './getConfigPaths';
+import replaceConfigWithAbsolutePaths from './replaceConfigWithAbsolutePaths';
 import warnOldConfigFilePaths from './warnOldConfigFilePaths';
 
 export const configFileName = 'sdaconfig.json';
@@ -46,23 +45,9 @@ function mergeConfig(config: IConfig, filePath: string): IConfig {
   try {
     const configFile = fs.readFileSync(filePath, 'utf8');
     const newConfig: IConfig = JSON.parse(configFile);
-    _.merge(config, replaceWithAbsolutePaths(newConfig, filePath));
+    _.merge(config, replaceConfigWithAbsolutePaths(newConfig, filePath));
   } catch (error) {
     Log.log(`WARNING: File "${filePath}" is invalid.`);
-  }
-  return config;
-}
-
-/**
- * Replaces all relative paths in the environments with absolute paths.
- */
-function replaceWithAbsolutePaths(config: Partial<IConfig>, configFilePath: string): Partial<IConfig> {
-  if (config.environments) {
-    const dir = path.parse(configFilePath).dir;
-    for (const key of Object.keys(config.environments)) {
-      const env = config.environments[key];
-      env.path = path.join(dir, env.path);
-    }
   }
   return config;
 }

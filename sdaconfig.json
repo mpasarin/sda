@@ -7,13 +7,25 @@
           "echo Running 'sda dummy'", 
           "sda dummy", 
           "echo Running 'sda failtest'", 
-          "sda failtest"
+          "sda failtest", 
+          "echo Running 'sda testPS'", 
+          "sda testPS", 
+          "echo Running 'sda testJS'", 
+          "sda testJS"
         ],
         "dummy": "echo Test successful",
         "throw": "node -e \"throw new Error('Expected error')\"",
         "testCmd": {
           "cmd": "cd",
           "cwd": "C:\\"
+        },
+        "testPS" : {
+          "filePath": "test\\dummy_script_powershell.ps1",
+          "interpreter": "powershell"
+        },
+        "testJS" : {
+          "filePath": "test\\dummy_script_node.js",
+          "interpreter": "node"
         }
       }
     }

@@ -1,9 +1,15 @@
 import { isArray, isString } from 'util';
-import { ICommand, IEnvironment, ITemplate } from './interfaces';
+import { IEnvironment, ITemplate } from './interfaces';
 import Log from './Log';
 
-export default function getCommands(environment: IEnvironment, commandNames: string[]): ICommand[] {
-  const cmds: ICommand[] = [];
+export interface IParsedCommand {
+  id: string;
+  cmd: string[];
+  cwd?: string;
+}
+
+export default function getCommands(environment: IEnvironment, commandNames: string[]): IParsedCommand[] {
+  const cmds: IParsedCommand[] = [];
   for (const cmdName of commandNames) {
     const cmd = getCommand(environment.template, cmdName);
     if (cmd) {
@@ -13,10 +19,10 @@ export default function getCommands(environment: IEnvironment, commandNames: str
   return cmds;
 }
 
-function getCommand(template: ITemplate, cmdName: string): ICommand | undefined {
+function getCommand(template: ITemplate, cmdName: string): IParsedCommand | undefined {
   let command = template.commands[cmdName];
   if (!command) {
-    Log.error(`Command "${cmdName}" not found in template "${template.id}"`);
+    Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
     return undefined;
   }
 
@@ -27,10 +33,17 @@ function getCommand(template: ITemplate, cmdName: string): ICommand | undefined 
     command = { cmd: command };
   } else if (isString(command.cmd)) {
     command.cmd = [command.cmd];
+  } else if (isString(command.filePath)) {
+    let filePath = command.filePath;
+    if (isString(command.interpreter)) {
+      filePath = `${command.interpreter} ${command.filePath}`;
+    }
+    command.cmd = [filePath];
   }
 
   return {
     id: cmdName,
-    ...command
+    cmd: command.cmd as string[],
+    cwd: command.cwd
   };
 }

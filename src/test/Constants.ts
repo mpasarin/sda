@@ -14,6 +14,13 @@ export const template: ITemplate = {
     commandWithFolder: {
       cmd: 'withFolder',
       cwd: 'C:\\'
+    },
+    commandWithFilePath: {
+      filePath: 'someFilePath'
+    },
+    commandWithFilePathAndInterpreter: {
+      filePath: 'someFilePath',
+      interpreter: 'node'
     }
   },
   id: 'testTemplate'

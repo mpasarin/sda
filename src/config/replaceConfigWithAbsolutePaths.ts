@@ -25,6 +25,9 @@ export default function replaceConfigWithAbsolutePaths(
                 if (command.cwd) {
                     command.cwd = getAbsolutePath(command.cwd, dir);
                 }
+                if (command.filePath) {
+                    command.filePath = getAbsolutePath(command.filePath, dir);
+                }
             });
         });
     }

@@ -27,6 +27,8 @@ sda <command>
 
 `sda -a <command>` / `sda --all <command>` runs a command in all environments.
 
+`sda -c <configPath> ...` / `sda --config <configPath> ...` runs sda with the specified config file (in addition to the regular config file).
+
 ## Configuration file
 A config file defines the different environment definitions and the environments that are supported.
 

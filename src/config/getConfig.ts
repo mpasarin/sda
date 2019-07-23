@@ -9,11 +9,16 @@ import warnOldConfigFilePaths from './warnOldConfigFilePaths';
 
 export const configFileName = 'sdaconfig.json';
 
-export default function getConfig(rootDir: string): IConfig {
+export default function getConfig(rootDir: string, argsConfigPath?: string): IConfig {
   // Warn about old config file name for backwards compatibility
   warnOldConfigFilePaths(rootDir);
 
   const paths = getConfigPaths(rootDir);
+  // If a config path is passed as arguments, merge it last
+  if (argsConfigPath) {
+    paths.push(argsConfigPath);
+  }
+
   const config = generateConfigFile(paths);
 
   return config;
@@ -38,8 +43,8 @@ function generateConfigFile(filePaths: string[]): IConfig {
  * In case of conflicts, the contents of the config file are used.
  */
 function mergeConfig(config: IConfig, filePath: string): IConfig {
-  const configFile = fs.readFileSync(filePath, 'utf8');
   try {
+    const configFile = fs.readFileSync(filePath, 'utf8');
     const newConfig: IConfig = JSON.parse(configFile);
     _.merge(config, replaceWithAbsolutePaths(newConfig, filePath));
   } catch (error) {

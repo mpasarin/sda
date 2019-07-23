@@ -10,11 +10,11 @@ import { IConfig } from './interfaces/IConfig';
 import Log from './Log';
 
 try {
+  let args = process.argv.splice(2);
+
   // Find config file
   const currentDir: string = path.normalize(process.cwd());
-  const config = getConfig(currentDir);
-
-  let args = process.argv.splice(2);
+  const config = getConfig(currentDir, getArgsConfigPath(args));
 
   if (shouldRunInAllEnvironments(args)) {
     args = args.splice(1);
@@ -35,6 +35,14 @@ try {
 /** Returns true if user ran the command with '-a' or '--all' */
 function shouldRunInAllEnvironments(args: string[]): boolean {
   return args[0] === '-a' || args[0] === '--all';
+}
+
+function getArgsConfigPath(args: string[]): string | undefined {
+  for (let i = 0; i < args.length - 1; i++) {
+    if (args[i] === '--config' || args[i] === '-c') {
+      return args[i + 1];
+    }
+  }
 }
 
 /** Executes the same commands on all environments */

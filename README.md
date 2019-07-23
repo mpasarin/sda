@@ -29,6 +29,8 @@ sda <command>
 
 `sda -c <configPath> ...` / `sda --config <configPath> ...` runs sda with the specified config file (in addition to the regular config file).
 
+`sda <command1> <command2> <-param1> <-param2>` runs multiple commands, one after the other, and applies any valid params (based on the validParams property for each command) to the commands. Each param will only be applied to those commands that list that param in the validParams property.
+
 ## Configuration file
 A config file defines the different environment definitions and the environments that are supported.
 
@@ -55,6 +57,14 @@ The user home config file takes precedence over other ones.
         "<multipleCommandsInFolder>": {
           "cmd": ["pwd", "echo second command"],
           "cwd": "C:\\"
+        },
+        "<commandWithParameters>": {
+          "cmd": "ls",
+          "validParams": ["-a", "-l"]
+        },
+        "<commandWithParameterPlaceholder>": {
+          "cmd": "ls %PARAM% && echo second command",
+          "validParams": ["-a", "-l"]
         }
       }
     }

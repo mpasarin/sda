@@ -64,6 +64,12 @@ test('get a non-existing and an existing command', () => {
   expect(cmd[0].cmd).toEqual(['inline']);
 });
 
+test('get a command with no valid params', () => {
+  const cmd = getCommands(env, ['regularCommand'], []);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['regular']);
+});
+
 test('get a command with a valid param', () => {
   const cmd = getCommands(env, ['commandWithParams'], [['-param', 'paramValue'], ['-invalidParam']]);
   expect(cmd.length).toBe(1);

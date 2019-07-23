@@ -31,9 +31,14 @@ function getCommand(template: ITemplate, cmdName: string, params?: string[][]): 
   } else if (isArray(command)) {
     command = { cmd: command };
   } else if (isString(command.cmd)) {
-    const paramString = params ? getParamString(command, params) : '';
-    command.cmd = addParams(command.cmd, paramString);
     command.cmd = [command.cmd];
+  }
+
+  const paramString = params ? getParamString(command, params) : '';
+  if (paramString.length > 0 && isArray(command.cmd)) {
+    for (let i = 0; i < command.cmd.length; i++) {
+      command.cmd[i] = addParams(command.cmd[i], paramString);
+    }
   }
 
   return {
@@ -67,9 +72,6 @@ function getParamString(command: IConfigCommand, params: string[][]): string {
  * @param paramString
  */
 function addParams(cmd: string, paramString: string) {
-  if (paramString.length === 0) {
-    return cmd;
-  }
   if (cmd.indexOf('%PARAM%') > -1) {
     return cmd.replace('%PARAM%', paramString);
   }

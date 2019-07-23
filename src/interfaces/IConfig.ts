@@ -39,4 +39,9 @@ export interface IConfigCommand {
    * Directory to run the command on
    */
   cwd?: string;
+
+  /**
+   * Parameters that can be passed to this command
+   */
+  validParams?: string[];
 }

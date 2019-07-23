@@ -9,6 +9,10 @@
           "echo Running 'sda failtest'", 
           "sda failtest"
         ],
+        "testNode": {
+          "cmd": "node %PARAM% && echo Test params",
+          "validParams": ["-v", "--version", "-p"]
+        },
         "dummy": "echo Test successful",
         "throw": "node -e \"throw new Error('Expected error')\"",
         "testCmd": {

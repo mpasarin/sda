@@ -14,6 +14,14 @@ export const template: ITemplate = {
     commandWithFolder: {
       cmd: 'withFolder',
       cwd: 'C:\\'
+    },
+    commandWithParams: {
+      cmd: 'withParams',
+      validParams: ['-param']
+    },
+    commandWithParamsPlaceholder: {
+      cmd: 'withParams %PARAM% && anotherCommand',
+      validParams: ['/p']
     }
   },
   id: 'testTemplate'

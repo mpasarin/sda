@@ -27,6 +27,11 @@ function getCommand(template: ITemplate, cmdName: string): ICommand | undefined 
     command = { cmd: command };
   } else if (isString(command.cmd)) {
     command.cmd = [command.cmd];
+  } else if (isString(command.filePath)) {
+    if (isString(command.interpreter)) {
+      command.filePath = `${command.interpreter} ${command.filePath}`;
+    }
+    command.cmd = [ command.filePath ];
   }
 
   return {

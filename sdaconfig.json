@@ -14,6 +14,14 @@
         "testCmd": {
           "cmd": "cd",
           "cwd": "C:\\"
+        },
+        "testScript" : {
+          "filePath": "test_files\\dummy_script.ps1",
+          "interpreter": "powershell"
+        },
+        "testScriptJS" : {
+          "filePath": "test_files\\dummy_script_node.js",
+          "interpreter": "node"
         }
       }
     }

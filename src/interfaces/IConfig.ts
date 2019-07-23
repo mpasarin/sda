@@ -40,7 +40,11 @@ export interface IConfigCommand {
    */
   cwd?: string;
   /**
-   * File path of script containing commands to run
+   * File path of script
    */
   filePath?: string;
+  /**
+   * Interpreter for script
+   */
+  interpreter?: string;
 }

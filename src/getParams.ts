@@ -1,4 +1,16 @@
-/** Finds parameters passed with commands and removes them from the argument list */
+/**
+ * Finds parameters passed with commands and removes them from the argument list.
+ *
+ * Params must start with - or /, and after the first param is encountered everything after is assumed to be
+ * a param or parameter value.
+ *
+ * Each array returned from this contains a parameter and optionally any parameter values. For example, if your
+ * input is ["cmd1", "cmd2", "-param1", "param1Value", "-param2"], the returned value will be:
+ * [ ["-param1", "param1Value"], ["-param2"] ]
+ *
+ * @param args Commands and params passed to sda
+ * @returns A 2D array of parameter arrays, each containing a parameter and optionally parameter values
+ */
 export default function getParams(args: string[]) {
     const params: string[][] = [];
     let currentParam: string[] = [];

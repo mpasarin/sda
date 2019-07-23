@@ -63,5 +63,11 @@ test('get a non-existing and an existing commands', () => {
 test('get a command from filepath', () => {
   const cmd = getCommands(env, ['commandWithFilePath']);
   expect(cmd.length).toBe(1);
-  expect(cmd[0].filePath).toEqual('someFilePath');
+  expect(cmd[0].cmd).toEqual(['someFilePath']);
+});
+
+test('get a command from filepath and interpreter', () => {
+  const cmd = getCommands(env, ['commandWithFilePathAndInterpreter']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['node someFilePath']);
 });

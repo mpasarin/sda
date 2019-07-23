@@ -17,6 +17,10 @@ export const template: ITemplate = {
     },
     commandWithFilePath: {
       filePath: 'someFilePath'
+    },
+    commandWithFilePathAndInterpreter: {
+      filePath: 'someFilePath',
+      interpreter: 'node'
     }
   },
   id: 'testTemplate'

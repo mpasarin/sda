@@ -4,17 +4,19 @@
       "commands": {
         "build": "npm run build",
         "test": [
-          "echo Running 'sda dummy'", 
+          "echo Running 'sda dummy'. Expect 'Test successful'", 
           "sda dummy", 
-          "echo Running 'sda failtest'", 
+          "echo Running 'sda failtest'. Expect error because command doesn't exist", 
           "sda failtest", 
-          "echo Running 'sda testPS'", 
+          "echo Running 'sda testPS'. Expect 'PowerShell script success'", 
           "sda testPS", 
-          "echo Running 'sda testJS'", 
-          "sda testJS"
+          "echo Running 'sda testJS'. Expect 'Node script success'", 
+          "sda testJS", 
+          "echo Running 'sda testNode -v'. Expect NodeJS version", 
+          "sda testNode -v"
         ],
         "testNode": {
-          "cmd": "node %PARAM% && echo Test params",
+          "cmd": "node %PARAM% && echo Params test successful",
           "validParams": ["-v", "--version", "-p"]
         },
         "dummy": "echo Test successful",

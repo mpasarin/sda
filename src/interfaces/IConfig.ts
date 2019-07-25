@@ -40,6 +40,10 @@ export interface IConfigCommand {
    */
   cwd?: string;
   /**
+   * Parameters that can be passed to this command
+   */
+  validParams?: string[];
+  /**
    * File path of script
    */
   filePath?: string;

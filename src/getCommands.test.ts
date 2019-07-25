@@ -63,6 +63,17 @@ test('get a non-existing and an existing command', () => {
   expect(cmd.length).toBe(1);
   expect(cmd[0].cmd).toEqual(['inline']);
 });
+test('get a command from filepath', () => {
+  const cmd = getCommands(env, ['commandWithFilePath']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['someFilePath']);
+});
+
+test('get a command from filepath and interpreter', () => {
+  const cmd = getCommands(env, ['commandWithFilePathAndInterpreter']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['node someFilePath']);
+});
 
 test('get a command with no valid params', () => {
   const cmd = getCommands(env, ['regularCommand'], []);

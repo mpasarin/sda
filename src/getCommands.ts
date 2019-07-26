@@ -15,6 +15,7 @@ export default function getCommands(environment: IEnvironment, commandNames: str
 
 function getCommand(template: ITemplate, cmdName: string): ICommand | undefined {
   let command = template.commands[cmdName];
+  // const metadata = template.metadata;
   if (!command) {
     Log.error(`Command "${cmdName}" not found in template "${template.id}"`);
     return undefined;

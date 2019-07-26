@@ -41,6 +41,18 @@
       },
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "metadata command",
+      "program": "${workspaceFolder}\\lib\\start.js",
+      "args": [
+        "status"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/response.txt"
+      ]
     }
   ]
 }

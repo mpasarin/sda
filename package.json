@@ -39,6 +39,7 @@
     "typescript": "^3.3.1"
   },
   "dependencies": {
+    "azure-devops-node-api": "^9.0.1",
     "lodash": "^4.17.11"
   }
 }

@@ -22,7 +22,6 @@ try {
   if (shouldGetMetadata(args)) {
     (async () => {
       const branch = await getCurrentgitBranch();
-      // branch = branch.split('*')[1];
       getMetadata(env.template.metadata.buildDefpath, env.template.metadata.repo, branch);
     })();
   } else {

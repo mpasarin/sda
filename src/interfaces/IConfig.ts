@@ -43,6 +43,7 @@ export interface IConfigCommand {
   cwd?: string;
 }
 
+// Rest API response format
 export interface IMyResult<T> {
   count: number;
   value: T[];

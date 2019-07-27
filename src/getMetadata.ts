@@ -25,9 +25,8 @@ export default async function getMetadata(buildDefpath: string, repo: string, br
 
 function findPrs(prs: GitInterfaces.GitPullRequest[], branchName: string): GitInterfaces.GitPullRequest[] {
     const branchPrs: GitInterfaces.GitPullRequest[] = [];
-    const branch: string =  `refs/heads/${branchName}`;
     prs.forEach((element) => {
-        if (element.sourceRefName !== null && element.sourceRefName === branch) {
+        if (element.sourceRefName !== undefined && element.sourceRefName.includes(branchName)) {
             branchPrs.push(element);
         }
     });

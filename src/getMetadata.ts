@@ -4,6 +4,7 @@ import * as GitInterfaces from 'azure-devops-node-api/interfaces/GitInterfaces';
 import { List } from 'lodash';
 import { IMyResult } from './interfaces/IConfig';
 
+// To-do : Need to generate the tokens automatically
 const API_TOKEN: string = 'jfj3bcakxdp5uvor4fneuum4tvcbe2lrjiwxrhgyy63e4amlowva';
 
 export default async function getMetadata(buildDefpath: string, repo: string, branchName: string) {

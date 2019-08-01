@@ -33,6 +33,10 @@
           "filePath": "test\\dummy_script_node.js",
           "interpreter": "node"
         }
+      }, 
+      "metadata": {
+        "buildDefpath": "https://onedrive.visualstudio.com/SPPPlat/_build?definitionId=3032",
+        "repo": "https://onedrive.visualstudio.com/SPPPlat/_git/sp-client"
       }
     }
   },

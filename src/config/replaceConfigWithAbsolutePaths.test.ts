@@ -50,6 +50,10 @@ describe('commands with cwd', () => {
               cmd: 'echo TEST',
               cwd: '..'
             }
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }
@@ -71,6 +75,10 @@ describe('commands with cwd', () => {
               cmd: 'echo TEST',
               cwd: 'D:\\TEST'
             }
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }
@@ -93,6 +101,10 @@ describe('commands with filepath', () => {
             testCmd: {
               filePath: '../test_script'
             }
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }
@@ -113,6 +125,10 @@ describe('commands with filepath', () => {
             testCmd: {
               filePath: 'D:\\test_script'
             }
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }
@@ -133,6 +149,10 @@ describe('other commands', () => {
         test: {
           commands: {
             testCmd: 'echo TEST'
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }
@@ -150,6 +170,10 @@ describe('other commands', () => {
         test: {
           commands: {
             testCmd: ['echo TEST', 'echo ANOTHER TEST']
+          },
+          metadata: {
+            buildDefpath: '',
+            repo: ''
           }
         }
       }

@@ -31,6 +31,10 @@ export const template: ITemplate = {
       validParams: ['/p']
     }
   },
+  metadata: {
+    buildDefpath: 'https://onedrive.visualstudio.com/SPPPlat/_build?definitionId=3032',
+    repo: 'https://onedrive.visualstudio.com/SPPPlat/_git/sp-client'
+  },
   id: 'testTemplate'
 };
 

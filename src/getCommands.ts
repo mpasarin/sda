@@ -26,6 +26,7 @@ export default function getCommands(
 
 function getCommand(template: ITemplate, cmdName: string, params?: string[][]): IParsedCommand | undefined {
   let command = template.commands[cmdName];
+  // const metadata = template.metadata;
   if (!command) {
     Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
     return undefined;

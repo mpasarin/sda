@@ -1,3 +1,4 @@
+
 export interface IConfig {
   templates: { [id: string]: IConfigTemplate };
   /**
@@ -24,6 +25,7 @@ export interface IConfigTemplate {
    * Value: Either the command to execute as a string, or a command definition.
    */
   commands: { [name: string]: string | string[] | IConfigCommand };
+  metadata: { buildDefpath: string, repo: string };
 }
 
 /**
@@ -51,4 +53,10 @@ export interface IConfigCommand {
    * Interpreter for script
    */
   interpreter?: string;
+}
+
+// Rest API response format
+export interface IMyResult<T> {
+  count: number;
+  value: T[];
 }

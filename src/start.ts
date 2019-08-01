@@ -7,6 +7,7 @@ import executeCommands from './executeCommands';
 import getCommands from './getCommands';
 import { getAllEnvironments, getEnvironment } from './getEnvironment';
 import getMetadata from './getMetadata';
+import getParams from './getParams';
 import { IEnvironment } from './interfaces';
 import { IConfig } from './interfaces/IConfig';
 import Log from './Log';
@@ -86,6 +87,7 @@ function runInAllEnvironments(config: IConfig, args: string[]) {
 
 /** Executes all commands passed in the args in a given environment */
 function runCommands(env: IEnvironment, args: string[]) {
-  const commands = getCommands(env, args);
+  const params = getParams(args);
+  const commands = getCommands(env, args, params);
   executeCommands(commands, env);
 }

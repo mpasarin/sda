@@ -1,16 +1,20 @@
+import _ from 'lodash';
 import getCommands from '../src/getCommands';
 import Log from './Log';
-import { env } from './test/Constants';
+import { env as environment } from './test/Constants';
 
 beforeAll(() => {
   Log.isEnabled = false;
 });
+let env: any;
+beforeEach(() => { env = _.cloneDeep(environment); });
 
 test('get an inline command', () => {
   const cmd = getCommands(env, ['inlineCommand']);
   expect(cmd.length).toBe(1);
   expect(cmd[0].cmd).toEqual(['inline']);
 });
+
 test('get an inline array command', () => {
   const cmd = getCommands(env, ['inlineArrayCommand']);
   expect(cmd.length).toBe(1);
@@ -48,14 +52,49 @@ test('get two commands', () => {
   expect(cmd[1].cmd).toEqual(['regular']);
 });
 
-test('get an existing and a non-existing commands', () => {
+test('get an existing and a non-existing command', () => {
   const cmd = getCommands(env, ['inlineCommand', 'nonExistingCommand']);
   expect(cmd.length).toBe(1);
   expect(cmd[0].cmd).toEqual(['inline']);
 });
 
-test('get a non-existing and an existing commands', () => {
+test('get a non-existing and an existing command', () => {
   const cmd = getCommands(env, ['nonExistingCommand', 'inlineCommand']);
   expect(cmd.length).toBe(1);
   expect(cmd[0].cmd).toEqual(['inline']);
+});
+test('get a command from filepath', () => {
+  const cmd = getCommands(env, ['commandWithFilePath']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['someFilePath']);
+});
+
+test('get a command from filepath and interpreter', () => {
+  const cmd = getCommands(env, ['commandWithFilePathAndInterpreter']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['node someFilePath']);
+});
+
+test('get a command with no valid params', () => {
+  const cmd = getCommands(env, ['regularCommand'], []);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['regular']);
+});
+
+test('get a command with a valid param', () => {
+  const cmd = getCommands(env, ['commandWithParams'], [['-param', 'paramValue'], ['-invalidParam']]);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['withParams -param paramValue']);
+});
+
+test('get a command with a param and placeholder', () => {
+  const cmd = getCommands(env, ['commandWithParamsPlaceholder'], [['/p']]);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['withParams /p && anotherCommand']);
+});
+
+test('get a command that does not accept passed param', () => {
+  const cmd = getCommands(env, ['commandWithParams'], [['-invalidParam', 'paramValue']]);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['withParams']);
 });

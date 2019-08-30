@@ -46,16 +46,15 @@ function getCommand(template: ITemplate, cmdName: string, params?: string[][]): 
     command.cmd = [filePath];
   }
 
+  const cmds: string[] = command.cmd as string[];
   const paramString = params ? getParamString(command, params) : '';
-  if (paramString.length > 0 && isArray(command.cmd)) {
-    for (let i = 0; i < command.cmd.length; i++) {
-      command.cmd[i] = addParams(command.cmd[i], paramString);
-    }
+  for (let i = 0; i < cmds.length; i++) {
+    cmds[i] = addParams(cmds[i], paramString);
   }
 
   return {
     id: cmdName,
-    cmd: command.cmd as string[],
+    cmd: cmds as string[],
     cwd: command.cwd
   };
 }
@@ -88,5 +87,5 @@ function addParams(cmd: string, paramString: string) {
   if (cmd.indexOf('%PARAM%') > -1) {
     return cmd.replace('%PARAM%', paramString);
   }
-  return cmd + ' ' + paramString;
+  return !!paramString ? cmd + ' ' + paramString : cmd;
 }

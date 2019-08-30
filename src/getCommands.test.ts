@@ -93,6 +93,12 @@ test('get a command with a param and placeholder', () => {
   expect(cmd[0].cmd).toEqual(['withParams /p && anotherCommand']);
 });
 
+test('get a command with a placeholder and no params', () => {
+  const cmd = getCommands(env, ['commandWithParamsPlaceholder']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['withParams  && anotherCommand']); // Note the double space.
+});
+
 test('get a command that does not accept passed param', () => {
   const cmd = getCommands(env, ['commandWithParams'], [['-invalidParam', 'paramValue']]);
   expect(cmd.length).toBe(1);

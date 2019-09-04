@@ -33,6 +33,15 @@ export function getEnvironment(config: IConfig, currentDir: string, args: string
     throw new Error(`There is no template with id "${environment.templateId}"`);
   }
 
+  // add default commands
+  if (config.templates.default) {
+    Object.keys(config.templates.default.commands).forEach((commandName) => {
+      if (environment && !config.templates[environment.templateId].commands[commandName]) {
+        config.templates[environment.templateId].commands[commandName] = config.templates.default.commands[commandName];
+      }
+    });
+  }
+
   return {
     ...environment,
     template: withId(environment.templateId, config.templates[environment.templateId])
@@ -43,6 +52,16 @@ export function getAllEnvironments(config: IConfig): IEnvironment[] {
   const envs: IEnvironment[] = [];
   Object.keys(config.environments).forEach((envId) => {
     const env = withId(envId, config.environments[envId]);
+
+    // add default commands
+    if (config.templates.default) {
+      Object.keys(config.templates.default.commands).forEach((commandName) => {
+        if (!config.templates[env.templateId].commands[commandName]) {
+          config.templates[env.templateId].commands[commandName] = config.templates.default.commands[commandName];
+        }
+      });
+    }
+
     envs.push({
       ...env,
       template: withId(env.templateId, config.templates[env.templateId])

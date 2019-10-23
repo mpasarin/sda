@@ -57,6 +57,24 @@ export const config: IConfig = {
   }
 };
 
+export const configWithDefault: IConfig = {
+  templates: {
+    testTemplate: template,
+    default: {
+      commands: {
+        defaultCommand: 'default',
+        inlineCommand: 'TEMPLATE_SHOULD_OVERRIDE'
+      }
+    }
+  },
+  environments: {
+    testEnv: {
+      path: 'C:\\folderA\\folderB',
+      templateId: 'testTemplate'
+    }
+  }
+};
+
 export const badConfig: IConfig = {
   templates: {
     testTemplate: template

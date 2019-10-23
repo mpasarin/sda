@@ -1,11 +1,9 @@
 # sda - Software development assistant
 
 ## What is sda?
-sda is a command-line tool that intends to simplify life of a software developer when working in different environments,
-with different tools and processes, at the same time.
+sda is a command-line tool that intends to simplify life of a software developer when working in different repositories, with different environments, tools and processes; at the same time.
 
-For a single project, using `npm` commands or `gulp` can be a better option, but for managing different projects at the
-same time, a developer can define their own set of commands.
+For a single project, using `npm` commands or `gulp` can be a better option, but for managing different projects at the same time, a developer can define their own set of commands.
 
 ## Usage
 ```sh
@@ -37,6 +35,14 @@ A config file defines the different environment definitions and the environments
 A config file must be named `sdaconfig.json` and be in a parent folder containing the different environments or the user home folder.
 
 The user home config file takes precedence over other ones.
+
+### Environments and templates
+
+An environment is defined by a path and a template. The path is the root folder for the environment, and the template defines the commands that are available for the environment.
+
+This is useful when there are multiple copies of the same environment in the machine, as the template is shared.
+
+There is a special template id called `default`. If the `default` template is defined, its commands will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, like for example complex commands in git.
 
 ### Schema
 

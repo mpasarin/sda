@@ -1,7 +1,7 @@
 
 import * as path from 'path';
 import { IEnvironment, INamed } from './interfaces';
-import { IConfig, IConfigEnvironment } from './interfaces/IConfig';
+import { IConfig, IConfigEnvironment, IConfigTemplate } from './interfaces/IConfig';
 import withId from './interfaces/withId';
 
 export function getEnvironment(config: IConfig, currentDir: string, args: string[]): IEnvironment {
@@ -33,14 +33,7 @@ export function getEnvironment(config: IConfig, currentDir: string, args: string
     throw new Error(`There is no template with id "${environment.templateId}"`);
   }
 
-  // add default commands
-  if (config.templates.default) {
-    Object.keys(config.templates.default.commands).forEach((commandName) => {
-      if (environment && !config.templates[environment.templateId].commands[commandName]) {
-        config.templates[environment.templateId].commands[commandName] = config.templates.default.commands[commandName];
-      }
-    });
-  }
+  addDefaultCommands(environment, config);
 
   return {
     ...environment,
@@ -52,20 +45,23 @@ export function getAllEnvironments(config: IConfig): IEnvironment[] {
   const envs: IEnvironment[] = [];
   Object.keys(config.environments).forEach((envId) => {
     const env = withId(envId, config.environments[envId]);
-
-    // add default commands
-    if (config.templates.default) {
-      Object.keys(config.templates.default.commands).forEach((commandName) => {
-        if (!config.templates[env.templateId].commands[commandName]) {
-          config.templates[env.templateId].commands[commandName] = config.templates.default.commands[commandName];
-        }
-      });
-    }
-
+    addDefaultCommands(env, config);
     envs.push({
       ...env,
       template: withId(env.templateId, config.templates[env.templateId])
     });
   });
   return envs;
+}
+
+function addDefaultCommands(environment: IConfigEnvironment, config: IConfig): void {
+  const defaultTemplate: IConfigTemplate | undefined = config.templates.default;
+  const envTemplate = config.templates[environment.templateId];
+  if (defaultTemplate) {
+    Object.keys(defaultTemplate.commands).forEach((commandName) => {
+      if (!envTemplate.commands[commandName]) {
+        envTemplate.commands[commandName] = defaultTemplate.commands[commandName];
+      }
+    });
+  }
 }

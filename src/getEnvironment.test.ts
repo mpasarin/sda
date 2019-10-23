@@ -1,5 +1,5 @@
 import { getAllEnvironments, getEnvironment } from '../src/getEnvironment';
-import { badConfig, config, template } from './test/Constants';
+import { badConfig, config, configWithDefault, template } from './test/Constants';
 
 describe('getEnvironment', () => {
   test('get the environment from the arguments', () => {
@@ -40,6 +40,12 @@ describe('getEnvironment', () => {
 
   test('enviroment does not exist neither in path nor in arguments fails', () => {
     expect(() => getEnvironment(badConfig, 'D:\\', ['badInput'])).toThrow();
+  });
+
+  test('get environment with defaults', () => {
+    const env = getEnvironment(configWithDefault, '', ['testEnv']);
+    expect(env.template.commands.defaultCommand).toBe('default'); // from the default
+    expect(env.template.commands.inlineCommand).toBe('inline'); // from the actual template
   });
 });
 

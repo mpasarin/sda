@@ -1,6 +1,6 @@
 {
   "name": "sda",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Software development assistant",
   "main": "lib/start.js",
   "files": [

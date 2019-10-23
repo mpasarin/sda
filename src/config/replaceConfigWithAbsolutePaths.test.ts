@@ -40,50 +40,6 @@ describe('environment paths', () => {
   });
 });
 
-describe('commands with cwd', () => {
-  test('replace command cwd with relative path', () => {
-    const config: Partial<IConfig> = {
-      templates: {
-        test: {
-          commands: {
-            testCmd: {
-              cmd: 'echo TEST',
-              cwd: '..'
-            }
-          }
-        }
-      }
-    };
-    const result = replaceConfigWithAbsolutePaths(config, path);
-    expect(result.templates).toBeDefined();
-    expect(result.templates!).toHaveProperty('test');
-    expect(result.templates!.test.commands).toHaveProperty('testCmd');
-    expect(result.templates!.test.commands.testCmd).toHaveProperty('cwd');
-    expect((result.templates!.test.commands.testCmd as IConfigCommand).cwd).toBe('C:\\A\\B');
-  });
-
-  test('replace command cwd with absolute path', () => {
-    const config: Partial<IConfig> = {
-      templates: {
-        test: {
-          commands: {
-            testCmd: {
-              cmd: 'echo TEST',
-              cwd: 'D:\\TEST'
-            }
-          }
-        }
-      }
-    };
-    const result = replaceConfigWithAbsolutePaths(config, path);
-    expect(result.templates).toBeDefined();
-    expect(result.templates!).toHaveProperty('test');
-    expect(result.templates!.test.commands).toHaveProperty('testCmd');
-    expect(result.templates!.test.commands.testCmd).toHaveProperty('cwd');
-    expect((result.templates!.test.commands.testCmd as IConfigCommand).cwd).toBe('D:\\TEST');
-  });
-});
-
 describe('commands with filepath', () => {
   test('replace command filepath with relative path', () => {
     const config: Partial<IConfig> = {

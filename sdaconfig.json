@@ -8,6 +8,12 @@
           "sda dummy", 
           "echo Running 'sda failtest'. Expect error because command doesn't exist", 
           "sda failtest", 
+          "echo Running 'sda throw'. Expect an error to be thrown", 
+          "sda throw", 
+          "echo Running 'sda testAbsolutePath'. Expect 'C:\\'", 
+          "sda testAbsolutePath", 
+          "echo Running 'sda testRelativePath'. Expect a path like [repoPath]\\src", 
+          "sda testRelativePath", 
           "echo Running 'sda testPS'. Expect 'PowerShell script success'", 
           "sda testPS", 
           "echo Running 'sda testJS'. Expect 'Node script success'", 
@@ -16,14 +22,18 @@
           "sda testNode -v"
         ],
         "testNode": {
-          "cmd": "node %PARAM% && echo Params test successful",
+          "cmd": "node %PARAM%",
           "validParams": ["-v", "--version", "-p"]
         },
         "dummy": "echo Test successful",
         "throw": "node -e \"throw new Error('Expected error')\"",
-        "testCmd": {
+        "testAbsolutePath": {
           "cmd": "cd",
           "cwd": "C:\\"
+        },
+        "testRelativePath": {
+          "cmd": "cd",
+          "cwd": "src"
         },
         "testPS" : {
           "filePath": "test\\dummy_script_powershell.ps1",

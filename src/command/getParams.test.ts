@@ -1,5 +1,5 @@
+import Log from '../Log';
 import getParams from './getParams';
-import Log from './Log';
 
 beforeAll(() => {
   Log.isEnabled = false;

@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import getCommands from '../src/getCommands';
-import Log from './Log';
-import { env as environment } from './test/Constants';
+import Log from '../Log';
+import { env as environment } from '../test/Constants';
+import getCommands, { IParsedCommand } from './getCommands';
 
 beforeAll(() => {
   Log.isEnabled = false;
@@ -11,8 +11,7 @@ beforeEach(() => { env = _.cloneDeep(environment); });
 
 test('get an inline command', () => {
   const cmd = getCommands(env, ['inlineCommand']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['inline']);
+  expectSingleCommand(cmd, 'inline');
 });
 
 test('get an inline array command', () => {
@@ -23,8 +22,7 @@ test('get an inline array command', () => {
 
 test('get a regular command', () => {
   const cmd = getCommands(env, ['regularCommand']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['regular']);
+  expectSingleCommand(cmd, 'regular');
 });
 
 test('get a regular array command', () => {
@@ -33,11 +31,18 @@ test('get a regular array command', () => {
   expect(cmd[0].cmd).toEqual(['regular1', 'regular2']);
 });
 
-test('get a command with folder', () => {
-  const cmd = getCommands(env, ['commandWithFolder']);
+test('get a command with absolute folder', () => {
+  const cmd = getCommands(env, ['commandWithAbsoluteFolder']);
   expect(cmd.length).toBe(1);
   expect(cmd[0].cmd).toEqual(['withFolder']);
-  expect(cmd[0].cwd).toEqual('C:\\');
+  expect(cmd[0].cwd).toEqual('C:\\testX\\testY');
+});
+
+test('get a command with relative folder', () => {
+  const cmd = getCommands(env, ['commandWithRelativeFolder']);
+  expect(cmd.length).toBe(1);
+  expect(cmd[0].cmd).toEqual(['withFolder']);
+  expect(cmd[0].cwd).toEqual('C:\\folderA\\folderB\\test1\\test2');
 });
 
 test('get a non-existing command', () => {
@@ -50,57 +55,56 @@ test('get two commands', () => {
   expect(cmd.length).toBe(2);
   expect(cmd[0].cmd).toEqual(['inline']);
   expect(cmd[1].cmd).toEqual(['regular']);
+  expect(cmd[0].cwd).toEqual('C:\\folderA\\folderB');
+  expect(cmd[1].cwd).toEqual('C:\\folderA\\folderB');
 });
 
 test('get an existing and a non-existing command', () => {
   const cmd = getCommands(env, ['inlineCommand', 'nonExistingCommand']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['inline']);
+  expectSingleCommand(cmd, 'inline');
 });
 
 test('get a non-existing and an existing command', () => {
   const cmd = getCommands(env, ['nonExistingCommand', 'inlineCommand']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['inline']);
+  expectSingleCommand(cmd, 'inline');
 });
 test('get a command from filepath', () => {
   const cmd = getCommands(env, ['commandWithFilePath']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['someFilePath']);
+  expectSingleCommand(cmd, 'someFilePath');
 });
 
 test('get a command from filepath and interpreter', () => {
   const cmd = getCommands(env, ['commandWithFilePathAndInterpreter']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['node someFilePath']);
+  expectSingleCommand(cmd, 'node someFilePath');
 });
 
 test('get a command with no valid params', () => {
   const cmd = getCommands(env, ['regularCommand'], []);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['regular']);
+  expectSingleCommand(cmd, 'regular');
 });
 
 test('get a command with a valid param', () => {
   const cmd = getCommands(env, ['commandWithParams'], [['-param', 'paramValue'], ['-invalidParam']]);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['withParams -param paramValue']);
+  expectSingleCommand(cmd, 'withParams -param paramValue');
 });
 
 test('get a command with a param and placeholder', () => {
   const cmd = getCommands(env, ['commandWithParamsPlaceholder'], [['/p']]);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['withParams /p && anotherCommand']);
+  expectSingleCommand(cmd, 'withParams /p && anotherCommand');
 });
 
 test('get a command with a placeholder and no params', () => {
   const cmd = getCommands(env, ['commandWithParamsPlaceholder']);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['withParams  && anotherCommand']); // Note the double space.
+  expectSingleCommand(cmd, 'withParams  && anotherCommand'); // Note the double space.
 });
 
 test('get a command that does not accept passed param', () => {
   const cmd = getCommands(env, ['commandWithParams'], [['-invalidParam', 'paramValue']]);
-  expect(cmd.length).toBe(1);
-  expect(cmd[0].cmd).toEqual(['withParams']);
+  expectSingleCommand(cmd, 'withParams');
 });
+
+function expectSingleCommand(command: IParsedCommand[], expectedCommandCmd: string) {
+  expect(command.length).toBe(1);
+  expect(command[0].cmd).toEqual([expectedCommandCmd]);
+  expect(command[0].cwd).toEqual('C:\\folderA\\folderB');
+}

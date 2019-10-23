@@ -11,9 +11,13 @@ export const template: ITemplate = {
     regularArrayCommand: {
       cmd: ['regular1', 'regular2']
     },
-    commandWithFolder: {
+    commandWithAbsoluteFolder: {
       cmd: 'withFolder',
-      cwd: 'C:\\'
+      cwd: 'C:\\testX\\testY'
+    },
+    commandWithRelativeFolder: {
+      cmd: 'withFolder',
+      cwd: 'test1\\test2'
     },
     commandWithFilePath: {
       filePath: 'someFilePath'
@@ -36,7 +40,7 @@ export const template: ITemplate = {
 
 export const env: IEnvironment = {
   id: 'testEnv',
-  path: '.',
+  path: 'C:\\folderA\\folderB',
   template,
   templateId: 'testTemplate',
 };

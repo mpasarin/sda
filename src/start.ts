@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
 import * as path from 'path';
+import runCommands from './command/runCommands';
 import getConfig from './config/getConfig';
-import executeCommands from './executeCommands';
-import getCommands from './getCommands';
 import { getAllEnvironments, getEnvironment } from './getEnvironment';
-import getParams from './getParams';
-import { IEnvironment } from './interfaces';
 import { IConfig } from './interfaces/IConfig';
 import Log from './Log';
 
@@ -57,11 +54,4 @@ function runInAllEnvironments(config: IConfig, args: string[]) {
       Log.error(`Error: Failed to run in environment "${env.id}". Inner error: ${error.message}`);
     }
   });
-}
-
-/** Executes all commands passed in the args in a given environment */
-function runCommands(env: IEnvironment, args: string[]) {
-  const params = getParams(args);
-  const commands = getCommands(env, args, params);
-  executeCommands(commands, env);
 }

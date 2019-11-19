@@ -3,6 +3,7 @@ import * as path from 'path';
 import { IEnvironment, INamed } from './interfaces';
 import { IConfig, IConfigEnvironment, IConfigTemplate } from './interfaces/IConfig';
 import withId from './interfaces/withId';
+import Log from './Log';
 
 export function getEnvironment(config: IConfig, currentDir: string, args: string[]): IEnvironment {
   let environment: INamed<IConfigEnvironment> | undefined;
@@ -19,6 +20,7 @@ export function getEnvironment(config: IConfig, currentDir: string, args: string
       const relativePath = path.relative(currentEnv.path, currentDir);
       if (!relativePath || relativePath.indexOf('..') !== 0) { // We are in the environment root folder, or inside it
         environment = withId(currentEnvName, currentEnv);
+        Log.verbose(`Using environment "${environment.id}" from current folder.`);
         break;
       }
     }

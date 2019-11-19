@@ -1,0 +1,15 @@
+{
+  "templates": {
+    "sda": {
+      "commands": {
+        "test": "echo Test successful"
+      }
+    }
+  },
+  "environments": {
+    "sda": {
+      "path": ".",
+      "templateId": "sda"
+    }
+  }
+}

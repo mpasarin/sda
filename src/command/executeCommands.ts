@@ -12,7 +12,7 @@ export default function executeCommands(commands: IParsedCommand[], environment:
 }
 
 function executeCommand(command: IParsedCommand, environment: IEnvironment): void {
-  Log.log(`Executing command "${command.id}" in environment "${environment.id}"`);
+  Log.verbose(`Executing command "${command.id}" in environment "${environment.id}"`);
   for (const cmd of command.cmd) {
     child_process.execSync(cmd, { cwd: command.cwd, stdio: 'inherit', maxBuffer: MAX_BUFFER });
   }

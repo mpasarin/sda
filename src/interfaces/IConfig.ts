@@ -51,4 +51,8 @@ export interface IConfigCommand {
    * Interpreter for script
    */
   interpreter?: string;
+  /**
+   * Description of the command. Used when listing commands.
+   */
+  description?: string;
 }

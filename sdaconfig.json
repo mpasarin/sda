@@ -2,32 +2,41 @@
   "templates": {
     "sda": {
       "commands": {
-        "build": "npm run build",
-        "test": [
-          "echo Running 'sda dummy'. Expect 'Test successful'", 
-          "sda dummy", 
-          "echo Running 'sda failtest'. Expect error because command doesn't exist", 
-          "sda failtest", 
-          "echo Running 'sda throw'. Expect an error to be thrown", 
-          "sda throw", 
-          "echo Running 'sda testAbsolutePath'. Expect 'C:\\'", 
-          "sda testAbsolutePath", 
-          "echo Running 'sda testRelativePath'. Expect a path like [repoPath]\\src", 
-          "sda testRelativePath", 
-          "echo Running 'sda testPS'. Expect 'PowerShell script success'", 
-          "sda testPS", 
-          "echo Running 'sda testJS'. Expect 'Node script success'", 
-          "sda testJS", 
-          "echo Running 'sda testNode --version'. Expect NodeJS version", 
-          "sda testNode --version",
-          "echo Running 'sda sda-copy dummy'. Expect 'Test successful'", 
-          "sda sda-copy dummy",
-          "echo Running 'sda test -c .\/sdaconfig.alt.json'. Expect 'Test successful'", 
-          "sda test -c ./sdaconfig.alt.json"
-        ],
+        "build": {
+          "cmd": "npm run build",
+          "description": "Build SDA"
+        },
+        "test": {
+          "cmd": [
+            "echo Running 'sda dummy'. Expect 'Test successful'",
+            "sda dummy",
+            "echo Running 'sda failtest'. Expect error because command doesn't exist",
+            "sda failtest",
+            "echo Running 'sda throw'. Expect an error to be thrown",
+            "sda throw",
+            "echo Running 'sda testAbsolutePath'. Expect 'C:\\'",
+            "sda testAbsolutePath",
+            "echo Running 'sda testRelativePath'. Expect a path like [repoPath]\\src",
+            "sda testRelativePath",
+            "echo Running 'sda testPS'. Expect 'PowerShell script success'",
+            "sda testPS",
+            "echo Running 'sda testJS'. Expect 'Node script success'",
+            "sda testJS",
+            "echo Running 'sda testNode --version'. Expect NodeJS version",
+            "sda testNode --version",
+            "echo Running 'sda sda-copy dummy'. Expect 'Test successful'",
+            "sda sda-copy dummy",
+            "echo Running 'sda test -c .\/sdaconfig.alt.json'. Expect 'Test successful'",
+            "sda test -c ./sdaconfig.alt.json"
+          ],
+          "description": "Test different scenarios for SDA"
+        },
         "testNode": {
           "cmd": "node %PARAM%",
-          "validParams": ["--version", "-p"]
+          "validParams": [
+            "--version",
+            "-p"
+          ]
         },
         "dummy": "echo Test successful",
         "throw": "node -e \"throw new Error('Expected error')\"",
@@ -39,11 +48,11 @@
           "cmd": "cd",
           "cwd": "src"
         },
-        "testPS" : {
+        "testPS": {
           "filePath": "test\\dummy_script_powershell.ps1",
           "interpreter": "powershell"
         },
-        "testJS" : {
+        "testJS": {
           "filePath": "test\\dummy_script_node.js",
           "interpreter": "node"
         }

@@ -5,10 +5,24 @@ import ExecutionConfig from './ExecutionConfig';
 import { getAllEnvironments } from './getEnvironment';
 import getExecutionConfig from './getExecutionConfig';
 import Log from './Log';
+import listCommands from './operations/listCommands';
+import listEnvironments from './operations/listEnvironments';
+import { Operations } from './operations/Operations';
 
 try {
   const ec = getExecutionConfig();
-  ec.runInAllEnvironments ? runInAllEnvironments(ec) : runCommands(ec);
+  switch (ec.operation) {
+    case Operations.ListEnvironments:
+      listEnvironments(ec);
+      break;
+    case Operations.ListCommands:
+      listCommands(ec);
+      break;
+    case Operations.RunCommands:
+    default:
+      ec.runInAllEnvironments ? runInAllEnvironments(ec) : runCommands(ec);
+      break;
+  }
 } catch (error) {
   Log.error('Error: ' + error.message);
 }

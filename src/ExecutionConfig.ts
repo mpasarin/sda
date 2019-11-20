@@ -1,4 +1,6 @@
+import * as path from 'path';
 import getParams from './command/getParams';
+import getConfig from './config/getConfig';
 import { getEnvironment } from './getEnvironment';
 import { IEnvironment } from './interfaces';
 import { IConfig } from './interfaces/IConfig';
@@ -12,15 +14,29 @@ export default class ExecutionConfig {
   public env: IEnvironment;
   public params: string[][];
   public commands: string[];
+  public setupParameters?: {
+    templateId: string,
+    path?: string
+  };
 
-  constructor(args: string[], config: IConfig, currentDir: string) {
+  constructor() {
+    const args = process.argv.splice(2);
+
     Log.isVerbose = checkFlag(args, '-v') || checkFlag(args, '--verbose');
 
-    this.config = config;
+    const currentDir: string = path.normalize(process.cwd());
+    this.config = getConfig(currentDir, getArgsConfigPath(args));
     this.runInAllEnvironments = checkFlag(args, '-a', 0) || checkFlag(args, '--all', 0);
     this.operation = this.getOperation(args);
 
-    this.env = getEnvironment(config, currentDir, args);
+    if (this.operation === Operations.SetupEnvironment || this.operation === Operations.AttachEnvironment) {
+      this.setupParameters = {
+        templateId: args[0],
+        path: args[1]
+      };
+    }
+
+    this.env = getEnvironment(this.config, args[0], currentDir);
     if (this.env.id === args[0]) {
       args.shift(); // Remove the environment from the arguments
     }
@@ -42,7 +58,18 @@ export default class ExecutionConfig {
     if (args.length === 0) { return Operations.ListEnvironments; }
     if (!this.runInAllEnvironments && checkFlag(args, 'list', 0)) { return Operations.ListEnvironments; }
     if (checkFlag(args, 'list', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
+    if (checkFlag(args, 'setup')) { return Operations.SetupEnvironment; }
+    if (checkFlag(args, 'attach')) { return Operations.AttachEnvironment; }
     return Operations.RunCommands;
+  }
+}
+
+function getArgsConfigPath(args: string[]): string | undefined {
+  for (let i = 0; i < args.length - 1; i++) {
+    if (args[i] === '--config' || args[i] === '-c') {
+      const configPath = args.splice(i, 2)[1];
+      return configPath;
+    }
   }
 }
 

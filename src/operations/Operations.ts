@@ -1,5 +1,7 @@
 export enum Operations {
   RunCommands,
   ListEnvironments,
-  ListCommands
+  ListCommands,
+  SetupEnvironment,
+  AttachEnvironment
 }

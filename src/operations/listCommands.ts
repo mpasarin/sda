@@ -1,8 +1,8 @@
 import Table from 'easy-table';
 import ExecutionConfig from '../ExecutionConfig';
-import { getAllEnvironments, getEnvironment } from '../getEnvironment';
+import { getAllEnvironments } from '../getEnvironment';
 import { IEnvironment } from '../interfaces';
-import { IConfigCommand, IConfigEnvironment } from '../interfaces/IConfig';
+import { IConfigCommand } from '../interfaces/IConfig';
 import Log from '../Log';
 
 export default function listCommands(ec: ExecutionConfig) {

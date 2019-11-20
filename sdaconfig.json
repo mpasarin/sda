@@ -1,6 +1,7 @@
 {
   "templates": {
     "sda": {
+      "gitRepo": "https://github.com/mpasarin/sda.git",
       "commands": {
         "build": {
           "cmd": "npm run build",
@@ -42,20 +43,31 @@
         "throw": "node -e \"throw new Error('Expected error')\"",
         "testAbsolutePath": {
           "cmd": "cd",
-          "cwd": "C:\\"
+          "cwd": "C:\\",
+          "description": "Prints C:\\"
         },
         "testRelativePath": {
           "cmd": "cd",
-          "cwd": "src"
+          "cwd": "src",
+          "description": "Prints SDA source folder"
         },
         "testPS": {
           "filePath": "test\\dummy_script_powershell.ps1",
-          "interpreter": "powershell"
+          "interpreter": "powershell",
+          "description": "Prints 'PowerShell script success'"
         },
         "testJS": {
           "filePath": "test\\dummy_script_node.js",
-          "interpreter": "node"
+          "interpreter": "node",
+          "description": "Prints 'Node script success'"
         }
+      }
+    },
+    "testSetup": {
+      "commands": {
+        "pre-setup": "echo PRE-SETUP",
+        "setup": "echo SETUP",
+        "post-setup": "echo POST-SETUP"
       }
     }
   },

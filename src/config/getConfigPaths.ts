@@ -1,8 +1,8 @@
 import * as fs from 'fs';
 import _ from 'lodash';
 import * as path from 'path';
-
-export const configFileName = 'sdaconfig.json';
+import { configFileName } from './Constants';
+import HomeConfig from './HomeConfig';
 
 /**
  * Find all configuration files from the input folder path up to the root folder.
@@ -21,30 +21,10 @@ export default function getConfigPaths(dir: string): string[] {
       dir = path.normalize(path.join(dir, '..'));
     } while (dir !== root);
 
-    const userHomeConfigPath = tryGetUserHomeConfigPath();
+    const userHomeConfigPath = HomeConfig.getPathIfExists();
     if (userHomeConfigPath) {
         paths.push(userHomeConfigPath);
     }
 
     return paths;
 }
-
-/**
- * Returns the path to the config file in the user folder.
- * If the file doesn't exist returns undefined.
- */
-function tryGetUserHomeConfigPath(): string | undefined {
-    let homeFolder;
-    if (process.env.HOME) {
-      homeFolder = process.env.HOME;
-    } else if (process.env.HOMEDRIVE && process.env.HOMEPATH) {
-      homeFolder = path.join(process.env.HOMEDRIVE!, process.env.HOMEPATH!);
-    }
-
-    if (homeFolder) {
-      const fileName = path.join(homeFolder, configFileName);
-      if (fs.existsSync(fileName)) {
-        return fileName;
-      }
-    }
-  }

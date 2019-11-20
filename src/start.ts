@@ -1,41 +1,32 @@
 #!/usr/bin/env node
 
-import runCommands from './command/runCommands';
 import ExecutionConfig from './ExecutionConfig';
-import { getAllEnvironments } from './getEnvironment';
-import getExecutionConfig from './getExecutionConfig';
 import Log from './Log';
+import attachEnvironment from './operations/attachEnvironment';
 import listCommands from './operations/listCommands';
 import listEnvironments from './operations/listEnvironments';
 import { Operations } from './operations/Operations';
+import runCommands from './operations/runCommands';
+import setupEnvironment from './operations/setupEnvironment';
 
 try {
-  const ec = getExecutionConfig();
-  switch (ec.operation) {
-    case Operations.ListEnvironments:
-      listEnvironments(ec);
-      break;
-    case Operations.ListCommands:
-      listCommands(ec);
-      break;
-    case Operations.RunCommands:
-    default:
-      ec.runInAllEnvironments ? runInAllEnvironments(ec) : runCommands(ec);
-      break;
+  const ec = new ExecutionConfig();
+  const map = getOperationsMap();
+  if (map.has(ec.operation)) {
+    map.get(ec.operation)!(ec);
+  } else {
+    throw new Error('Invalid operation.');
   }
 } catch (error) {
   Log.error('Error: ' + error.message);
 }
 
-/** Executes the same commands on all environments */
-function runInAllEnvironments(ec: ExecutionConfig) {
-  const envs = getAllEnvironments(ec.config);
-
-  envs.forEach((env) => {
-    try {
-      runCommands(ec, env);
-    } catch (error) {
-      Log.error(`Error: Failed to run in environment "${env.id}". Inner error: ${error.message}`);
-    }
-  });
+function getOperationsMap() {
+  const map = new Map<Operations, (ec: ExecutionConfig) => void>();
+  map.set(Operations.RunCommands, runCommands);
+  map.set(Operations.ListEnvironments, listEnvironments);
+  map.set(Operations.ListCommands, listCommands);
+  map.set(Operations.SetupEnvironment, setupEnvironment);
+  map.set(Operations.AttachEnvironment, attachEnvironment);
+  return map;
 }

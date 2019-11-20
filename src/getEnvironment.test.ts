@@ -2,48 +2,48 @@ import { getAllEnvironments, getEnvironment } from '../src/getEnvironment';
 import { badConfig, config, configWithDefault, template } from './test/Constants';
 
 describe('getEnvironment', () => {
-  test('get the environment from the arguments', () => {
-    const env = getEnvironment(config, '', ['testEnv']);
+  test('get the environment from the id', () => {
+    const env = getEnvironment(config, 'testEnv');
     expect(env.id).toBe('testEnv');
     expect(env.template).toBeDefined();
   });
 
-  test('get the environment from the arguments before the command', () => {
-    const env = getEnvironment(config, '', ['testEnv', 'aCommand']);
+  test('get the environment from an unexisting id', () => {
+    expect(() => getEnvironment(config, 'badInput')).toThrow();
+  });
+
+  test('get the environment from inside env path', () => {
+    const env = getEnvironment(config, '', 'C:\\folderA\\folderB\\folderC');
     expect(env.id).toBe('testEnv');
     expect(env.template.id).toBe(env.templateId);
   });
 
-  test('get the environment from the arguments after the command', () => {
-    expect(() => getEnvironment(config, '', ['aCommand', 'testEnv'])).toThrow();
-  });
-
-  test('get the environment from inside env path', () => {
-    const env = getEnvironment(config, 'C:\\folderA\\folderB\\folderC', []);
+  test('get the environment from inside env path with unexisting id', () => {
+    const env = getEnvironment(config, 'badInput', 'C:\\folderA\\folderB\\folderC');
     expect(env.id).toBe('testEnv');
     expect(env.template.id).toBe(env.templateId);
   });
 
   test('get the environment from root env path', () => {
-    const env = getEnvironment(config, 'C:\\folderA\\folderB', []);
+    const env = getEnvironment(config, '', 'C:\\folderA\\folderB');
     expect(env.id).toBe('testEnv');
     expect(env.template.id).toBe(env.templateId);
   });
 
   test('get the environment from outside env path fails', () => {
-    expect(() => getEnvironment(config, 'C:\\folderA', [])).toThrow();
+    expect(() => getEnvironment(config, '', 'C:\\folderA')).toThrow();
   });
 
   test('enviroment has invalid template id fails', () => {
-    expect(() => getEnvironment(badConfig, 'D:\\', ['badEnv'])).toThrow();
+    expect(() => getEnvironment(badConfig, 'badEnv', 'D:\\')).toThrow();
   });
 
   test('enviroment does not exist neither in path nor in arguments fails', () => {
-    expect(() => getEnvironment(badConfig, 'D:\\', ['badInput'])).toThrow();
+    expect(() => getEnvironment(badConfig, 'badInput', 'D:\\')).toThrow();
   });
 
   test('get environment with defaults', () => {
-    const env = getEnvironment(configWithDefault, '', ['testEnv']);
+    const env = getEnvironment(configWithDefault, 'testEnv');
     expect(env.template.commands.defaultCommand).toBe('default'); // from the default
     expect(env.template.commands.inlineCommand).toBe('inline'); // from the actual template
   });

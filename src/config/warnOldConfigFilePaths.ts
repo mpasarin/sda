@@ -2,9 +2,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import Log from '../Log';
-import { configFileName } from './getConfig';
-
-const previousConfigFileName = '.sdaconfig';
+import { configFileName, previousConfigFileName } from './Constants';
 
 /**
  * Warn about old configuration files. Browses from the input folder path up to the root folder.

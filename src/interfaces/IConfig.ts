@@ -24,6 +24,11 @@ export interface IConfigTemplate {
    * Value: Either the command to execute as a string, or a command definition.
    */
   commands: { [name: string]: string | string[] | IConfigCommand };
+
+  /**
+   * Git repository URL. Used for the "setup" operation.
+   */
+  gitRepo?: string;
 }
 
 /**

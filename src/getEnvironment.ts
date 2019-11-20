@@ -5,16 +5,14 @@ import { IConfig, IConfigEnvironment, IConfigTemplate } from './interfaces/IConf
 import withId from './interfaces/withId';
 import Log from './Log';
 
-export function getEnvironment(config: IConfig, currentDir: string, args: string[]): IEnvironment {
+export function getEnvironment(config: IConfig, envId: string, currentDir?: string): IEnvironment {
   let environment: INamed<IConfigEnvironment> | undefined;
-  // Find environment as the first argument
-  const arg = args[0];
-  if (config.environments[arg]) {
-    environment = withId(arg, config.environments[arg]);
+  if (config.environments[envId]) {
+    environment = withId(envId, config.environments[envId]);
   }
 
   // Find environments from the current path
-  if (!environment) {
+  if (!environment && currentDir) {
     for (const currentEnvName of Object.keys(config.environments)) {
       const currentEnv = config.environments[currentEnvName];
       const relativePath = path.relative(currentEnv.path, currentDir);

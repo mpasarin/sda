@@ -2,9 +2,8 @@ import * as fs from 'fs';
 import _ from 'lodash';
 import { IConfig } from '../interfaces/IConfig';
 import Log from '../Log';
-import getAbsolutePath from '../utils/getAbsolutePath';
 import { EMPTY_CONFIG } from './Constants';
-import getConfigPaths from './getConfigPaths';
+import { getAllConfigPaths, getConfigPaths } from './getConfigPaths';
 import replaceConfigWithAbsolutePaths from './replaceConfigWithAbsolutePaths';
 import warnOldConfigFilePaths from './warnOldConfigFilePaths';
 
@@ -12,19 +11,23 @@ export default function getConfig(rootDir: string, argsConfigPath?: string): ICo
   // Warn about old config file name for backwards compatibility
   warnOldConfigFilePaths(rootDir);
 
-  const paths = getConfigPaths(rootDir);
-  // If a config path is passed as arguments, merge it last
-  if (argsConfigPath) {
-    paths.push(getAbsolutePath(argsConfigPath, process.cwd()));
-  }
+  const paths = getAllConfigPaths(rootDir, argsConfigPath);
 
   let config = EMPTY_CONFIG;
   for (const filePath of paths) {
     config = mergeConfig(config, filePath);
   }
 
-  // An environment may point at a template defined elsehere.
-  // If missing try to get it from the environment folder.
+  config = backfillOrphanEnvs(config);
+
+  return config;
+}
+
+/**
+ * An environment may point at a template defined elsehere.
+ * If missing try to get it from the environment folder.
+ */
+function backfillOrphanEnvs(config: IConfig): IConfig {
   Object.keys(config.environments).forEach((envId) => {
     const env = config.environments[envId];
     if (!config.templates[env.templateId]) {
@@ -35,20 +38,19 @@ export default function getConfig(rootDir: string, argsConfigPath?: string): ICo
       }
     }
   });
-
   return config;
 }
 
 /**
  * Merges the contents of a config file with an IConfig object.
  * In case of conflicts, the contents of the config file are used.
- * If shyMode flag is on, the new config file won't take priority over the existing config.
+ * If backfill flag is on, the new config file won't take priority over the existing config.
  */
-function mergeConfig(config: IConfig, filePath: string, shyMode?: boolean): IConfig {
+function mergeConfig(config: IConfig, filePath: string, backfill?: boolean): IConfig {
   try {
     const configFile = fs.readFileSync(filePath, 'utf8');
     const newConfig: IConfig = JSON.parse(configFile);
-    if (!shyMode) {
+    if (!backfill) {
       Log.verbose(`Merging config with file "${filePath}"`);
       config = _.merge(config, replaceConfigWithAbsolutePaths(newConfig, filePath));
     } else {

@@ -31,16 +31,17 @@
   "homepage": "https://github.com/mpasarin/sda#readme",
   "devDependencies": {
     "@types/jest": "^24.0.0",
-    "@types/lodash": "^4.14.120",
     "@types/node": "^8.10.39",
+    "@types/lodash": "^4.14.120",
+    "@types/easy-table": "0.0.32",
     "jest": "^23.0.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
   },
   "dependencies": {
-    "@types/easy-table": "0.0.32",
     "easy-table": "^1.1.1",
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.11",
+    "yeoman-environment": "^2.6.0"
   }
 }

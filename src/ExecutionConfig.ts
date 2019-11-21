@@ -36,7 +36,12 @@ export default class ExecutionConfig {
       };
     }
 
-    if (this.operation !== Operations.ListEnvironments) {
+    // These operations run outside an environment, so it shouldn't try to get the environment.
+    if (
+      this.operation !== Operations.ListEnvironments
+      && this.operation !== Operations.SetupEnvironment
+      && this.operation !== Operations.AttachEnvironment
+    ) {
       this.env = getEnvironment(this.config, args[0], currentDir);
       if (this.env.id === args[0]) {
         args.shift(); // Remove the environment from the arguments

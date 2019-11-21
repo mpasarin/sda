@@ -64,11 +64,12 @@ export default class ExecutionConfig {
    * Other scenarios just run the commands
    */
   private getOperation(args: string[]): Operations {
-    if (args.length === 0) { return Operations.ListEnvironments; }
+    if (args.length === 0) { return Operations.Help; }
     if (!this.runInAllEnvironments && checkFlag(args, 'list', 0)) { return Operations.ListEnvironments; }
     if (checkFlag(args, 'list', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
     if (checkFlag(args, 'setup')) { return Operations.SetupEnvironment; }
     if (checkFlag(args, 'attach')) { return Operations.AttachEnvironment; }
+    if (checkFlag(args, 'help', 0)) { return Operations.Help; }
     return Operations.RunCommands;
   }
 }

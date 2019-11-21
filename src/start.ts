@@ -3,6 +3,7 @@
 import ExecutionConfig from './ExecutionConfig';
 import Log from './Log';
 import attachEnvironment from './operations/attachEnvironment';
+import help from './operations/help';
 import listCommands from './operations/listCommands';
 import listEnvironments from './operations/listEnvironments';
 import { Operations } from './operations/Operations';
@@ -28,5 +29,6 @@ function getOperationsMap() {
   map.set(Operations.ListCommands, listCommands);
   map.set(Operations.SetupEnvironment, setupEnvironment);
   map.set(Operations.AttachEnvironment, attachEnvironment);
+  map.set(Operations.Help, help);
   return map;
 }

@@ -3,5 +3,6 @@ export enum Operations {
   ListEnvironments,
   ListCommands,
   SetupEnvironment,
-  AttachEnvironment
+  AttachEnvironment,
+  Help
 }

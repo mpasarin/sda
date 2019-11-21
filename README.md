@@ -29,6 +29,8 @@ sda <command>
 
 `sda <command1> <command2> <-param1> <-param2>` runs multiple commands, one after the other, and applies any valid params (based on the validParams property for each command) to the commands. Each param will only be applied to those commands that list that param in the validParams property.
 
+`sda <alias>` runs the command specified by that alias. Aliases are generally used as shortcuts/abbreviations for commands. You can combine multiple aliases or aliases and commands to run multiple commands, and include params that are valid for the commands.
+
 ## Configuration file
 A config file defines the different environment definitions and the environments that are supported.
 
@@ -38,11 +40,11 @@ The user home config file takes precedence over other ones.
 
 ### Environments and templates
 
-An environment is defined by a path and a template. The path is the root folder for the environment, and the template defines the commands that are available for the environment.
+An environment is defined by a path and a template. The path is the root folder for the environment, and the template defines the commands and aliases that are available for the environment.
 
 This is useful when there are multiple copies of the same environment in the machine, as the template is shared.
 
-There is a special template id called `default`. If the `default` template is defined, its commands will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, like for example complex commands in git.
+There is a special template id called `default`. If the `default` template is defined, its commands and aliases will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, for example complex commands in git.
 
 ### Schema
 
@@ -50,6 +52,9 @@ There is a special template id called `default`. If the `default` template is de
 {
   "templates": {
     "<templateId>": {
+      "aliases" : {
+        "<alias>": "<commandName>"
+      },
       "commands": {
         "<quickCommand>": "echo quick command",
         "<multipleCommands>": [

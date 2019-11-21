@@ -15,8 +15,7 @@ export function getEnvironment(config: IConfig, envId: string, currentDir?: stri
   if (!environment && currentDir) {
     for (const currentEnvName of Object.keys(config.environments)) {
       const currentEnv = config.environments[currentEnvName];
-      const relativePath = path.relative(currentEnv.path, currentDir);
-      if (!relativePath || relativePath.indexOf('..') !== 0) { // We are in the environment root folder, or inside it
+      if (isDirInsideEnvironment(currentDir, currentEnv.path)) {
         environment = withId(currentEnvName, currentEnv);
         Log.verbose(`Using environment "${environment.id}" from current folder.`);
         break;
@@ -52,6 +51,14 @@ export function getAllEnvironments(config: IConfig): IEnvironment[] {
     });
   });
   return envs;
+}
+
+function isDirInsideEnvironment(dir: string, envDir: string) {
+  const relativePath = path.relative(envDir, dir);
+  if (!relativePath) { return true; } // Same directory
+  if (relativePath === dir) { return false; } // Different drives
+  if (relativePath.indexOf('..') !== 0) { return true; } // Dir is inside envDir
+  return false;
 }
 
 function addDefaultCommands(environment: IConfigEnvironment, config: IConfig): void {

@@ -10,46 +10,76 @@ For a single project, using `npm` commands or `gulp` can be a better option, but
 # install sda
 npm install -g sda
 
+# <Optional> install SDA configuration packages
 # set up your sdaconfig.json file in your user home folder
 
 # run sda inside of your environment
 sda <command>
 ```
 
-### Options
-`sda <command>` runs a specific command in the current environment.
+### Run commands
+`sda <command> ... <param?> ...` - Run one command or many commands at once. Parameters affect to all commands.
 
-`sda <command1> <command2>` runs multiple commands, one after the other, in the current environment.
+`sda <env> <command>`         - Run the commands in a specific environment.
 
-`sda <environment> <command>` runs a command in a specific environment.
-
-`sda -a <command>` / `sda --all <command>` runs a command in all environments.
+`sda [--all | -a] <command>`  - Run the commands in all environments.
 
 `sda -c <configPath> ...` / `sda --config <configPath> ...` runs sda with the specified config file (in addition to the regular config file).
 
-`sda <command1> <command2> <-param1> <-param2>` runs multiple commands, one after the other, and applies any valid params (based on the validParams property for each command) to the commands. Each param will only be applied to those commands that list that param in the validParams property.
+### Set up environments
+`sda [setup | s] <template> <folder?>` sets up a new environment in the specified folder, or the current folder.
+
+`sda [attach | a] <template> <folder?>` attaches a template to a folder, or the current folder.
+
+### Explore your configuration
+`sda [list | l]`            - List all environments in SDA.
+
+`sda <env> [list | l]`      - List all commands for an environment.
+
+`sda [listTemplates | lt]`  - List all templates in SDA.
+
+### Other options
+  `sda [help | h]`                        - Show help.
+
+  `sda ... [--config | -c] <configFile>`  - Use a specific configuration file.
+
+  `sda ... -v`                            - Show verbose comments.
+
 
 ## Configuration file
 A config file defines the different environment definitions and the environments that are supported.
 
-A config file must be named `sdaconfig.json` and be in a parent folder containing the different environments or the user home folder.
+A config file must be named `sdaconfig.json`
 
-The user home config file takes precedence over other ones.
+The config file can be placed in:
+* The current or a parent folder from the working directory where SDA is run. This is useful to add a SDA config file in the same place as the environment.
+* A SDA configuration package (see below)
+* The user home folder (`C:\Users\<username>` or `/home/<username>`)
+
+The home folder config overrides any configuration from the environment or packages, allowing the user to customize the configuration for their specific needs.
+
+### Configuration packages
+
+You can re-use SDA configuration file by packaging them. Name your package `sda-*` and add a `sdaconfig.json` file in the root folder of the package.
+
+After installing the package the configuration file will be always available. Any configuration coming from the package can be overridden by the home folder config file.
 
 ### Environments and templates
 
-An environment is defined by a path and a template. The path is the root folder for the environment, and the template defines the commands that are available for the environment.
+An environment is defined by a *path* and a *template*. The *path* is the root folder for the environment, and the *template* defines the commands that are available for the environment.
 
 This is useful when there are multiple copies of the same environment in the machine, as the template is shared.
 
 There is a special template id called `default`. If the `default` template is defined, its commands will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, like for example complex commands in git.
 
-### Schema
+### Sample configuration file
 
 ```json
 {
   "templates": {
     "<templateId>": {
+      "description": "(Optional) This is the description of the template",
+      "gitRepo": "(Optional) <git repository>"
       "commands": {
         "<quickCommand>": "echo quick command",
         "<multipleCommands>": [
@@ -71,7 +101,9 @@ There is a special template id called `default`. If the `default` template is de
         "<commandWithParameterPlaceholder>": {
           "cmd": "ls %PARAM% && echo second command",
           "validParams": ["-a", "-l"]
-        }
+        },
+        "pre-setup": "(Optional) <command to execute before cloning the git repo",
+        "post-setup": "(Optional) <command to execute after cloning the git repo"
       }
     }
   },

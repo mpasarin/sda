@@ -1,6 +1,6 @@
 import { isArray, isString } from 'util';
 import { IEnvironment } from '../interfaces';
-import { IConfigCommand } from '../interfaces/IConfig';
+import { IConfigCommand, IConfigTemplate } from '../interfaces/IConfig';
 import Log from '../Log';
 import getAbsolutePath from '../utils/getAbsolutePath';
 import processCommandParams from './processCommandParams';
@@ -28,17 +28,21 @@ export default function getCommands(
 
 function getCommand(environment: IEnvironment, cmdName: string, params?: string[][]): IParsedCommand | undefined {
   const template = environment.template;
+  let unaliasedCommandName = cmdName;
   if (!template.commands[cmdName]) {
-    Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
-    return undefined;
+    unaliasedCommandName = getCommandNameForAlias(cmdName, template);
+    if (!unaliasedCommandName) {
+      Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
+      return undefined;
+    }
   }
 
-  let command = normalizeCommand(template.commands[cmdName]);
+  let command = normalizeCommand(template.commands[unaliasedCommandName]);
   command = processCommandParams(command, params);
   const cwd = command.cwd ? getAbsolutePath(command.cwd, environment.path) : environment.path;
 
   return {
-    id: cmdName,
+    id: unaliasedCommandName,
     cmd: command.cmd as string[],
     cwd
   };
@@ -59,4 +63,11 @@ function normalizeCommand(command: string | string[] | IConfigCommand): IConfigC
     command.cmd = [filePath];
   }
   return command;
+}
+
+function getCommandNameForAlias(aliasName: string, template: IConfigTemplate): string {
+  if (template.aliases && template.aliases[aliasName] && template.commands[template.aliases[aliasName]] ) {
+    return template.aliases[aliasName];
+  }
+  return '';
 }

@@ -33,6 +33,7 @@ export function getEnvironment(config: IConfig, envId: string, currentDir?: stri
   }
 
   addDefaultCommands(environment, config);
+  addDefaultAliases(environment, config);
 
   return {
     ...environment,
@@ -45,6 +46,7 @@ export function getAllEnvironments(config: IConfig): IEnvironment[] {
   Object.keys(config.environments).forEach((envId) => {
     const env = withId(envId, config.environments[envId]);
     addDefaultCommands(env, config);
+    addDefaultAliases(env, config);
     envs.push({
       ...env,
       template: withId(env.templateId, config.templates[env.templateId])
@@ -68,6 +70,21 @@ function addDefaultCommands(environment: IConfigEnvironment, config: IConfig): v
     Object.keys(defaultTemplate.commands).forEach((commandName) => {
       if (!envTemplate.commands[commandName]) {
         envTemplate.commands[commandName] = defaultTemplate.commands[commandName];
+      }
+    });
+  }
+}
+
+function addDefaultAliases(environment: IConfigEnvironment, config: IConfig): void {
+  const defaultTemplate: IConfigTemplate | undefined = config.templates.default;
+  const envTemplate = config.templates[environment.templateId];
+  if (defaultTemplate && defaultTemplate.aliases) {
+    if (!envTemplate.aliases) {
+      envTemplate.aliases = {};
+    }
+    Object.keys(defaultTemplate.aliases).forEach((aliasName) => {
+      if (!envTemplate.aliases![aliasName]) {
+        envTemplate.aliases![aliasName] = defaultTemplate.aliases![aliasName];
       }
     });
   }

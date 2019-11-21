@@ -29,6 +29,13 @@ export interface IConfigTemplate {
    * Git repository URL. Used for the "setup" operation.
    */
   gitRepo?: string;
+
+  /**
+   * Map to define aliases for commands
+   * Key: Alias name
+   * Value: Command name
+   */
+  aliases?: { [name: string]: string };
 }
 
 /**

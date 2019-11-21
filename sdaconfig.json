@@ -2,6 +2,10 @@
   "templates": {
     "sda": {
       "gitRepo": "https://github.com/mpasarin/sda.git",
+      "aliases": {
+        "b": "build",
+        "d": "dummy"
+      },
       "commands": {
         "build": {
           "cmd": "npm run build",
@@ -28,7 +32,9 @@
             "echo Running 'sda sda-copy dummy'. Expect 'Test successful'",
             "sda sda-copy dummy",
             "echo Running 'sda test -c .\/sdaconfig.alt.json'. Expect 'Test successful'",
-            "sda test -c ./sdaconfig.alt.json"
+            "sda test -c ./sdaconfig.alt.json",
+            "echo Running 'sda d'. Expect 'Test successful'",
+            "sda d"
           ],
           "description": "Test different scenarios for SDA"
         },

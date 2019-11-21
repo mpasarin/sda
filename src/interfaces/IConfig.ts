@@ -29,6 +29,10 @@ export interface IConfigTemplate {
    * Git repository URL. Used for the "setup" operation.
    */
   gitRepo?: string;
+  /**
+   * Description of the template. Used when listing environments and templates.
+   */
+  description?: string;
 }
 
 /**

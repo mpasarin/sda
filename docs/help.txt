@@ -5,16 +5,19 @@ Run commands
 
   Run one command or many commands at once. Parameters affect to all commands.
 
-  sda <env> <command>             - Runs the commands in a specific environment.
-  sda [-a | --all] <command>      - Runs the commands in all environments.
+  sda <env> <command>             - Run the commands in a specific environment.
+  sda [-a | --all] <command>      - Run the commands in all environments.
 
 Setup environments
-  sda setup <template> <folder?>  - Set up a new environment in the specified folder, or the current folder.
-  sda attach <template> <folder?> - Attach a template to a folder, or the current folder.
+  sda [setup | s] <template> <folder?>  - Set up a new environment in the specified folder, or the current folder.
+  sda [attach | a] <template> <folder?> - Attach a template to a folder, or the current folder.
 
 Explore your configuration
-  sda list                        - Lists all environments in SDA.
-  sda <env> list                  - Lists all commands for an environment.
+  sda [list | l]                        - List all environments in SDA.
+  sda <env> [list | l]                  - List all commands for an environment.
+  sda [listTemplates | lt]              - List all templates in SDA.
 
-Get help
-  sda help
+Other
+  sda [help | h]                        - Show help
+  
+  Use -v with any command for verbose mode.

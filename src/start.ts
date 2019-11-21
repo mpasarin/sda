@@ -2,13 +2,7 @@
 
 import ExecutionConfig from './ExecutionConfig';
 import Log from './Log';
-import attachEnvironment from './operations/attachEnvironment';
-import help from './operations/help';
-import listCommands from './operations/listCommands';
-import listEnvironments from './operations/listEnvironments';
-import { Operations } from './operations/Operations';
-import runCommands from './operations/runCommands';
-import setupEnvironment from './operations/setupEnvironment';
+import { getOperationsMap } from './operations/Operations';
 
 try {
   const ec = new ExecutionConfig();
@@ -20,15 +14,4 @@ try {
   }
 } catch (error) {
   Log.error('Error: ' + error.message);
-}
-
-function getOperationsMap() {
-  const map = new Map<Operations, (ec: ExecutionConfig) => void>();
-  map.set(Operations.RunCommands, runCommands);
-  map.set(Operations.ListEnvironments, listEnvironments);
-  map.set(Operations.ListCommands, listCommands);
-  map.set(Operations.SetupEnvironment, setupEnvironment);
-  map.set(Operations.AttachEnvironment, attachEnvironment);
-  map.set(Operations.Help, help);
-  return map;
 }

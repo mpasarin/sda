@@ -49,7 +49,7 @@ function backfillOrphanEnvs(config: IConfig): IConfig {
 function mergeConfig(config: IConfig, filePath: string, backfill?: boolean): IConfig {
   try {
     const configFile = fs.readFileSync(filePath, 'utf8');
-    const newConfig: IConfig = JSON.parse(configFile);
+    const newConfig: Partial<IConfig> = JSON.parse(configFile);
     if (!backfill) {
       Log.verbose(`Merging config with file "${filePath}"`);
       config = _.merge(config, replaceConfigWithAbsolutePaths(newConfig, filePath));

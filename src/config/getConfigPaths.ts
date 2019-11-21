@@ -36,7 +36,7 @@ export function getAllConfigPaths(rootDir: string, argsConfigPath?: string): str
  * Returns the list of paths to config files from npm packages that start with sda-*
  */
 function getPackageConfigPaths(): string[] {
-  return resolver.findGeneratorsIn(resolver.getNpmPaths(false).reverse(), 'sda*')
+  return resolver.findGeneratorsIn(resolver.getNpmPaths(false).reverse(), 'sda-*')
     .map((dir) => path.join(dir, configFileName))
     .filter((fileName) => fs.existsSync(fileName));
 }

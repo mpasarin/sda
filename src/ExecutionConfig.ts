@@ -36,9 +36,13 @@ export default class ExecutionConfig {
       };
     }
 
-    this.env = getEnvironment(this.config, args[0], currentDir);
-    if (this.env.id === args[0]) {
-      args.shift(); // Remove the environment from the arguments
+    if (this.operation !== Operations.ListEnvironments) {
+      this.env = getEnvironment(this.config, args[0], currentDir);
+      if (this.env.id === args[0]) {
+        args.shift(); // Remove the environment from the arguments
+      }
+    } else {
+      this.env = undefined as any;
     }
 
     this.params = getParams(args); // getParams already removes them from args

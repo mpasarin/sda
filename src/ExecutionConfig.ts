@@ -37,11 +37,10 @@ export default class ExecutionConfig {
       };
     }
 
-    // These operations run outside an environment, so it shouldn't try to get the environment.
+    // Only try to get an environment for operations that require it
     if (
-      this.operation !== Operations.ListEnvironments
-      && this.operation !== Operations.SetupEnvironment
-      && this.operation !== Operations.AttachEnvironment
+      this.operation === Operations.RunCommands
+      || this.operation === Operations.ListCommands
     ) {
       this.env = getEnvironment(this.config, args[0], currentDir);
       if (this.env.id === args[0]) {

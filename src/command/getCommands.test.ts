@@ -120,7 +120,7 @@ test('get commands with existing command and valid alias', () => {
   expect(cmd[1].cmd).toEqual(['regular']);
 });
 
-test('get commands with non-exsting command and valid alias', () => {
+test('get commands with non-existing command and valid alias', () => {
   const cmd = getCommands(env, ['nonExistingCommand', 'ic']);
   expectSingleCommand(cmd, 'inline');
 });

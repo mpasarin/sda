@@ -18,7 +18,9 @@ sda <command>
 ```
 
 ### Run commands
-`sda <command> ... <param?> ...` - Run one command or many commands at once. Parameters affect to all commands.
+`sda <command> ... <param?> ...` - Run one command or many commands at once. Parameters affect all commands.
+
+`sda <alias> ... <param?> ...` - Run command specified by an alias. Aliases can be combined and used interchangeably with commands.
 
 `sda <env> <command>`         - Run the commands in a specific environment.
 
@@ -45,8 +47,6 @@ sda <command>
 
   `sda ... -v`                            - Show verbose comments.
 
-
-`sda <alias>` runs the command specified by that alias. Aliases are generally used as shortcuts/abbreviations for commands. You can combine multiple aliases or aliases and commands to run multiple commands, and include params that are valid for the commands.
 
 ## Configuration file
 A config file defines the different environment definitions and the environments that are supported.
@@ -81,7 +81,10 @@ There is a special template id called `default`. If the `default` template is de
   "templates": {
     "<templateId>": {
       "description": "(Optional) This is the description of the template",
-      "gitRepo": "(Optional) <git repository>"
+      "gitRepo": "(Optional) <git repository>",
+      "aliases (Optional)": {
+        "<alias>": "<commandName>"
+      },
       "commands": {
         "<quickCommand>": "echo quick command",
         "<multipleCommands>": [

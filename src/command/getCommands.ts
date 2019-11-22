@@ -28,21 +28,18 @@ export default function getCommands(
 
 function getCommand(environment: IEnvironment, cmdName: string, params?: string[][]): IParsedCommand | undefined {
   const template = environment.template;
-  let unaliasedCommandName = cmdName;
-  if (!template.commands[cmdName]) {
-    unaliasedCommandName = getCommandNameForAlias(cmdName, template);
-    if (!unaliasedCommandName) {
-      Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
-      return undefined;
-    }
+  const commandName = getCommandName(cmdName, template);
+  if (!commandName) {
+    Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
+    return undefined;
   }
 
-  let command = normalizeCommand(template.commands[unaliasedCommandName]);
+  let command = normalizeCommand(template.commands[commandName]);
   command = processCommandParams(command, params);
   const cwd = command.cwd ? getAbsolutePath(command.cwd, environment.path) : environment.path;
 
   return {
-    id: unaliasedCommandName,
+    id: commandName,
     cmd: command.cmd as string[],
     cwd
   };
@@ -65,9 +62,12 @@ function normalizeCommand(command: string | string[] | IConfigCommand): IConfigC
   return command;
 }
 
-function getCommandNameForAlias(aliasName: string, template: IConfigTemplate): string {
-  if (template.aliases && template.aliases[aliasName] && template.commands[template.aliases[aliasName]] ) {
-    return template.aliases[aliasName];
+function getCommandName(commandName: string, template: IConfigTemplate): string {
+  if (template.commands[commandName]) {
+    return commandName;
+  }
+  if (template.aliases && template.aliases[commandName] && template.commands[template.aliases[commandName]] ) {
+    return template.aliases[commandName];
   }
   return '';
 }

@@ -8,6 +8,7 @@ import Log from './Log';
 import { Operations } from './operations/Operations';
 
 export default class ExecutionConfig {
+  public isVerbose: boolean;
   public config: IConfig;
   public runInAllEnvironments: boolean;
   public operation: Operations;
@@ -21,12 +22,12 @@ export default class ExecutionConfig {
 
   constructor() {
     const args = process.argv.splice(2);
-
-    Log.isVerbose = checkFlag(args, '-v') || checkFlag(args, '--verbose');
+    this.isVerbose = checkFlag(args, '--verbose', '-v');
+    Log.isVerbose = this.isVerbose;
 
     const currentDir: string = path.normalize(process.cwd());
     this.config = getConfig(currentDir, getArgsConfigPath(args));
-    this.runInAllEnvironments = checkFlag(args, '-a', 0) || checkFlag(args, '--all', 0);
+    this.runInAllEnvironments = checkFlag(args, '--all', '-a', 0);
     this.operation = this.getOperation(args);
 
     if (this.operation === Operations.SetupEnvironment || this.operation === Operations.AttachEnvironment) {
@@ -64,11 +65,13 @@ export default class ExecutionConfig {
    * Other scenarios just run the commands
    */
   private getOperation(args: string[]): Operations {
-    if (args.length === 0) { return Operations.ListEnvironments; }
-    if (!this.runInAllEnvironments && checkFlag(args, 'list', 0)) { return Operations.ListEnvironments; }
-    if (checkFlag(args, 'list', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
-    if (checkFlag(args, 'setup')) { return Operations.SetupEnvironment; }
-    if (checkFlag(args, 'attach')) { return Operations.AttachEnvironment; }
+    if (args.length === 0) { return Operations.Help; }
+    if (!this.runInAllEnvironments && checkFlag(args, 'list', 'l', 0)) { return Operations.ListEnvironments; }
+    if (checkFlag(args, 'list', 'l', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
+    if (checkFlag(args, 'listTemplates', 'lt', 0)) { return Operations.ListTemplates; }
+    if (checkFlag(args, 'setup', 's')) { return Operations.SetupEnvironment; }
+    if (checkFlag(args, 'attach', 'a')) { return Operations.AttachEnvironment; }
+    if (checkFlag(args, 'help', 'h', 0)) { return Operations.Help; }
     return Operations.RunCommands;
   }
 }
@@ -83,8 +86,8 @@ function getArgsConfigPath(args: string[]): string | undefined {
 }
 
 /** Checks a flag. Returns true if the flag is present and removes it from the args variable. */
-function checkFlag(args: string[], flag: string, index?: number): boolean {
-  const foundIndex = args.indexOf(flag);
+function checkFlag(args: string[], flag: string, shorthand?: string, index?: number): boolean {
+  const foundIndex = Math.max(args.indexOf(flag), shorthand ? args.indexOf(shorthand) : -1);
   if ((index !== undefined && foundIndex === index) || (index === undefined && foundIndex > -1)) {
     args.splice(foundIndex, 1);
     return true;

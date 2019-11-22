@@ -36,6 +36,11 @@ export interface IConfigTemplate {
    * Value: Command name
    */
   aliases?: { [name: string]: string };
+
+  /**
+   * Description of the template. Used when listing environments and templates.
+   */
+  description?: string;
 }
 
 /**

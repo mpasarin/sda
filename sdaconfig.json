@@ -1,6 +1,7 @@
 {
   "templates": {
     "sda": {
+      "description": "SDA - Software development assistant",
       "gitRepo": "https://github.com/mpasarin/sda.git",
       "aliases": {
         "b": "build",
@@ -70,6 +71,7 @@
       }
     },
     "testSetup": {
+      "description": "Template to test setup with - Prints in console only",
       "commands": {
         "pre-setup": "echo PRE-SETUP",
         "setup": "echo SETUP",

@@ -5,6 +5,7 @@ import ExecutionConfig from '../ExecutionConfig';
 import { ITemplate } from '../interfaces';
 import { IConfig } from '../interfaces/IConfig';
 import withId from '../interfaces/withId';
+import Log from '../Log';
 
 export interface IEnvOpParams {
   template: ITemplate;
@@ -39,7 +40,8 @@ function validateParams(ec: ExecutionConfig): IEnvOpParams {
 
   const destinationPath = getDestinationPath(setupParameters.path);
   if (!fs.existsSync(destinationPath)) {
-    throw new Error(`Path "${destinationPath}" doesn't exist.`);
+    Log.verbose(`Creating missing directory "${destinationPath}"`);
+    fs.mkdirSync(destinationPath);
   }
 
   if (!ec.config.templates[setupParameters.templateId]) {

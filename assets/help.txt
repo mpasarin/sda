@@ -1,0 +1,23 @@
+SDA - Software development assistant
+
+Run commands
+  sda <command> ... <param?> ...
+
+  Run one command or many commands at once. Parameters affect to all commands.
+
+  sda <env> <command>         - Run the commands in a specific environment.
+  sda [-a | --all] <command>  - Run the commands in all environments.
+
+Set up environments
+  sda [setup | s] <template> <folder?>    - Set up a new environment in the specified folder, or the current folder.
+  sda [attach | a] <template> <folder?>   - Attach a template to a folder, or the current folder.
+
+Explore your configuration
+  sda [list | l]            - List all environments in SDA.
+  sda <env> [list | l]      - List all commands for an environment.
+  sda [listTemplates | lt]  - List all templates in SDA.
+
+Other options
+  sda [help | h]                        - Show help.
+  sda ... [--config | -c] <configFile>  - Use a specific configuration file.
+  sda ... -v                            - Show verbose comments.

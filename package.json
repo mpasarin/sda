@@ -4,7 +4,8 @@
   "description": "Software development assistant",
   "main": "lib/start.js",
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "assets/**/*"
   ],
   "scripts": {
     "build": "tslint -p tsconfig.json && tsc && npm run test",

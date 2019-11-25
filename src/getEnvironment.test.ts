@@ -46,6 +46,15 @@ describe('getEnvironment', () => {
     const env = getEnvironment(configWithDefault, 'testEnv');
     expect(env.template.commands.defaultCommand).toBe('default'); // from the default
     expect(env.template.commands.inlineCommand).toBe('inline'); // from the actual template
+    expect(env.template.aliases!.dc).toBe('defaultCommand');
+    expect(env.template.aliases!.ic).toBe('inlineCommand');
+  });
+
+  test('get environment with only default aliases', () => {
+    const configWithOnlyDefaultAliases = Object.assign({}, configWithDefault);
+    configWithOnlyDefaultAliases.templates.testTemplate!.aliases = undefined;
+    const env = getEnvironment(configWithOnlyDefaultAliases, 'testEnv');
+    expect(env.template.aliases!.dc).toBe('defaultCommand');
   });
 });
 

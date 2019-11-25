@@ -18,7 +18,9 @@ sda <command>
 ```
 
 ### Run commands
-`sda <command> ... <param?> ...` - Run one command or many commands at once. Parameters affect to all commands.
+`sda <command> ... <param?> ...` - Run one command or many commands at once. Parameters affect all commands.
+
+`sda <alias> ... <param?> ...` - Run command specified by an alias. Aliases can be combined and used interchangeably with commands.
 
 `sda <env> <command>`         - Run the commands in a specific environment.
 
@@ -66,11 +68,11 @@ After installing the package the configuration file will be always available. An
 
 ### Environments and templates
 
-An environment is defined by a *path* and a *template*. The *path* is the root folder for the environment, and the *template* defines the commands that are available for the environment.
+An environment is defined by a *path* and a *template*. The *path* is the root folder for the environment, and the *template* defines the commands and aliases that are available for the environment.
 
 This is useful when there are multiple copies of the same environment in the machine, as the template is shared.
 
-There is a special template id called `default`. If the `default` template is defined, its commands will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, like for example complex commands in git.
+There is a special template id called `default`. If the `default` template is defined, its commands and aliases will apply to all templates. This can be useful to define useful commands that are not scoped to a specific template, for example complex commands in git.
 
 ### Sample configuration file
 
@@ -79,7 +81,10 @@ There is a special template id called `default`. If the `default` template is de
   "templates": {
     "<templateId>": {
       "description": "(Optional) This is the description of the template",
-      "gitRepo": "(Optional) <git repository>"
+      "gitRepo": "(Optional) <git repository>",
+      "aliases (Optional)": {
+        "<alias>": "<commandName>"
+      },
       "commands": {
         "<quickCommand>": "echo quick command",
         "<multipleCommands>": [

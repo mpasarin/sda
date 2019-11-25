@@ -68,7 +68,7 @@ After installing the package the configuration file will be always available. An
 
 ### Environments and templates
 
-An environment is defined by a *path* and a *template*. The *path* is the root folder for the environment, and the *template* defines the commands that are available for the environment.
+An environment is defined by a *path* and a *template*. The *path* is the root folder for the environment, and the *template* defines the commands and aliases that are available for the environment.
 
 This is useful when there are multiple copies of the same environment in the machine, as the template is shared.
 

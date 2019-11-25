@@ -4,7 +4,8 @@ Run commands
   sda <command> ... <param?> ...
 
   Run one command or many commands at once. Parameters affect to all commands.
-
+  
+  sda <alias>                 - Run command specified by an alias.
   sda <env> <command>         - Run the commands in a specific environment.
   sda [-a | --all] <command>  - Run the commands in all environments.
 

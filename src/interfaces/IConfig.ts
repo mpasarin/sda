@@ -24,19 +24,16 @@ export interface IConfigTemplate {
    * Value: Either the command to execute as a string, or a command definition.
    */
   commands: { [name: string]: string | string[] | IConfigCommand };
-
-  /**
-   * Git repository URL. Used for the "setup" operation.
-   */
-  gitRepo?: string;
-
   /**
    * Map to define aliases for commands
    * Key: Alias name
    * Value: Command name
    */
   aliases?: { [name: string]: string };
-
+  /**
+   * Git repository URL. Used for the "setup" operation.
+   */
+  gitRepo?: string;
   /**
    * Description of the template. Used when listing environments and templates.
    */

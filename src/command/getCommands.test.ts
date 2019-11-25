@@ -103,6 +103,43 @@ test('get a command that does not accept passed param', () => {
   expectSingleCommand(cmd, 'withParams');
 });
 
+test('get a command from an alias', () => {
+  const cmd = getCommands(env, ['ic']);
+  expectSingleCommand(cmd, 'inline');
+});
+
+test('get a command with an invalid alias', () => {
+  const cmd = getCommands(env, ['ne']);
+  expect(cmd.length).toBe(0);
+});
+
+test('get commands with existing command and valid alias', () => {
+  const cmd = getCommands(env, ['ic', 'regularCommand']);
+  expect(cmd.length).toBe(2);
+  expect(cmd[0].cmd).toEqual(['inline']);
+  expect(cmd[1].cmd).toEqual(['regular']);
+});
+
+test('get commands with non-existing command and valid alias', () => {
+  const cmd = getCommands(env, ['nonExistingCommand', 'ic']);
+  expectSingleCommand(cmd, 'inline');
+});
+
+test('get commands with existing command and invalid alias', () => {
+  const cmd = getCommands(env, ['regularCommand', 'ne']);
+  expectSingleCommand(cmd, 'regular');
+});
+
+test('get command from alias with params', () => {
+  const cmd = getCommands(env, ['cwp'], [['-param', 'paramValue'], ['-invalidParam']]);
+  expectSingleCommand(cmd, 'withParams -param paramValue');
+});
+
+test('get command from alias with param placeholder', () => {
+  const cmd = getCommands(env, ['cwpp'], [['/p']]);
+  expectSingleCommand(cmd, 'withParams /p && anotherCommand');
+});
+
 function expectSingleCommand(command: IParsedCommand[], expectedCommandCmd: string) {
   expect(command.length).toBe(1);
   expect(command[0].cmd).toEqual([expectedCommandCmd]);

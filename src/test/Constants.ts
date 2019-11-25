@@ -2,6 +2,11 @@ import { IEnvironment, ITemplate } from '../interfaces';
 import { IConfig } from '../interfaces/IConfig';
 
 export const template: ITemplate = {
+  aliases: {
+    ic: 'inlineCommand',
+    cwp: 'commandWithParams',
+    cwpp: 'commandWithParamsPlaceholder'
+  },
   commands: {
     inlineCommand: 'inline',
     inlineArrayCommand: ['inline1', 'inline2'],
@@ -61,6 +66,10 @@ export const configWithDefault: IConfig = {
   templates: {
     testTemplate: template,
     default: {
+      aliases: {
+        dc: 'defaultCommand',
+        ic: 'TEMPLATE_SHOULD_OVERRIDE'
+      },
       commands: {
         defaultCommand: 'default',
         inlineCommand: 'TEMPLATE_SHOULD_OVERRIDE'

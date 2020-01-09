@@ -27,7 +27,7 @@ function runInAllEnvironments(ec: ExecutionConfig) {
       Log.log(`Environment "${env.id}"`);
       runCommandsInEnv(ec, env);
     } catch (error) {
-      Log.error(`Error: Failed to run in environment "${env.id}". Inner error: ${error.message}`);
+      Log.error(`Failed to run in environment "${env.id}". Inner error: ${error.message}`);
     }
   });
 }

@@ -30,7 +30,7 @@ function getCommand(environment: IEnvironment, cmdName: string, params?: string[
   const template = environment.template;
   const commandName = getCommandName(cmdName, template);
   if (!commandName) {
-    Log.error(`Error: Command "${cmdName}" not found in template "${template.id}"`);
+    Log.error(`Command "${cmdName}" not found in template "${template.id}"`);
     return undefined;
   }
 

@@ -39,8 +39,9 @@ export default class ExecutionConfig {
 
     // Only try to get an environment for operations that require it
     if (
-      this.operation === Operations.RunCommands
-      || this.operation === Operations.ListCommands
+      !this.runInAllEnvironments
+      && (this.operation === Operations.RunCommands
+        || this.operation === Operations.ListCommands)
     ) {
       this.env = getEnvironment(this.config, args[0], currentDir);
       if (this.env.id === args[0]) {

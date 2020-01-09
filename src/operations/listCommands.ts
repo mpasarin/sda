@@ -6,16 +6,15 @@ import { IConfigCommand } from '../interfaces/IConfig';
 import Log from '../Log';
 
 export default function listCommands(ec: ExecutionConfig) {
-  Log.verbose(`List commands for environment "${ec.env.id}" with template "${ec.env.templateId}"`);
-  Log.verbose('');
-
   if (ec.runInAllEnvironments) {
+    Log.verbose('List commands for all environments');
     const envs = getAllEnvironments(ec.config);
     envs.forEach((env) => {
       console.log(`Environment: ${env.id}`);
       listEnvCommands(env);
     });
   } else {
+    Log.verbose(`List commands for environment "${ec.env.id}" with template "${ec.env.templateId}"`);
     listEnvCommands(ec.env);
   }
 }

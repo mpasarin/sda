@@ -13,5 +13,5 @@ try {
     throw new Error('Invalid operation.');
   }
 } catch (error) {
-  Log.error('Error: ' + error.message);
+  Log.error(error.message);
 }

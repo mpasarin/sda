@@ -10,13 +10,13 @@ export default class Log {
 
   public static verbose(message: string) {
     if (Log.isEnabled && Log.isVerbose) {
-      console.log(message);
+      console.log(`VERBOSE: ${message}`);
     }
   }
 
   public static error(message: string) {
     if (Log.isEnabled) {
-      console.error(message);
+      console.error(`ERROR: ${message}`);
     }
   }
 }

@@ -9,8 +9,10 @@ import { Operations } from './operations/Operations';
 
 export default class ExecutionConfig {
   public isVerbose: boolean;
+  public isSilent: boolean;
   public config: IConfig;
   public runInAllEnvironments: boolean;
+  public parallelOperations: number;
   public operation: Operations;
   public env: IEnvironment;
   public params: string[][];
@@ -22,12 +24,14 @@ export default class ExecutionConfig {
 
   constructor() {
     const args = process.argv.splice(2);
-    this.isVerbose = checkFlag(args, '--verbose', '-v');
+    this.isVerbose = checkBooleanFlag(args, '--verbose', '-v');
+    this.isSilent = checkBooleanFlag(args, '--silent', '-s');
     Log.isVerbose = this.isVerbose;
 
     const currentDir: string = path.normalize(process.cwd());
     this.config = getConfig(currentDir, getArgsConfigPath(args));
-    this.runInAllEnvironments = checkFlag(args, '--all', '-a', 0);
+    this.runInAllEnvironments = checkBooleanFlag(args, '--all', '-a', 0);
+    this.parallelOperations = checkNumberFlag(args, '--parallel', '-p') || 1;
     this.operation = this.getOperation(args);
 
     if (this.operation === Operations.SetupEnvironment || this.operation === Operations.AttachEnvironment) {
@@ -66,12 +70,12 @@ export default class ExecutionConfig {
    */
   private getOperation(args: string[]): Operations {
     if (args.length === 0) { return Operations.Help; }
-    if (!this.runInAllEnvironments && checkFlag(args, 'list', 'l', 0)) { return Operations.ListEnvironments; }
-    if (checkFlag(args, 'list', 'l', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
-    if (checkFlag(args, 'listTemplates', 'lt', 0)) { return Operations.ListTemplates; }
-    if (checkFlag(args, 'setup', 's')) { return Operations.SetupEnvironment; }
-    if (checkFlag(args, 'attach', 'a')) { return Operations.AttachEnvironment; }
-    if (checkFlag(args, 'help', 'h', 0)) { return Operations.Help; }
+    if (!this.runInAllEnvironments && checkBooleanFlag(args, 'list', 'l', 0)) { return Operations.ListEnvironments; }
+    if (checkBooleanFlag(args, 'list', 'l', this.runInAllEnvironments ? 0 : 1)) { return Operations.ListCommands; }
+    if (checkBooleanFlag(args, 'listTemplates', 'lt', 0)) { return Operations.ListTemplates; }
+    if (checkBooleanFlag(args, 'setup', 's')) { return Operations.SetupEnvironment; }
+    if (checkBooleanFlag(args, 'attach', 'a')) { return Operations.AttachEnvironment; }
+    if (checkBooleanFlag(args, 'help', 'h', 0)) { return Operations.Help; }
     return Operations.RunCommands;
   }
 }
@@ -86,12 +90,23 @@ function getArgsConfigPath(args: string[]): string | undefined {
 }
 
 /** Checks a flag. Returns true if the flag is present and removes it from the args variable. */
-function checkFlag(args: string[], flag: string, shorthand?: string, index?: number): boolean {
+function checkBooleanFlag(args: string[], flag: string, shorthand?: string, index?: number): boolean {
   const foundIndex = Math.max(args.indexOf(flag), shorthand ? args.indexOf(shorthand) : -1);
   if ((index !== undefined && foundIndex === index) || (index === undefined && foundIndex > -1)) {
     args.splice(foundIndex, 1);
     return true;
   } else {
     return false;
+  }
+}
+
+/** Checks a flag. Returns true if the flag is present and removes it from the args variable. */
+function checkNumberFlag(args: string[], flag: string, shorthand?: string, index?: number): number | undefined {
+  const foundIndex = Math.max(args.indexOf(flag), shorthand ? args.indexOf(shorthand) : -1);
+  if ((index !== undefined && foundIndex === index) || (index === undefined && foundIndex > -1)) {
+    const removedArgs = args.splice(foundIndex, 2);
+    return parseInt(removedArgs[1], undefined);
+  } else {
+    return undefined;
   }
 }

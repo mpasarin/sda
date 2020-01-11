@@ -24,9 +24,8 @@ sda <command>
 
 `sda <env> <command>`         - Run the commands in a specific environment.
 
-`sda [--all | -a] <command>`  - Run the commands in all environments.
+`sda [--all | -a] <command>`  - Run the commands in all environments. Use the additional option `-p <number>` to define the number of parallel environment executions.
 
-`sda -c <configPath> ...` / `sda --config <configPath> ...` runs sda with the specified config file (in addition to the regular config file).
 
 ### Set up environments
 `sda [setup | s] <template> <folder?>` sets up a new environment in the specified folder, or the current folder.
@@ -43,9 +42,11 @@ sda <command>
 ### Other options
   `sda [help | h]`                        - Show help.
 
-  `sda ... [--config | -c] <configFile>`  - Use a specific configuration file.
+  `sda ... [--config | -c] <configFile>`  - Use a specific configuration file (in addition to the regular config file).
 
-  `sda ... -v`                            - Show verbose comments.
+  `sda ... [--verbose | -v]`              - Show verbose comments.
+
+  `sda ... [--silent | -s]`               - Run commands silently (no console output).
 
 
 ## Configuration file

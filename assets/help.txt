@@ -7,7 +7,7 @@ Run commands
   
   sda <alias>                 - Run command specified by an alias.
   sda <env> <command>         - Run the commands in a specific environment.
-  sda [-a | --all] <command>  - Run the commands in all environments.
+  sda [-a | --all] <command>  - Run the commands in all environments. Use "-p <number>" for parallel executions.
 
 Set up environments
   sda [setup | s] <template> <folder?>    - Set up a new environment in the specified folder, or the current folder.
@@ -22,3 +22,4 @@ Other options
   sda [help | h]                        - Show help.
   sda ... [--config | -c] <configFile>  - Use a specific configuration file.
   sda ... -v                            - Show verbose comments.
+  sda ... -s                            - Run commands silently (no console output).

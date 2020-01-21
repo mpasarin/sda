@@ -53,9 +53,13 @@ function normalizeCommand(command: string | string[] | IConfigCommand): IConfigC
   } else if (isString(command.cmd)) {
     command.cmd = [command.cmd];
   } else if (isString(command.filePath)) {
-    let filePath = command.filePath;
+    let filePath = `"${command.filePath}"`;
     if (isString(command.interpreter)) {
-      filePath = `${command.interpreter} ${command.filePath}`;
+      if (command.interpreter === 'powershell') {
+        filePath = `${command.interpreter} -File ${filePath}`;
+      } else {
+        filePath = `${command.interpreter} ${filePath}`;
+      }
     }
     command.cmd = [filePath];
   }

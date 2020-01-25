@@ -64,7 +64,7 @@ export default class HomeConfig {
   }
 }
 
-function getHomeFolder() {
+export function getHomeFolder() {
   if (process.env.HOME) {
     return process.env.HOME;
   } else if (process.env.HOMEDRIVE && process.env.HOMEPATH) {

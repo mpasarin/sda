@@ -2,7 +2,7 @@
   "name": "sda",
   "version": "0.0.8",
   "description": "Software development assistant",
-  "main": "lib/start.js",
+  "main": "lib/cli/start.js",
   "files": [
     "lib/**/*",
     "assets/**/*"
@@ -10,10 +10,11 @@
   "scripts": {
     "build": "tslint -p tsconfig.json && tsc && npm run test",
     "test": "jest --config jest.config.js",
-    "try": "npm run build && npm link && sda test && npm unlink"
+    "try": "npm run build && npm link && sda test && npm unlink",
+    "tray": "electron lib/gui/main.js"
   },
   "bin": {
-    "sda": "lib/start.js"
+    "sda": "lib/cli/start.js"
   },
   "repository": {
     "type": "git",
@@ -31,10 +32,11 @@
   },
   "homepage": "https://github.com/mpasarin/sda#readme",
   "devDependencies": {
-    "@types/jest": "^24.0.0",
-    "@types/node": "^8.10.39",
-    "@types/lodash": "^4.14.120",
     "@types/easy-table": "0.0.32",
+    "@types/jest": "^24.0.0",
+    "@types/lodash": "^4.14.120",
+    "@types/node": "^8.10.39",
+    "electron": "^7.1.10",
     "jest": "^23.0.0",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",

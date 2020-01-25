@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import ExecutionConfig from './ExecutionConfig';
-import Log from './Log';
-import { getOperationsMap } from './operations/Operations';
+import ExecutionConfig from '../ExecutionConfig';
+import Log from '../Log';
+import { getOperationsMap } from '../operations/Operations';
 
 try {
   const ec = new ExecutionConfig();

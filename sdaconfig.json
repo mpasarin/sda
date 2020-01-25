@@ -8,6 +8,10 @@
         "d": "dummy"
       },
       "commands": {
+        "ide": {
+          "cmd": "code .",
+          "description": "Opens VS code for this repo"
+        },
         "build": {
           "cmd": "npm run build",
           "description": "Build SDA"

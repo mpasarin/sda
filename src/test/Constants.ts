@@ -31,6 +31,10 @@ export const template: ITemplate = {
       filePath: 'someFilePath',
       interpreter: 'node'
     },
+    powershellCommand: {
+      filePath: 'someFilePath',
+      interpreter: 'powershell'
+    },
     commandWithParams: {
       cmd: 'withParams',
       validParams: ['-param']

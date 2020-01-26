@@ -1,9 +1,9 @@
 import * as child_process from 'child_process';
 import { app, Menu, MenuItem, Tray } from 'electron';
+import getConfig from 'sda-core/lib/config/getConfig';
+import { getHomeFolder } from 'sda-core/lib/config/HomeConfig';
+import { IConfig } from 'sda-core/lib/interfaces/IConfig';
 import * as util from 'util';
-import getConfig from '../config/getConfig';
-import { getHomeFolder } from '../config/HomeConfig';
-import { IConfig } from '../interfaces/IConfig';
 const exec = util.promisify(child_process.exec);
 
 const cfg = getConfig(getHomeFolder()!);

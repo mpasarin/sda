@@ -13,8 +13,23 @@
           "description": "Opens VS code for this repo"
         },
         "build": {
-          "cmd": "npm run build",
+          "cmd": "rush update && rush build",
           "description": "Build SDA"
+        },
+        "tray": {
+          "cmd": "npm run tray",
+          "cwd": "packages/sda-gui",
+          "description": "Run SDA tray app"
+        },
+        "link": {
+          "cmd": "npm link",
+          "cwd": "packages/sda-cli",
+          "description": "Link the code version of SDA to be used as the installed version"      
+        },
+        "unlink": {
+          "cmd": "npm unlink",
+          "cwd": "packages/sda-cli",
+          "description": "Unlink the code version of SDA to use the globally installed version"      
         },
         "test": {
           "cmd": [
@@ -26,7 +41,7 @@
             "sda throw",
             "echo Running 'sda testAbsolutePath'. Expect 'C:\\'",
             "sda testAbsolutePath",
-            "echo Running 'sda testRelativePath'. Expect a path like [repoPath]\\src",
+            "echo Running 'sda testRelativePath'. Expect a path like [repoPath]\\packages\\sda",
             "sda testRelativePath",
             "echo Running 'sda testPS'. Expect 'PowerShell script success'",
             "sda testPS",
@@ -59,7 +74,7 @@
         },
         "testRelativePath": {
           "cmd": "cd",
-          "cwd": "src",
+          "cwd": "packages/sda",
           "description": "Prints SDA source folder"
         },
         "testPS": {

@@ -308,6 +308,18 @@
     {
       "packageName": "sda",
       "projectFolder": "packages/sda"
+    },
+    {
+      "packageName": "sda-cli",
+      "projectFolder": "packages/sda-cli"
+    },
+    {
+      "packageName": "sda-core",
+      "projectFolder": "packages/sda-core"
+    },
+    {
+      "packageName": "sda-gui",
+      "projectFolder": "packages/sda-gui"
     }
     // {
     //   /**

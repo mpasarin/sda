@@ -1,13 +1,16 @@
 {
-  "name": "sda",
+  "name": "sda-gui",
   "version": "0.0.8",
-  "description": "Software development assistant",
+  "description": "Software development assistant - GUI",
+  "main": "lib/cli/start.js",
   "files": [
     "lib/**/*",
     "assets/**/*"
   ],
   "scripts": {
-    "build": ""
+    "build": "tslint -p tsconfig.json && tsc",
+    "test": "jest --config jest.config.js",
+    "tray": "electron lib/gui/main.js"
   },
   "bin": {
   },
@@ -26,7 +29,13 @@
     "url": "https://github.com/mpasarin/sda/issues"
   },
   "homepage": "https://github.com/mpasarin/sda#readme",
+  "devDependencies": {
+    "@types/node": "^8.10.39",
+    "electron": "^7.1.10",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  },
   "dependencies": {
-    "sda-cli": "*"
+    "sda-core": "*"
   }
 }

@@ -1,5 +1,8 @@
 dependencies:
   '@rush-temp/sda': 'file:projects/sda.tgz'
+  '@rush-temp/sda-cli': 'file:projects/sda-cli.tgz'
+  '@rush-temp/sda-core': 'file:projects/sda-core.tgz'
+  '@rush-temp/sda-gui': 'file:projects/sda-gui.tgz'
   '@types/easy-table': 0.0.32
   '@types/jest': 24.9.1
   '@types/lodash': 4.14.149
@@ -8,6 +11,7 @@ dependencies:
   electron: 7.1.10
   jest: 25.1.0
   jest-environment-jsdom: 25.1.0
+  jest-standard-reporter: 1.0.4
   lodash: 4.17.15
   require-text: 0.0.1
   ts-jest: 25.0.0
@@ -196,6 +200,16 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-tsAQNx32a8CoFhjhijUIhI4kccIAgmGhy8LZMZgGfmXcpMbPRUqn5LWmgRttILi6yeGmBJd2xsPkFMs0PzgPCw==
+  /@jest/console/24.9.0:
+    dependencies:
+      '@jest/source-map': 24.9.0
+      chalk: 2.4.2
+      slash: 2.0.0
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-Zuj6b8TnKXi3q4ymac8EQfc3ea/uhLeCGThFqXeC8H9/raaH8ARPUTdId+XyGd03Z4In0/VjD2OYFcBF09fNLQ==
   /@jest/console/25.1.0:
     dependencies:
       '@jest/source-map': 25.1.0
@@ -252,6 +266,16 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-cTpUtsjU4cum53VqBDlcW0E4KbQF03Cn0jckGPW/5rrE9tb+porD3+hhLtHAwhthsqfyF+bizyodTlsRA++sHg==
+  /@jest/fake-timers/24.9.0:
+    dependencies:
+      '@jest/types': 24.9.0
+      jest-message-util: 24.9.0
+      jest-mock: 24.9.0
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-eWQcNa2YSwzXWIMC5KufBh3oWRIijrQFROsIqt6v/NS9Io/gknw1jsAC9c+ih/RQX4A3O7SeWAhQeN0goKhT9A==
   /@jest/fake-timers/25.1.0:
     dependencies:
       '@jest/types': 25.1.0
@@ -298,6 +322,16 @@ packages:
       node-notifier: 6.0.0
     resolution:
       integrity: sha512-ORLT7hq2acJQa8N+NKfs68ZtHFnJPxsGqmofxW7v7urVhzJvpKZG9M7FAcgh9Ee1ZbCteMrirHA3m5JfBtAaDg==
+  /@jest/source-map/24.9.0:
+    dependencies:
+      callsites: 3.1.0
+      graceful-fs: 4.2.3
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-/Xw7xGlsZb4MJzNDgB7PW5crou5JqWiBQaz6xyPd3ArOg2nfn/PunV8+olXbbEZzNl591o5rWKE9BRDaFAuIBg==
   /@jest/source-map/25.1.0:
     dependencies:
       callsites: 3.1.0
@@ -308,6 +342,16 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-ohf2iKT0xnLWcIUhL6U6QN+CwFWf9XnrM2a6ybL9NXxJjgYijjLSitkYHIdzkd8wFliH73qj/+epIpTiWjRtAA==
+  /@jest/test-result/24.9.0:
+    dependencies:
+      '@jest/console': 24.9.0
+      '@jest/types': 24.9.0
+      '@types/istanbul-lib-coverage': 2.0.1
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-XEFrHbBonBJ8dGp2JmF8kP/nQI/ImPpygKHwQ/SY+es59Z3L5PI4Qb9TQQMAEeYsThG1xF0k6tmG0tIKATNiiA==
   /@jest/test-result/25.1.0:
     dependencies:
       '@jest/console': 25.1.0
@@ -1984,6 +2028,10 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Sb1jMdfQLQwJvJEKEHW6gWW1bfk=
+  /inherits/2.0.3:
+    dev: false
+    resolution:
+      integrity: sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
   /inherits/2.0.4:
     dev: false
     resolution:
@@ -2503,6 +2551,21 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-KGOAFcSFbclXIFE7bS4C53iYobKI20ZWleAdAFun4W1Wz1Kkej8Ng6RRbhL8leaEvIOjGXhGf/a1JjO8bkxIWQ==
+  /jest-message-util/24.9.0:
+    dependencies:
+      '@babel/code-frame': 7.8.3
+      '@jest/test-result': 24.9.0
+      '@jest/types': 24.9.0
+      '@types/stack-utils': 1.0.1
+      chalk: 2.4.2
+      micromatch: 3.1.10
+      slash: 2.0.0
+      stack-utils: 1.0.2
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-oCj8FiZ3U0hTP4aSui87P4L4jC37BtQwUMqk+zk/b11FR19BJDeZsZAvIHutWnmtw7r85UmR3CEWZ0HWU2mAlw==
   /jest-message-util/25.1.0:
     dependencies:
       '@babel/code-frame': 7.8.3
@@ -2518,6 +2581,14 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-Nr/Iwar2COfN22aCqX0kCVbXgn8IBm9nWf4xwGr5Olv/KZh0CZ32RKgZWMVDXGdOahicM10/fgjdimGNX/ttCQ==
+  /jest-mock/24.9.0:
+    dependencies:
+      '@jest/types': 24.9.0
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-3BEYN5WbSq9wd+SyLDES7AHnjH9A/ROBwmz7l2y+ol+NtSFO8DYiEBzoO1CeFc9a8DYy10EO4dDFVv/wN3zl1w==
   /jest-mock/25.1.0:
     dependencies:
       '@jest/types': 25.1.0
@@ -2651,6 +2722,35 @@ packages:
       node: '>= 8.3'
     resolution:
       integrity: sha512-xZ73dFYN8b/+X2hKLXz4VpBZGIAn7muD/DAg+pXtDzDGw3iIV10jM7WiHqhCcpDZfGiKEj7/2HXAEPtHTj0P2A==
+  /jest-standard-reporter/1.0.4:
+    dependencies:
+      chalk: 3.0.0
+      jest-util: 24.9.0
+      path: 0.12.7
+      slash: 3.0.0
+      string-length: 3.1.0
+    dev: false
+    resolution:
+      integrity: sha512-7TkgqfG68JP/0a102lRO0budb3l1INwrUpOPcGAGAKMJWEZG/F/FV8G4TXUWk6zeiMgoT4DLh8bGFmU486e4AQ==
+  /jest-util/24.9.0:
+    dependencies:
+      '@jest/console': 24.9.0
+      '@jest/fake-timers': 24.9.0
+      '@jest/source-map': 24.9.0
+      '@jest/test-result': 24.9.0
+      '@jest/types': 24.9.0
+      callsites: 3.1.0
+      chalk: 2.4.2
+      graceful-fs: 4.2.3
+      is-ci: 2.0.0
+      mkdirp: 0.5.1
+      slash: 2.0.0
+      source-map: 0.6.1
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-x+cZU8VRmOJxbA1K5oDBdxQmdq0OIdADarLxk0Mq+3XS4jgvhG/oKGWcIDCtPG0HgjxOYvF+ilPJQsAyXfbNOg==
   /jest-util/25.1.0:
     dependencies:
       '@jest/types': 25.1.0
@@ -3365,6 +3465,13 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-T2ZUsdZFHgA3u4e5PfPbjd7HDDpxPnQb5jN0SrDsjNSuVXHJqtwTnWqG0B1jZrgmJ/7lj1EmVIByWt1gxGkWvg==
+  /path/0.12.7:
+    dependencies:
+      process: 0.11.10
+      util: 0.10.4
+    dev: false
+    resolution:
+      integrity: sha1-1NwqUGxM4hl+tIHr/NWzbAFAsQ8=
   /pend/1.2.0:
     dev: false
     resolution:
@@ -3469,6 +3576,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
+  /process/0.11.10:
+    dev: false
+    engines:
+      node: '>= 0.6.0'
+    resolution:
+      integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
   /prompts/2.3.0:
     dependencies:
       kleur: 3.0.3
@@ -3872,6 +3985,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-xB8vbDn8FtHNF61LXYlhFK5HDVU=
+  /slash/2.0.0:
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-ZYKh3Wh2z1PpEXWr0MpSBZ0V6mZHAQfYevttO11c51CaWjGTaadiKZ+wVt1PbMlDV5qhMFslpZCemhwOK7C89A==
   /slash/3.0.0:
     dev: false
     engines:
@@ -4530,6 +4649,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-g9JpC/3He3bm38zsLupWryXHoEcS22YHthuPQSJdMy6KNrzIRzWqcsHzD/WUnqe45whVou4VIsPew37DoXWNrA==
+  /util/0.10.4:
+    dependencies:
+      inherits: 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==
   /uuid/3.4.0:
     dev: false
     hasBin: true
@@ -4760,6 +4885,72 @@ packages:
     dev: false
     resolution:
       integrity: sha512-YNzSUWgJVSgnm0qgLON4Gb2nTm+kywBiWjK4MbvosjUP2YJJ30lNhEx7ukyzKRPUlsavd5IsuALtF6QaVrq81A==
+  'file:projects/sda-cli.tgz':
+    dependencies:
+      '@types/easy-table': 0.0.32
+      '@types/jest': 24.9.1
+      '@types/lodash': 4.14.149
+      '@types/node': 8.10.59
+      easy-table: 1.1.1
+      jest: 25.1.0
+      jest-environment-jsdom: 25.1.0
+      lodash: 4.17.15
+      require-text: 0.0.1
+      ts-jest: /ts-jest/25.0.0/jest@25.1.0
+      tslint: /tslint/5.20.1/typescript@3.7.5
+      typescript: 3.7.5
+      yeoman-environment: 2.7.0
+    dev: false
+    name: '@rush-temp/sda-cli'
+    resolution:
+      integrity: sha512-MdzQB1ZcdPzEzdjgn7hXdK6LJqCD9qAtbMr0x+8C9bsu7aH3NlUYxyuuqGPxUO4yBC3rVMlZ99bjHLBfhCB2BQ==
+      tarball: 'file:projects/sda-cli.tgz'
+    version: 0.0.0
+  'file:projects/sda-core.tgz':
+    dependencies:
+      '@types/easy-table': 0.0.32
+      '@types/jest': 24.9.1
+      '@types/lodash': 4.14.149
+      '@types/node': 8.10.59
+      easy-table: 1.1.1
+      electron: 7.1.10
+      jest: 25.1.0
+      jest-environment-jsdom: 25.1.0
+      jest-standard-reporter: 1.0.4
+      lodash: 4.17.15
+      require-text: 0.0.1
+      ts-jest: /ts-jest/25.0.0/jest@25.1.0
+      tslint: /tslint/5.20.1/typescript@3.7.5
+      typescript: 3.7.5
+      yeoman-environment: 2.7.0
+    dev: false
+    name: '@rush-temp/sda-core'
+    resolution:
+      integrity: sha512-0qn4+maSe2dEVc5GdHJ2VaipK1J8foxCSHfP63gToSV8XUZwxLUfzM3FPemSvTNEs/xFWwGTLMcGNNfdpZSUiQ==
+      tarball: 'file:projects/sda-core.tgz'
+    version: 0.0.0
+  'file:projects/sda-gui.tgz':
+    dependencies:
+      '@types/easy-table': 0.0.32
+      '@types/jest': 24.9.1
+      '@types/lodash': 4.14.149
+      '@types/node': 8.10.59
+      easy-table: 1.1.1
+      electron: 7.1.10
+      jest: 25.1.0
+      jest-environment-jsdom: 25.1.0
+      lodash: 4.17.15
+      require-text: 0.0.1
+      ts-jest: /ts-jest/25.0.0/jest@25.1.0
+      tslint: /tslint/5.20.1/typescript@3.7.5
+      typescript: 3.7.5
+      yeoman-environment: 2.7.0
+    dev: false
+    name: '@rush-temp/sda-gui'
+    resolution:
+      integrity: sha512-dAGuLCFgpd9lB2rAot3mc0t0FWCgH0pRAW4BZp2mtKVH+Es7tx7AAeWemZP6YMhihRq66JfyBfuIT8ENdlq8lg==
+      tarball: 'file:projects/sda-gui.tgz'
+    version: 0.0.0
   'file:projects/sda.tgz':
     dependencies:
       '@types/easy-table': 0.0.32
@@ -4779,7 +4970,7 @@ packages:
     dev: false
     name: '@rush-temp/sda'
     resolution:
-      integrity: sha512-1i4U8LzkA9xcDq5hiSDMVbVWhC2k/mLTNmqk7kcT4v6rMZ4Se+Vt2J5F9oR2QwNbqnL28cBmGZ0Gpp+aLSxPyw==
+      integrity: sha512-e4Zxq5ZyjRWZyVkJK3F7JH+iFEYBbFCg9tYBzjZeBGl5KwWQ8kyPaKF/imQGYzzmeQ78Zet8ny996DLx7lWR7g==
       tarball: 'file:projects/sda.tgz'
     version: 0.0.0
 registry: 'https://registry.npmjs.org/'
@@ -4787,6 +4978,9 @@ shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   '@rush-temp/sda': 'file:./projects/sda.tgz'
+  '@rush-temp/sda-cli': 'file:./projects/sda-cli.tgz'
+  '@rush-temp/sda-core': 'file:./projects/sda-core.tgz'
+  '@rush-temp/sda-gui': 'file:./projects/sda-gui.tgz'
   '@types/easy-table': 0.0.32
   '@types/jest': ^24.9.1
   '@types/lodash': ^4.14.120
@@ -4795,6 +4989,7 @@ specifiers:
   electron: ^7.1.10
   jest: ^25.0.0
   jest-environment-jsdom: ^25.0.0
+  jest-standard-reporter: ~1.0.4
   lodash: ^4.17.11
   require-text: 0.0.1
   ts-jest: ^25.0.0

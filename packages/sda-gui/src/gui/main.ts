@@ -8,10 +8,11 @@ const exec = util.promisify(child_process.exec);
 
 const cfg = getConfig(getHomeFolder()!);
 
-let appIcon = null;
+let tray = null;
 app.on('ready', () => {
-  appIcon = new Tray('assets/logo24.png');
-  appIcon.setContextMenu(Menu.buildFromTemplate(getMenuItems(cfg)));
+  tray = new Tray('assets/logo24.png');
+  tray.setToolTip('SDA - Software development assistant');
+  tray.setContextMenu(Menu.buildFromTemplate(getMenuItems(cfg)));
 });
 
 function getMenuItems(config: IConfig): MenuItem[] {

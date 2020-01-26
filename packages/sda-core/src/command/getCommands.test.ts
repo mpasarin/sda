@@ -70,12 +70,17 @@ test('get a non-existing and an existing command', () => {
 });
 test('get a command from filepath', () => {
   const cmd = getCommands(env, ['commandWithFilePath']);
-  expectSingleCommand(cmd, 'someFilePath');
+  expectSingleCommand(cmd, '"someFilePath"');
 });
 
 test('get a command from filepath and interpreter', () => {
   const cmd = getCommands(env, ['commandWithFilePathAndInterpreter']);
-  expectSingleCommand(cmd, 'node someFilePath');
+  expectSingleCommand(cmd, 'node "someFilePath"');
+});
+
+test('get a command from filePath and powershell interpreter', () => {
+  const cmd = getCommands(env, ['powershellCommand']);
+  expectSingleCommand(cmd, 'powershell -File "someFilePath"');
 });
 
 test('get a command with no valid params', () => {

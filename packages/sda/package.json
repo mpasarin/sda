@@ -1,0 +1,32 @@
+{
+  "name": "sda",
+  "version": "0.0.8",
+  "description": "Software development assistant",
+  "files": [
+    "lib/**/*",
+    "assets/**/*"
+  ],
+  "scripts": {
+    "build": ""
+  },
+  "bin": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mpasarin/sda.git"
+  },
+  "keywords": [
+    "sda",
+    "environment",
+    "manager"
+  ],
+  "author": "Marc Pasarin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mpasarin/sda/issues"
+  },
+  "homepage": "https://github.com/mpasarin/sda#readme",
+  "dependencies": {
+    "sda-cli": "*"
+  }
+}

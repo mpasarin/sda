@@ -15,5 +15,11 @@ module.exports = {
     "json",
     "node"
   ],
+  globals: {
+    'ts-jest': {
+      packageJson: './package.json',
+    }
+  },
+  reporters: ['jest-standard-reporter'],
   collectCoverage: true
 }

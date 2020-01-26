@@ -1,4 +1,4 @@
-# sda - Software development assistant
+# ![logo](assets/logo24.png) SDA - Software development assistant
 
 ## What is sda?
 sda is a command-line tool that intends to simplify life of a software developer when working in different repositories, with different environments, tools and processes; at the same time.

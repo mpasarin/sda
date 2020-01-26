@@ -5,7 +5,8 @@
       "gitRepo": "https://github.com/mpasarin/sda.git",
       "aliases": {
         "b": "build",
-        "d": "dummy"
+        "d": "dummy",
+        "ps": "terminal"
       },
       "commands": {
         "ide": {
@@ -20,6 +21,10 @@
           "cmd": "npm run tray",
           "cwd": "packages/sda-gui",
           "description": "Run SDA tray app"
+        },
+        "terminal": {
+          "cmd": "start powershell -NoExit -Command \"cd .\"",
+          "description": "Opens a PowerShell terminal in the current folder"
         },
         "link": {
           "cmd": "npm link",

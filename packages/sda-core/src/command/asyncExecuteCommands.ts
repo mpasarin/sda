@@ -1,12 +1,10 @@
-import * as child_process from 'child_process';
-import * as util from 'util';
 import ExecutionConfig from '../ExecutionConfig';
 import { IEnvironment } from '../interfaces';
 import Log from '../Log';
+import exec from '../utils/exec';
 import { IParsedCommand } from './getCommands';
 
 const MAX_BUFFER = 20 * 1024 * 1024; // 20 MB
-const exec = util.promisify(child_process.exec);
 
 export default async function asyncExecuteCommands(
   commands: IParsedCommand[],

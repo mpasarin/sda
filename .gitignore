@@ -1,5 +1,6 @@
-# JS generated from TS
+# Bundles generated from TS
 lib
+dist
 
 # Logs
 *.log

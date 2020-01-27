@@ -2,18 +2,20 @@
   "name": "sda-gui",
   "version": "0.0.8",
   "description": "Software development assistant - GUI",
-  "main": "lib/cli/start.js",
   "files": [
+    "dist/**/*",
     "lib/**/*",
     "assets/**/*"
   ],
   "scripts": {
-    "build": "tslint -p tsconfig.json && tsc",
+    "build": "tslint -p tsconfig.json && npm run webpack",
+    "webpack": "webpack --config webpack.config.js",
+    "watch": "webpack --config webpack.config.js --watch",
     "test": "jest --config jest.config.js",
-    "tray": "electron lib/gui/main.js"
+    "tray": "electron dist/main.js",
+    "start": "npm run build && npm run tray"
   },
-  "bin": {
-  },
+  "bin": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mpasarin/sda.git"
@@ -33,9 +35,20 @@
     "@types/node": "^8.10.39",
     "electron": "^7.1.10",
     "tslint": "^5.12.1",
-    "typescript": "^3.3.1"
+    "typescript": "^3.3.1",
+    "webpack": "~4.41.5",
+    "webpack-cli": "~3.3.10",
+    "html-webpack-plugin": "~3.2.0",
+    "ts-loader": "~6.2.1",
+    "react": "~16.12.0",
+    "react-dom": "~16.12.0",
+    "@types/react": "~16.9.19",
+    "@types/react-dom": "~16.9.5",
+    "tslint-react": "~4.2.0"
   },
   "dependencies": {
-    "sda-core": "*"
+    "sda-core": "*",
+    "office-ui-fabric-react": "~7.84.1",
+    "@uifabric/icons": "~7.3.2"
   }
 }

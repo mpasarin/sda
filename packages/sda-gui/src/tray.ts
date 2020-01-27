@@ -1,19 +1,13 @@
-import * as child_process from 'child_process';
 import { app, Menu, MenuItem, Tray } from 'electron';
-import getConfig from 'sda-core/lib/config/getConfig';
-import { getHomeFolder } from 'sda-core/lib/config/HomeConfig';
 import { IConfig } from 'sda-core/lib/interfaces/IConfig';
-import * as util from 'util';
-const exec = util.promisify(child_process.exec);
+import exec from 'sda-core/lib/utils/exec';
 
-const cfg = getConfig(getHomeFolder()!);
-
-let tray = null;
-app.on('ready', () => {
-  tray = new Tray('assets/logo24.png');
+export function createTray(config: IConfig): Tray {
+  const tray = new Tray('assets/logo24.png');
   tray.setToolTip('SDA - Software development assistant');
-  tray.setContextMenu(Menu.buildFromTemplate(getMenuItems(cfg)));
-});
+  tray.setContextMenu(Menu.buildFromTemplate(getMenuItems(config)));
+  return tray;
+}
 
 function getMenuItems(config: IConfig): MenuItem[] {
   const menuItems: MenuItem[] = [];

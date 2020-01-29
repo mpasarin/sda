@@ -1,5 +1,6 @@
 import { BrowserWindow } from 'electron';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
+declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 export function createMainWindow(config: IConfig) {
   // Create the browser window.
@@ -12,5 +13,5 @@ export function createMainWindow(config: IConfig) {
   });
 
   // and load the index.html of the app.
-  win.loadFile('app/index.html');
+  win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }

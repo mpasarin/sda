@@ -1,6 +1,8 @@
 node_modules
 lib
 dist
+.webpack
+out
 coverage
 package-lock.json
 *.log

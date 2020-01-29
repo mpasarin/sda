@@ -1,8 +1,14 @@
 import { app } from 'electron';
 import getConfig from 'sda/lib/config/getConfig';
 import { getHomeFolder } from 'sda/lib/config/HomeConfig';
-import { createMainWindow } from './app/mainWindow';
+import { createMainWindow } from './mainWindow';
 import { createTray } from './tray';
+
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// tslint:disable-next-line: no-var-requires
+if (require('electron-squirrel-startup')) {
+  app.quit();
+}
 
 const cfg = getConfig(getHomeFolder()!);
 

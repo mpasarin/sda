@@ -1,9 +1,10 @@
 import { app, Menu, MenuItem, Tray } from 'electron';
+import * as path from 'path';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
 import exec from 'sda/lib/utils/exec';
 
 export function createTray(config: IConfig): Tray {
-  const tray = new Tray('assets/logo24.png');
+  const tray = new Tray(path.join(__dirname, '../assets/logo24.png'));
   tray.setToolTip('SDA - Software development assistant');
   tray.setContextMenu(Menu.buildFromTemplate(getMenuItems(config)));
   return tray;

@@ -1,8 +1,8 @@
 import { exec } from 'child_process';
 import { DefaultButton, Icon, Link, List } from 'office-ui-fabric-react';
 import * as React from 'react';
-import { IEnvironment } from 'sda-core/lib/interfaces';
-import { IConfigCommand } from 'sda-core/lib/interfaces/IConfig';
+import { IEnvironment } from 'sda/lib/interfaces';
+import { IConfigCommand } from 'sda/lib/interfaces/IConfig';
 import { IExtendedEnvironment } from './IExtendedEnvironment';
 
 interface IEnvironmentDashboardProps {

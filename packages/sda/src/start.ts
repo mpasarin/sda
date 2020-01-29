@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import ExecutionConfig from 'sda-core/lib/ExecutionConfig';
-import Log from 'sda-core/lib/Log';
-import { getOperationsMap } from 'sda-core/lib/operations/Operations';
+import ExecutionConfig from './ExecutionConfig';
+import Log from './Log';
+import { getOperationsMap } from './operations/Operations';
 
 try {
   const ec = new ExecutionConfig();

@@ -13,12 +13,16 @@
           "cmd": "code .",
           "description": "Opens VS code for this repo"
         },
+        "sync": {
+          "cmd": "git pull && lerna bootstrap",
+          "description": "Sync repo to the latest version"
+        },
         "build": {
-          "cmd": "rush update && rush build",
+          "cmd": "lerna exec npm run build",
           "description": "Build SDA"
         },
-        "tray": {
-          "cmd": "npm run tray",
+        "gui": {
+          "cmd": "npm run gui",
           "cwd": "packages/sda-gui",
           "description": "Run SDA tray app"
         },
@@ -28,12 +32,12 @@
         },
         "link": {
           "cmd": "npm link",
-          "cwd": "packages/sda-cli",
+          "cwd": "packages/sda",
           "description": "Link the code version of SDA to be used as the installed version"      
         },
         "unlink": {
           "cmd": "npm unlink",
-          "cwd": "packages/sda-cli",
+          "cwd": "packages/sda",
           "description": "Unlink the code version of SDA to use the globally installed version"      
         },
         "test": {

@@ -7,9 +7,12 @@
     "assets/**/*"
   ],
   "scripts": {
-    "build": ""
+    "build": "tslint -p tsconfig.json && tsc",
+    "test": "jest --config jest.config.js",
+    "try": "npm run build && npm link && sda test && npm unlink"
   },
   "bin": {
+    "sda": "lib/start.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,23 @@
     "url": "https://github.com/mpasarin/sda/issues"
   },
   "homepage": "https://github.com/mpasarin/sda#readme",
+  "devDependencies": {
+    "@types/easy-table": "0.0.32",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.120",
+    "@types/node": "^8.10.39",
+    "electron": "^7.1.10",
+    "jest": "^25.0.0",
+    "jest-environment-jsdom": "^25.0.0",
+    "ts-jest": "^25.0.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1"
+  },
   "dependencies": {
-    "sda-cli": "*"
+    "easy-table": "^1.1.1",
+    "lodash": "^4.17.11",
+    "require-text": "0.0.1",
+    "yeoman-environment": "^2.6.0",
+    "jest-standard-reporter": "~1.0.4"
   }
 }

@@ -1,9 +1,9 @@
 import { initializeIcons } from '@uifabric/icons';
 import { Fabric, INavLink, Nav } from 'office-ui-fabric-react';
 import * as React from 'react';
-import { getEnvironment } from 'sda-core/lib/getEnvironment';
-import { IEnvironment } from 'sda-core/lib/interfaces';
-import { IConfig } from 'sda-core/lib/interfaces/IConfig';
+import { getEnvironment } from 'sda/lib/getEnvironment';
+import { IEnvironment } from 'sda/lib/interfaces';
+import { IConfig } from 'sda/lib/interfaces/IConfig';
 import EnvironmentDashboard from './EnvironmentDashboard';
 import { IExtendedEnvironment } from './IExtendedEnvironment';
 

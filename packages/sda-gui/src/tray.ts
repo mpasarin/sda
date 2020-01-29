@@ -1,6 +1,6 @@
 import { app, Menu, MenuItem, Tray } from 'electron';
-import { IConfig } from 'sda-core/lib/interfaces/IConfig';
-import exec from 'sda-core/lib/utils/exec';
+import { IConfig } from 'sda/lib/interfaces/IConfig';
+import exec from 'sda/lib/utils/exec';
 
 export function createTray(config: IConfig): Tray {
   const tray = new Tray('assets/logo24.png');

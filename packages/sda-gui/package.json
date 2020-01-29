@@ -12,8 +12,8 @@
     "webpack": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "test": "jest --config jest.config.js",
-    "tray": "electron dist/main.js",
-    "start": "npm run build && npm run tray"
+    "gui": "electron dist/main.js",
+    "start": "npm run build && npm run gui"
   },
   "bin": {},
   "repository": {
@@ -47,7 +47,7 @@
     "tslint-react": "~4.2.0"
   },
   "dependencies": {
-    "sda-core": "*",
+    "sda": "0.0.8",
     "office-ui-fabric-react": "~7.84.1",
     "@uifabric/icons": "~7.3.2",
     "gift": "~0.10.2"

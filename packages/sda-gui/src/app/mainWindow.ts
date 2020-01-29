@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import { IConfig } from 'sda-core/lib/interfaces/IConfig';
+import { IConfig } from 'sda/lib/interfaces/IConfig';
 
 export function createMainWindow(config: IConfig) {
   // Create the browser window.

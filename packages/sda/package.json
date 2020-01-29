@@ -46,6 +46,8 @@
     "lodash": "^4.17.11",
     "require-text": "0.0.1",
     "yeoman-environment": "^2.6.0",
+    "globby": "^11.0.0",
+    "path-type": "^4.0.0",
     "jest-standard-reporter": "~1.0.4"
   }
 }

@@ -112,6 +112,8 @@
     "@uifabric/icons": "~7.3.2",
     "gift": "~0.10.2",
     "yeoman-environment": "^2.6.0",
+    "globby": "^11.0.0",
+    "path-type": "^4.0.0",
     "electron-squirrel-startup": "^1.0.0"
   }
 }

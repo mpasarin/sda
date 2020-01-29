@@ -5,67 +5,111 @@ import { getEnvironment } from 'sda-core/lib/getEnvironment';
 import { IEnvironment } from 'sda-core/lib/interfaces';
 import { IConfig } from 'sda-core/lib/interfaces/IConfig';
 import EnvironmentDashboard from './EnvironmentDashboard';
+import { IExtendedEnvironment } from './IExtendedEnvironment';
+
+// tslint:disable-next-line: no-var-requires
+const git = require('gift');
 
 interface IMainComponentProps {
     config: IConfig;
 }
 
 interface IMainComponentState {
-    env: IEnvironment | undefined;
+    selectedEnvId: string;
+}
+
+export interface IGitInformation {
+    branchName: string;
 }
 
 export default class MainComponent extends React.Component<IMainComponentProps, IMainComponentState> {
+
+    private envs: Map<string, IExtendedEnvironment> = new Map();
+    private initPromise: Promise<unknown>;
+
     constructor(props: IMainComponentProps, context?: any) {
         super(props, context);
-        const firstEnvId = Object.getOwnPropertyNames(this.props.config.environments)[0];
-        const firstEnv = getEnvironment(this.props.config, firstEnvId);
-        this.state = { env: firstEnv };
+        this.initPromise = this.initializeEnvs(this.props.config);
+        const firstEnvId: string = this.envs.keys().next().value;
+        this.state = { selectedEnvId: firstEnvId };
         initializeIcons();
     }
 
     public render() {
         return (
             <Fabric>
-                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', height: '100vh' }}>
                     <Nav
                         styles={{
                             root: {
-                                minWidth: '150px'
+                                height: '100%',
+                                width: '200px'
                             }
                         }}
-                        selectedKey={this.state.env ? this.state.env.id : undefined}
+                        selectedKey={this.state.selectedEnvId}
                         onLinkClick={
                             (ev, item) => {
                                 if (item) {
-                                    this.setState({ env: getEnvironment(this.props.config, item.name) });
+                                    this.setState({ selectedEnvId: item.key! });
                                 }
                             }}
                         groups={
                             [
                                 {
-                                    links: this.getNavLinks(this.props.config)
+                                    links: this.getNavLinks(this.envs)
                                 }
                             ]
                         }
                     />
-                    <EnvironmentDashboard env={this.state.env} />
+                    <div style={{ flexGrow: 1, overflowY: 'auto' }}>
+                        <EnvironmentDashboard env={this.envs.get(this.state.selectedEnvId)!} />
+                    </div>
                 </div>
             </Fabric>
         );
     }
 
-    private getNavLinks(config: IConfig): INavLink[] {
+    public componentDidMount() {
+        // Once branches are ready, re-render
+        this.initPromise.then(() => this.forceUpdate());
+    }
+
+    private async initializeEnvs(config: IConfig) {
+        const promises = Object.keys(config.environments)
+            .map((envId) => getEnvironment(config, envId))
+            .map((env) => {
+                // Set the environment without the branch first
+                this.envs.set(env.id, env);
+                if (!env.template.gitRepo) {
+                    return Promise.resolve();
+                } else {
+                    return this.getBranchName(env).then((branchName) => {
+                        this.envs.set(env.id, { ...env, branchName });
+                    });
+                }
+            });
+        return Promise.all(promises);
+    }
+
+    private getNavLinks(envs: Map<string, IExtendedEnvironment>): INavLink[] {
         const links: INavLink[] = [];
-        const envs = config.environments;
-        for (const envId in envs) {
-            if (envs.hasOwnProperty(envId)) {
-                links.push({
-                    name: envId,
-                    url: '',
-                    key: envId
-                });
-            }
+        for (const env of envs.values()) {
+            links.push({
+                name: env.branchName ? `${env.id} (${env.branchName})` : env.id,
+                url: '',
+                key: env.id
+            });
         }
         return links;
+    }
+
+    private getBranchName(env: IEnvironment): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const repo = git(env.path);
+            repo.branch((err: Error, head: { name: string; }) => {
+                if (err) { reject(err); }
+                resolve(head.name);
+            });
+        });
     }
 }

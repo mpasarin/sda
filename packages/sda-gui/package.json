@@ -49,6 +49,7 @@
   "dependencies": {
     "sda-core": "*",
     "office-ui-fabric-react": "~7.84.1",
-    "@uifabric/icons": "~7.3.2"
+    "@uifabric/icons": "~7.3.2",
+    "gift": "~0.10.2"
   }
 }

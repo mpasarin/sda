@@ -3,9 +3,10 @@ import { DefaultButton, Icon, Link, List } from 'office-ui-fabric-react';
 import * as React from 'react';
 import { IEnvironment } from 'sda-core/lib/interfaces';
 import { IConfigCommand } from 'sda-core/lib/interfaces/IConfig';
+import { IExtendedEnvironment } from './IExtendedEnvironment';
 
 interface IEnvironmentDashboardProps {
-  env?: IEnvironment;
+  env: IExtendedEnvironment;
 }
 
 interface ICommandItem {
@@ -25,9 +26,12 @@ export default class EnvironmentDashboard extends React.Component<IEnvironmentDa
           <Icon iconName='FolderHorizontal' /> {env.path}
         </Link></li>
         {env.template.gitRepo
-          ? <li><Link href='#' onClick={() => exec(`start ${env.template.gitRepo}`)}>
-            <Icon iconName='GitGraph' /> {env.template.gitRepo}
-          </Link></li>
+          ? (<div>
+            <li><Link href='#' onClick={() => exec(`start ${env.template.gitRepo}`)}>
+              <Icon iconName='GitGraph' /> {env.template.gitRepo}
+            </Link></li>
+            {env.branchName ? <li>Branch: {env.branchName}</li> : undefined}
+          </div>)
           : null}
       </ul>
       <hr />
@@ -51,7 +55,7 @@ export default class EnvironmentDashboard extends React.Component<IEnvironmentDa
       <p style={{ flexGrow: 1, marginLeft: '5px', marginRight: '5px' }}>
         <b>{item.id}</b> {item.description ? ` - ${item.description}` : ''}
       </p>
-      <DefaultButton text='Run command' onClick={() => exec(item.execCommand)} />
+      <DefaultButton style={{ flexShrink: 0 }} text='Run command' onClick={() => exec(item.execCommand)} />
     </div>);
   }
 }

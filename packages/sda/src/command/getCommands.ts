@@ -9,6 +9,7 @@ export interface IParsedCommand {
   id: string;
   cmd: string[];
   cwd: string;
+  timeout: number | undefined;
 }
 
 export default function getCommands(
@@ -41,7 +42,8 @@ function getCommand(environment: IEnvironment, cmdName: string, params?: string[
   return {
     id: commandName,
     cmd: command.cmd as string[],
-    cwd
+    cwd,
+    timeout: parseInt(command.timeout!, 10) || undefined
   };
 }
 

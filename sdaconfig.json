@@ -95,6 +95,10 @@
           "filePath": "test\\dummy_script_node.js",
           "interpreter": "node",
           "description": "Prints 'Node script success'"
+        },
+        "testTimeout": {
+          "cmd": "node -e \"console.log('Test timeout'); setTimeout(() => console.log('After execution fails'), 2000)\"",
+          "timeout": 1000
         }
       }
     },

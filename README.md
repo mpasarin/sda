@@ -87,6 +87,12 @@ There is a special template id called `default`. If the `default` template is de
         "<alias>": "<commandName>"
       },
       "commands": {
+        "<command>": {
+          "cmd": "echo regular command",
+          "cwd": "C:\\",
+          "description": "This command prints \"regular command\"",
+          "timeout": 1000
+        },
         "<quickCommand>": "echo quick command",
         "<multipleCommands>": [
           "echo first command",
@@ -108,8 +114,8 @@ There is a special template id called `default`. If the `default` template is de
           "cmd": "ls %PARAM% && echo second command",
           "validParams": ["-a", "-l"]
         },
-        "pre-setup": "(Optional) <command to execute before cloning the git repo",
-        "post-setup": "(Optional) <command to execute after cloning the git repo"
+        "pre-setup": "(Optional) <command to execute before cloning the git repo>",
+        "post-setup": "(Optional) <command to execute after cloning the git repo>"
       }
     }
   },

@@ -23,7 +23,14 @@ async function asyncExecuteCommand(
 ): Promise<void> {
   Log.verbose(`Executing command "${command.id}" in environment "${environment.id}"`);
   for (const cmd of command.cmd) {
-    const { stdout, stderr } = await exec(cmd, { cwd: command.cwd, maxBuffer: MAX_BUFFER });
+    const { stdout, stderr } = await exec(
+      cmd,
+      {
+        cwd: command.cwd,
+        maxBuffer: MAX_BUFFER,
+        timeout: command.timeout
+      }
+    );
 
     if (!ec.isSilent) {
       const trimmedOut = stdout.trim();

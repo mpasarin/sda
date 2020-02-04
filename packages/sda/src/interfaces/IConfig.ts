@@ -21,11 +21,11 @@ export interface IConfigTemplate {
   /**
    * Map to define the different commands.
    * Key: Command name
-   * Value: Either the command to execute as a string, or a command definition.
+   * Value: Either the command to execute as a string, or a command definition
    */
   commands: { [name: string]: string | string[] | IConfigCommand };
   /**
-   * Map to define aliases for commands
+   * Map to define aliases for commands.
    * Key: Alias name
    * Value: Command name
    */
@@ -46,27 +46,31 @@ export interface IConfigTemplate {
  */
 export interface IConfigCommand {
   /**
-   * Command to execute
+   * Command to execute.
    */
   cmd?: string | string[];
   /**
-   * Directory to run the command on
+   * Directory to run the command on.
    */
   cwd?: string;
   /**
-   * Parameters that can be passed to this command
+   * Parameters that can be passed to this command.
    */
   validParams?: string[];
   /**
-   * File path of script
+   * File path of script.
    */
   filePath?: string;
   /**
-   * Interpreter for script
+   * Interpreter for script.
    */
   interpreter?: string;
   /**
    * Description of the command. Used when listing commands.
    */
   description?: string;
+  /**
+   * Maximum time for the command to run, in milliseconds. Default is undefined.
+   */
+  timeout?: string;
 }

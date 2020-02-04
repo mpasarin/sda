@@ -19,6 +19,14 @@ export default function syncExecuteCommands(
 function executeCommand(command: IParsedCommand, environment: IEnvironment, ec: ExecutionConfig): void {
   Log.verbose(`Executing command "${command.id}" in environment "${environment.id}"`);
   for (const cmd of command.cmd) {
-    child_process.execSync(cmd, { cwd: command.cwd, stdio: ec.isSilent ? 'ignore' : 'inherit', maxBuffer: MAX_BUFFER });
+    child_process.execSync(
+      cmd,
+      {
+        cwd: command.cwd,
+        stdio: ec.isSilent ? 'ignore' : 'inherit',
+        maxBuffer: MAX_BUFFER,
+        timeout: command.timeout
+      }
+    );
   }
 }

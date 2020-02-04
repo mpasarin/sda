@@ -1,8 +1,7 @@
 import { exec } from 'child_process';
-import { DefaultButton, Icon, Link, List } from 'office-ui-fabric-react';
+import { Icon, Link } from 'office-ui-fabric-react';
 import * as React from 'react';
-import { IEnvironment } from 'sda/lib/interfaces';
-import { IConfigCommand } from 'sda/lib/interfaces/IConfig';
+import CommandsList from './CommandsList';
 import { IExtendedEnvironment } from './IExtendedEnvironment';
 
 interface IEnvironmentDashboardProps {
@@ -36,26 +35,7 @@ export default class EnvironmentDashboard extends React.Component<IEnvironmentDa
       </ul>
       <hr />
       <h2>Commands</h2>
-      <List items={this.getCommandItems(env)} onRenderCell={this.onRenderCell} />
-    </div>);
-  }
-
-  private getCommandItems(env: IEnvironment): ICommandItem[] {
-    const cmdIds = Object.keys(env.template.commands);
-    return cmdIds.map((id) => ({
-      id,
-      description: (env.template.commands[id] as IConfigCommand).description,
-      execCommand: `sda ${env.id} ${id}`
-    }));
-  }
-
-  private onRenderCell(item?: ICommandItem) {
-    if (!item) { return null; }
-    return (<div style={{ display: 'flex', flexDirection: 'row', margin: '10px' }}>
-      <p style={{ flexGrow: 1, marginLeft: '5px', marginRight: '5px' }}>
-        <b>{item.id}</b> {item.description ? ` - ${item.description}` : ''}
-      </p>
-      <DefaultButton style={{ flexShrink: 0 }} text='Run command' onClick={() => exec(item.execCommand)} />
+      <CommandsList env={env} />
     </div>);
   }
 }

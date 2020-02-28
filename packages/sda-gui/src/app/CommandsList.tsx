@@ -1,4 +1,4 @@
-import { DefaultButton, IContextualMenuProps, List } from 'office-ui-fabric-react';
+import { DefaultButton, IContextualMenuProps, List, TooltipHost } from 'office-ui-fabric-react';
 import * as React from 'react';
 import { IEnvironment } from 'sda/lib/interfaces';
 import { IConfigCommand } from 'sda/lib/interfaces/IConfig';
@@ -27,7 +27,13 @@ export default class CommandsList extends React.Component<ICommandsListProps> {
   }
 
   public render() {
-    return <List items={this.getCommandItems(this.props.env)} onRenderCell={this.onRenderCell} />;
+    const items = this.getCommandItems(this.props.env);
+    return <List
+      items={items}
+      getPageSpecification={() => ({
+        itemCount: items.length
+      })}
+      onRenderCell={this.onRenderCell} />;
   }
 
   private getCommandItems(env: IEnvironment): ICommandItem[] {
@@ -52,22 +58,24 @@ export default class CommandsList extends React.Component<ICommandsListProps> {
       }],
       onItemClick: () => this.executeInConsole(item)
     };
-
-    return (<div style={{ display: 'flex', flexDirection: 'row', margin: '10px' }}>
-      <p style={{ flexGrow: 1, marginLeft: '5px', marginRight: '5px' }}>
-        <b>{item.title}</b> {item.description ? ` - ${item.description}` : ''}
-      </p>
-      <div style={{ flexShrink: 0 }}>
-        <DefaultButton
-          disabled={item.isRunning}
-          iconProps={item.isRunning ? { iconName: 'SyncStatus' } : { iconName: 'Play' }}
-          split
-          menuProps={menuProps}
-          text='Run command'
-          onClick={() => this.executeCommand(item)}
-        />
-      </div>
-    </div>);
+    return (
+      <div style={{ float: 'left', marginRight: '15px', marginBottom: '15px' }}>
+        <TooltipHost
+          content={item.description}
+          id={`tooltip_${item.id}`}
+          styles={{ root: { display: 'inline-block' } }}
+        >
+          <DefaultButton
+            style={{ width: '200px' }}
+            disabled={item.isRunning}
+            iconProps={item.isRunning ? { iconName: 'SyncStatus' } : { iconName: 'Play' }}
+            split
+            menuProps={menuProps}
+            text={`Run "${item.title}"`}
+            onClick={() => this.executeCommand(item)}
+          />
+        </TooltipHost>
+      </div>);
   }
 
   private executeInConsole(item: ICommandItem) {

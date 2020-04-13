@@ -22,9 +22,9 @@
           "description": "Build SDA"
         },
         "gui": {
-          "cmd": "npm run gui",
+          "cmd": "npm run start",
           "cwd": "packages/sda-gui",
-          "description": "Run SDA tray app"
+          "description": "Run SDA GUI app"
         },
         "terminal": {
           "cmd": "start powershell -NoExit -Command \"cd .\"",

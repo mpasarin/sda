@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import { IEnvironment } from '../interfaces';
-import { IConfig } from '../interfaces/IConfig';
+import { INamed } from '../interfaces';
+import { IConfig, IConfigEnvironment, IConfigTemplate } from '../interfaces/IConfig';
 import Log from '../Log';
 import { configFileName, EMPTY_CONFIG } from './Constants';
 
@@ -50,10 +50,27 @@ export default class HomeConfig {
     this.fileName = fileName;
   }
 
-  public addEnvironment(env: IEnvironment) {
+  public addEnvironment(env: INamed<IConfigEnvironment>) {
+    if (!this.config.environments) {
+      this.config.environments = {};
+    }
+
     this.config.environments[env.id] = {
       path: env.path,
       templateId: env.templateId
+    };
+  }
+
+  public addTemplate(template: INamed<IConfigTemplate>) {
+    if (!this.config.templates) {
+      this.config.templates = {};
+    }
+
+    this.config.templates[template.id] = {
+      commands: template.commands,
+      aliases: template.aliases,
+      gitRepo: template.gitRepo,
+      description: template.description
     };
   }
 

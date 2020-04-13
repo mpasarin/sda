@@ -8,12 +8,6 @@ interface IEnvironmentDashboardProps {
   env: IExtendedEnvironment;
 }
 
-interface ICommandItem {
-  id: string;
-  description?: string;
-  execCommand: string;
-}
-
 export default class EnvironmentDashboard extends React.Component<IEnvironmentDashboardProps> {
   public render() {
     if (!this.props.env) { return null; }

@@ -6,8 +6,8 @@ declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 export function createMainWindow(config: IConfig) {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1000,
+    height: 800,
     webPreferences: {
       nodeIntegration: true
     },

@@ -4,6 +4,7 @@ import * as React from 'react';
 import { getEnvironment } from 'sda/lib/getEnvironment';
 import { IEnvironment } from 'sda/lib/interfaces';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
+import CommandBar from './CommandBar';
 import EnvironmentDashboard from './EnvironmentDashboard';
 import { IExtendedEnvironment } from './IExtendedEnvironment';
 
@@ -62,6 +63,7 @@ export default class MainComponent extends React.Component<IMainComponentProps, 
                         }
                     />
                     <div style={{ flexGrow: 1, overflowY: 'auto' }}>
+                        <CommandBar config={this.props.config} selectedEnvId={this.state.selectedEnvId} />
                         <EnvironmentDashboard env={this.envs.get(this.state.selectedEnvId)!} />
                     </div>
                 </div>

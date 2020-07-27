@@ -1,12 +1,19 @@
 import { DefaultButton, IContextualMenuProps, List, TooltipHost } from 'office-ui-fabric-react';
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 import { IEnvironment } from 'sda/lib/interfaces';
 import { IConfigCommand } from 'sda/lib/interfaces/IConfig';
 import exec from 'sda/lib/utils/exec';
 import { IExtendedEnvironment } from './IExtendedEnvironment';
+import { endCommand, startCommand } from './redux/actions';
+import IState from './redux/IState';
 
 interface ICommandsListProps {
-  env: IExtendedEnvironment;
+  env: IEnvironment;
+  commandsRunning: { [cmdId: string]: boolean };
+  startCommand: (cmdId: string) => void;
+  endCommand: (cmdId: string) => void;
 }
 
 interface ICommandItem {
@@ -17,13 +24,10 @@ interface ICommandItem {
   isRunning: boolean;
 }
 
-export default class CommandsList extends React.Component<ICommandsListProps> {
-  private isRunningMap: Map<string, boolean>;
-
+class CommandsList extends React.Component<ICommandsListProps> {
   constructor(props: ICommandsListProps, context: any) {
     super(props, context);
     this.onRenderCell = this.onRenderCell.bind(this);
-    this.isRunningMap = new Map();
   }
 
   public render() {
@@ -43,7 +47,7 @@ export default class CommandsList extends React.Component<ICommandsListProps> {
       title: id,
       description: (env.template.commands[id] as IConfigCommand).description,
       execCommand: `sda ${env.id} ${id}`,
-      isRunning: !!this.isRunningMap.get(this.getItemId(env, id))
+      isRunning: !!this.props.commandsRunning[this.getItemId(env, id)]
     }));
   }
 
@@ -83,12 +87,10 @@ export default class CommandsList extends React.Component<ICommandsListProps> {
   }
 
   private executeCommand(item: ICommandItem) {
-    this.isRunningMap.set(item.id, true);
-    this.forceUpdate(); // Updating the map updates the state
+    this.props.startCommand(item.id);
     const result = exec(item.execCommand);
     result.then(() => {
-      this.isRunningMap.set(item.id, false);
-      this.forceUpdate(); // Updating the map updates the state
+      this.props.endCommand(item.id);
     });
   }
 
@@ -96,3 +98,20 @@ export default class CommandsList extends React.Component<ICommandsListProps> {
     return `${env.id}__${commandId}`;
   }
 }
+
+function mapStateToProps(state: IState) {
+  return {
+    env: state.envsById[state.selectedEnvId],
+    commandsRunning: state.commandsRunning,
+    numberOfCommandsRunning: state.numberOfCommandsRunning
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    startCommand: (cmdId: string) => dispatch(startCommand(cmdId)),
+    endCommand: (cmdId: string) => dispatch(endCommand(cmdId))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommandsList);

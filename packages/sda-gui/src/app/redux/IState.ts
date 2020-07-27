@@ -7,6 +7,13 @@ export default interface IState {
   selectedEnvId: string;
   // Enriched environments by id
   envsById: { [envId: string]: IEnvironment };
+
+  // Branch names
   branchNameByEnvId: { [envId: string]: string };
   lastBranchUpdate: number;
+
+  // Running commands state
+  // cmdId is in the form "envId__commandId" to avoid collisions
+  commandsRunning: { [cmdId: string]: boolean };
+  numberOfCommandsRunning: number;
 }

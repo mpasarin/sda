@@ -50,7 +50,7 @@ class EnvironmentDashboard extends React.Component<IEnvironmentDashboardProps> {
         </div>
         <hr />
         <h2>Commands</h2>
-        <CommandsList env={env} />
+        <CommandsList />
       </div>
     );
   }

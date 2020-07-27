@@ -12,7 +12,9 @@ export default function getStore(config: IConfig) {
     selectedEnvId: firstEnvId,
     envsById: getEnvsById(config),
     branchNameByEnvId: {},
-    lastBranchUpdate: now()
+    lastBranchUpdate: now(),
+    commandsRunning: {},
+    numberOfCommandsRunning: 0
   };
   return createStore(reducer, initialState);
 }

@@ -1,4 +1,5 @@
 import { app } from 'electron';
+import { update } from 'lodash';
 import getConfig from 'sda/lib/config/getConfig';
 import { getHomeFolder } from 'sda/lib/config/HomeConfig';
 import { createMainWindow } from './mainWindow';
@@ -17,6 +18,10 @@ let tray = undefined;
 
 app.on('ready', () => {
   (global as any).sdaconfig = cfg;
+  (global as any).updateConfig =  () => {
+    const newCfg = getConfig(getHomeFolder()!);
+    (global as any).sdaconfig = newCfg;
+  };
   tray = createTray(cfg);
   createMainWindow(cfg);
 });

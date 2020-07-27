@@ -74,10 +74,14 @@ export default class HomeConfig {
     };
   }
 
-  public write() {
+  public async write(): Promise<void> {
     const ws = fs.createWriteStream(this.fileName);
     ws.write(JSON.stringify(this.config, undefined, 2));
     ws.end();
+    return new Promise<void>((resolve, reject) => {
+      ws.on('finish', () => { Log.verbose('Config file written.'); resolve(); });
+      ws.on('error', (error) => { Log.verbose(`Error writing config file. ${error}`); reject(error); });
+    });
   }
 }
 

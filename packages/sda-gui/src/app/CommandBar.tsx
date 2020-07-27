@@ -1,18 +1,20 @@
-import { CommandBar, ICommandBarItemProps } from 'office-ui-fabric-react';
+import { CommandBar as FabricCommandBar, ICommandBarItemProps } from 'office-ui-fabric-react';
 import * as React from 'react';
 import { useState } from 'react';
+import { connect } from 'react-redux';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
 import ConfigDialog, { IConfigDialogProps } from './config/ConfigDialog';
+import IState from './redux/IState';
 
 interface ICommandBarProps {
     config: IConfig;
     selectedEnvId: string;
 }
 
-export default (props: ICommandBarProps) => {
+const CommandBar = (props: ICommandBarProps) => {
     const [dialogProps, setDialogProps] = useState({ showDialog: false } as IConfigDialogProps);
     return <>
-        <CommandBar items={getCommandBarItems(props, setDialogProps)} />
+        <FabricCommandBar items={getCommandBarItems(props, setDialogProps)} />
         <ConfigDialog {...dialogProps} />
     </>;
 };
@@ -99,3 +101,12 @@ function getCommandBarItems(
         }
     ];
 }
+
+function mapStateToProps(state: IState) {
+  return {
+    config: state.config,
+    selectedEnvId: state.selectedEnvId
+  };
+}
+
+export default connect(mapStateToProps)(CommandBar);

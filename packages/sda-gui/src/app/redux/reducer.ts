@@ -1,5 +1,9 @@
 import { now } from 'lodash';
-import { SELECT_ENV, SET_BRANCH_NAME } from './actions';
+import { getEnvironment } from 'sda/lib/getEnvironment';
+import { IEnvironment } from 'sda/lib/interfaces';
+import { IConfig } from 'sda/lib/interfaces/IConfig';
+import { SELECT_ENV, SET_BRANCH_NAME, UPDATE_CONFIG } from './actions';
+import getEnvsById from './getEnvsById';
 import IState from './IState';
 
 export default function reducer(
@@ -7,6 +11,10 @@ export default function reducer(
   action: any
 ): IState {
   switch (action.type) {
+    case UPDATE_CONFIG:
+      const config = action.config;
+      const envsById = getEnvsById(config);
+      return Object.assign({}, state, { config, envsById });
     case SELECT_ENV:
       return Object.assign({}, state, { selectedEnvId: action.envId });
     case SET_BRANCH_NAME:

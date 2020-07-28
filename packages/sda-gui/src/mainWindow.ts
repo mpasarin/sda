@@ -14,6 +14,8 @@ export function createMainWindow(config: IConfig) {
     icon: path.join(__dirname, '../assets/logo128.ico')
   });
 
+  win.setMenu(null);
+
   // and load the index.html of the app.
   win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 }

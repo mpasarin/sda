@@ -14,6 +14,14 @@ ipcRenderer.on('response-update-config', (event, newConfig) => {
   store.dispatch(updateConfig(newConfig));
 });
 
+document.addEventListener('keydown', (event) => {
+  if (event.which === 123) { // F12
+    remote.getCurrentWebContents().toggleDevTools();
+  } else if (event.which === 116) { // F5
+    location.reload();
+  }
+});
+
 ReactDOM.render(
   <Provider store={store}>
     <MainComponent />

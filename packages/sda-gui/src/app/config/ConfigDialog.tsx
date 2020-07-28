@@ -5,7 +5,7 @@ import {
   Dialog,
   DialogFooter,
   DialogType,
-  PrimaryButton
+  PrimaryButton,
 } from 'office-ui-fabric-react';
 import * as React from 'react';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ import {
   IConfig,
   IConfigCommand,
   IConfigEnvironment,
-  IConfigTemplate
+  IConfigTemplate,
 } from 'sda/lib/interfaces/IConfig';
 import withId from 'sda/lib/interfaces/withId';
 import { isArray, isString } from 'util';

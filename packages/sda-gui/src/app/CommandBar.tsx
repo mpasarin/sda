@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import {
   CommandBar as FabricCommandBar,
   ICommandBarItemProps,
@@ -5,6 +6,7 @@ import {
 import * as React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import HomeConfig from 'sda/lib/config/HomeConfig';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
 import ConfigDialog, { IConfigDialogProps } from './config/ConfigDialog';
 import IState from './redux/IState';
@@ -29,9 +31,7 @@ const CommandBar = (props: ICommandBarProps) => {
 
 function getCommandBarItems(
   props: ICommandBarProps,
-  setDialogProps: (
-    dialogProps: Omit<IConfigDialogProps, 'config'>
-  ) => void
+  setDialogProps: (dialogProps: Omit<IConfigDialogProps, 'config'>) => void
 ): ICommandBarItemProps[] {
   const closeDialog = () => setDialogProps({ showDialog: false });
   return [
@@ -108,6 +108,26 @@ function getCommandBarItems(
                 },
                 closeDialog,
               });
+            },
+          },
+        ],
+      },
+    },
+    {
+      key: 'delete',
+      text: 'Delete',
+      iconProps: { iconName: 'Delete' },
+      subMenuProps: {
+        items: [
+          {
+            key: 'deleteEnv',
+            text: 'Environment',
+            onClick: () => {
+              const homeConfig = HomeConfig.create();
+              homeConfig.removeEnvironment(props.selectedEnvId);
+              homeConfig
+                .write()
+                .then(() => ipcRenderer.send('request-update-config'));
             },
           },
         ],

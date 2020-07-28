@@ -1,19 +1,25 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { INamed } from '../interfaces';
-import { IConfig, IConfigEnvironment, IConfigTemplate } from '../interfaces/IConfig';
+import {
+  IConfig,
+  IConfigEnvironment,
+  IConfigTemplate,
+} from '../interfaces/IConfig';
 import Log from '../Log';
 import { configFileName, EMPTY_CONFIG } from './Constants';
 
 export default class HomeConfig {
-
   public static create(): HomeConfig {
     const homeFolder = getHomeFolder();
     if (homeFolder) {
       try {
         const fileName = path.join(homeFolder, configFileName);
         if (!fs.existsSync(fileName)) {
-          fs.writeFileSync(fileName, JSON.stringify(EMPTY_CONFIG, undefined, 2));
+          fs.writeFileSync(
+            fileName,
+            JSON.stringify(EMPTY_CONFIG, undefined, 2)
+          );
         }
 
         const configFile = fs.readFileSync(fileName, 'utf8');
@@ -57,7 +63,7 @@ export default class HomeConfig {
 
     this.config.environments[env.id] = {
       path: env.path,
-      templateId: env.templateId
+      templateId: env.templateId,
     };
   }
 
@@ -70,14 +76,36 @@ export default class HomeConfig {
       commands: template.commands,
       aliases: template.aliases,
       gitRepo: template.gitRepo,
-      description: template.description
+      description: template.description,
     };
   }
 
-  public write() {
+  public removeEnvironment(envId: string) {
+    if (this.config.environments) {
+      this.config.environments[envId] = undefined as any;
+    }
+  }
+
+  public removeTemplate(templateId: string) {
+    if (this.config.templates) {
+      delete this.config.templates[templateId];
+    }
+  }
+
+  public async write(): Promise<void> {
     const ws = fs.createWriteStream(this.fileName);
     ws.write(JSON.stringify(this.config, undefined, 2));
     ws.end();
+    return new Promise<void>((resolve, reject) => {
+      ws.on('finish', () => {
+        Log.verbose('Config file written.');
+        resolve();
+      });
+      ws.on('error', (error) => {
+        Log.verbose(`Error writing config file. ${error}`);
+        reject(error);
+      });
+    });
   }
 }
 

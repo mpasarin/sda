@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import { app, ipcMain } from 'electron';
 import getConfig from 'sda/lib/config/getConfig';
 import { getHomeFolder } from 'sda/lib/config/HomeConfig';
 import { createMainWindow } from './mainWindow';
@@ -11,6 +11,11 @@ if (require('electron-squirrel-startup')) {
 }
 
 const cfg = getConfig(getHomeFolder()!);
+
+ipcMain.on('request-update-config', (event) => {
+  const newCfg = getConfig(getHomeFolder()!);
+  event.sender.send('response-update-config', newCfg);
+});
 
 // tslint:disable-next-line: no-unnecessary-initializer
 let tray = undefined;

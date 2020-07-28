@@ -7,13 +7,17 @@ import { getAllConfigPaths, getConfigPaths } from './getConfigPaths';
 import replaceConfigWithAbsolutePaths from './replaceConfigWithAbsolutePaths';
 import warnOldConfigFilePaths from './warnOldConfigFilePaths';
 
-export default function getConfig(rootDir: string, argsConfigPath?: string): IConfig {
+export default function getConfig(
+  rootDir: string,
+  argsConfigPath?: string
+): IConfig {
   // Warn about old config file name for backwards compatibility
   warnOldConfigFilePaths(rootDir);
 
   const paths = getAllConfigPaths(rootDir, argsConfigPath);
 
-  let config = EMPTY_CONFIG;
+  // Make a copy of the empty config, as this keeps geing updated in-place
+  let config = _.cloneDeep(EMPTY_CONFIG);
   for (const filePath of paths) {
     config = mergeConfig(config, filePath);
   }
@@ -31,7 +35,9 @@ function backfillOrphanEnvs(config: IConfig): IConfig {
   Object.keys(config.environments).forEach((envId) => {
     const env = config.environments[envId];
     if (!config.templates[env.templateId]) {
-      Log.verbose(`Environment "${envId}" is missing the template. Looking in the environment folder.`);
+      Log.verbose(
+        `Environment "${envId}" is missing the template. Looking in the environment folder.`
+      );
       const configPathsFromEnv = getConfigPaths(env.path);
       for (const filePath of configPathsFromEnv) {
         config = mergeConfig(config, filePath, true);
@@ -46,16 +52,26 @@ function backfillOrphanEnvs(config: IConfig): IConfig {
  * In case of conflicts, the contents of the config file are used.
  * If backfill flag is on, the new config file won't take priority over the existing config.
  */
-function mergeConfig(config: IConfig, filePath: string, backfill?: boolean): IConfig {
+function mergeConfig(
+  config: IConfig,
+  filePath: string,
+  backfill?: boolean
+): IConfig {
   try {
     const configFile = fs.readFileSync(filePath, 'utf8');
     const newConfig: Partial<IConfig> = JSON.parse(configFile);
     if (!backfill) {
       Log.verbose(`Merging config with file "${filePath}"`);
-      config = _.merge(config, replaceConfigWithAbsolutePaths(newConfig, filePath));
+      config = _.merge(
+        config,
+        replaceConfigWithAbsolutePaths(newConfig, filePath)
+      );
     } else {
       Log.verbose(`Merging config with file "${filePath}" in shy mode`);
-      config = _.merge(replaceConfigWithAbsolutePaths(newConfig, filePath), config);
+      config = _.merge(
+        replaceConfigWithAbsolutePaths(newConfig, filePath),
+        config
+      );
     }
   } catch (error) {
     Log.log(`WARNING: File "${filePath}" is invalid.`);

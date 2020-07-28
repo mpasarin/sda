@@ -11,7 +11,7 @@ export function createMainWindow(config: IConfig) {
     webPreferences: {
       nodeIntegration: true
     },
-    icon: path.join(__dirname, '../assets/logo24.png')
+    icon: path.join(__dirname, '../assets/logo128.png')
   });
 
   // and load the index.html of the app.

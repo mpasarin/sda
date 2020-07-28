@@ -1,7 +1,7 @@
 {
   "name": "sda-gui",
   "version": "0.0.8",
-  "description": "Software development assistant - GUI",
+  "description": "Software development assistant",
   "files": [
     "dist/**/*",
     "lib/**/*",
@@ -25,12 +25,15 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./assets/logo128.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "electron_app"
+            "name": "sda-gui",
+            "iconUrl": "https://github.com/mpasarin/sda/blob/master/packages/sda-gui/assets/logo128.ico?raw=true"
           }
         },
         {

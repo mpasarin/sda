@@ -48,6 +48,7 @@ export interface IEditableCommand {
   cwd?: string;
   description?: string;
   timeout?: number;
+  hasBeenRemoved?: boolean;
 }
 
 const ConfigDialog = (props: IConfigDialogProps) => {
@@ -289,6 +290,11 @@ function setEditableCommands(
     }
   });
   template.commands = merge(template.commands, cmds);
+  commands.forEach((command) => {
+    if (command.hasBeenRemoved) {
+      template.commands![command.id] = undefined as any;
+    }
+  });
   return template;
 }
 

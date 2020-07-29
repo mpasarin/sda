@@ -76,7 +76,7 @@ function renderCommand(
     <div key={`div-${command.id}`}>
       <DefaultButton
         key={`button-open-${command.id}`}
-        text={isOpen ? `Hide "${command.id}"` : `Show "${command.id}"`}
+        text={isOpen ? `Hide "${getCommandDisplayId(command)}"` : `Show "${getCommandDisplayId(command)}"`}
         onClick={() => setOpenCommandId(!isOpen ? command.id : undefined)}
       />
       {isOpen ? (
@@ -87,10 +87,15 @@ function renderCommand(
             disabled={!!command.restriction}
             defaultValue={command.id}
             onChange={(ev, value) => {
-              command.id = value || '';
+              command.newId = value || '';
               command.hasChanged = true;
               setCommands((cmds) => [...cmds]);
-              setOpenCommandId(command.id);
+            }}
+            onGetErrorMessage={(text) => {
+              if (!text) { return 'Id must not be empty'; }
+              if (text.startsWith('TODO')) { return 'Id must not start with TODO'; }
+              if (text.includes(' ')) { return 'Id must not have white space'; }
+              return '';
             }}
           />
           <TextField
@@ -114,6 +119,11 @@ function renderCommand(
               command.hasChanged = true;
               setCommands((cmds) => [...cmds]);
             }}
+            onGetErrorMessage={(text) => {
+              if (!text) { return 'Command must not be empty'; }
+              if (text.startsWith('TODO')) { return 'Command must not start with TODO'; }
+              return '';
+            }}
           />
           <TextField
             key={`textField-cwd-${command.id}`}
@@ -128,7 +138,7 @@ function renderCommand(
           />
           <DefaultButton
             key={`button-removeCmd-${command.id}`}
-            text={`Remove command "${command.id}"`}
+            text={`Remove command "${getCommandDisplayId(command)}"`}
             disabled={!!command.restriction}
             onClick={() => {
               command.hasBeenRemoved = true;
@@ -160,4 +170,8 @@ function renderAddCommand(
       }}
     />
   );
+}
+
+function getCommandDisplayId(command: IEditableCommand) {
+  return command.newId || command.id;
 }

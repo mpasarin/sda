@@ -42,6 +42,7 @@ export interface IConfigOperation {
 
 export interface IEditableCommand {
   id: string;
+  newId?: string; // Used when the id changes
   restriction?: string; // String with the warning why the command can't be modified
   hasChanged: boolean;
   cmd: string;
@@ -63,14 +64,14 @@ const ConfigDialog = (props: IConfigDialogProps) => {
     !!envId
       ? cloneDeep(withId(envId, props.config.environments[envId]))
       : ({} as Partial<INamed<IConfigEnvironment>>)
-  ); // tslint:disable-line: max-line-length
+  );
   const [template, setTemplate] = useState(
     !!envId
       ? cloneDeep(
           withId(env.templateId!, props.config.templates[env.templateId!])
         )
       : ({} as Partial<INamed<IConfigTemplate>>)
-  ); // tslint:disable-line: max-line-length
+  );
   const [commands, setCommands] = useState(
     template ? getEditableCommands(template) : []
   );
@@ -88,7 +89,7 @@ const ConfigDialog = (props: IConfigDialogProps) => {
         isBlocking: false,
       }}
     >
-      <div style={{ height: isEnv ? '200px' : '600px', overflowY: 'auto' }}>
+      <div style={{ height: isEnv ? '200px' : '580px', overflowY: 'auto' }}>
         {isEnv ? (
           <EnvironmentEditor
             isNew={isNew}
@@ -97,7 +98,6 @@ const ConfigDialog = (props: IConfigDialogProps) => {
             config={props.config}
           />
         ) : (
-          // tslint:disable-next-line: max-line-length
           <TemplateEditor
             isNew={isNew}
             template={template}
@@ -180,7 +180,7 @@ function isTemplateValid(
 
   // Check only commands that have changed - Disabled commands might actually be invalid
   const cmds = commands.filter((cmd) => cmd.hasChanged);
-  const cmdIds = cmds.map((cmd) => cmd.id);
+  const cmdIds = cmds.map((cmd) => cmd.newId || cmd.id);
   // No duplicate command id
   if (cmdIds.length !== uniq(cmdIds).length) {
     return false;
@@ -282,7 +282,7 @@ function setEditableCommands(
   const cmds: { [id: string]: IConfigCommand } = {};
   commands.forEach((command) => {
     if (command.hasChanged) {
-      cmds[command.id] = {
+      cmds[command.newId || command.id] = {
         cmd: command.cmd,
         cwd: command.cwd,
         description: command.description,
@@ -291,7 +291,9 @@ function setEditableCommands(
   });
   template.commands = merge(template.commands, cmds);
   commands.forEach((command) => {
-    if (command.hasBeenRemoved) {
+    // If command was removed, delete the command
+    // If command was renamed, delete the old id
+    if (command.hasBeenRemoved || !!command.newId) {
       template.commands![command.id] = undefined as any;
     }
   });

@@ -23,7 +23,7 @@ export default (props: ITemplateEditorProps) => {
   const template = props.template;
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '580px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '590px' }}>
       <TextField
         label='Template id'
         disabled={!props.isNew}

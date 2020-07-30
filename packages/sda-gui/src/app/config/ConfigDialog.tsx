@@ -49,6 +49,7 @@ export interface IEditableCommand {
   cwd?: string;
   description?: string;
   timeout?: number;
+  icon?: string;
   hasBeenRemoved?: boolean;
 }
 
@@ -268,6 +269,7 @@ function getEditableCommands(
         cwd: command.cwd,
         description: command.description,
         timeout: command.timeout ? parseInt(command.timeout, 10) : -1,
+        icon: command.icon,
       };
     }
   });
@@ -284,6 +286,7 @@ function setEditableCommands(
         cmd: command.cmd,
         cwd: command.cwd,
         description: command.description,
+        icon: command.icon,
       };
     }
   });

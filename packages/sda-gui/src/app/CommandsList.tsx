@@ -20,6 +20,7 @@ interface ICommandItem {
   id: string;
   title: string;
   description?: string;
+  icon?: string;
   execCommand: string;
   isRunning: boolean;
 }
@@ -46,6 +47,7 @@ class CommandsList extends React.Component<ICommandsListProps> {
       id: this.getItemId(env, id),
       title: id,
       description: (env.template.commands[id] as IConfigCommand).description,
+      icon: (env.template.commands[id] as IConfigCommand).icon,
       execCommand: env.id === 'all' ? `sda -a ${id}` : `sda ${env.id} ${id}`,
       isRunning: !!this.props.commandsRunning[this.getItemId(env, id)]
     }));
@@ -72,7 +74,7 @@ class CommandsList extends React.Component<ICommandsListProps> {
           <DefaultButton
             style={{ width: '200px' }}
             disabled={item.isRunning}
-            iconProps={item.isRunning ? { iconName: 'SyncStatus' } : { iconName: 'Play' }}
+            iconProps={item.isRunning ? { iconName: 'SyncStatus' } : { iconName: item.icon || 'Play' }}
             split
             menuProps={menuProps}
             text={`Run "${item.title}"`}

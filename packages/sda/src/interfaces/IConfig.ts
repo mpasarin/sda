@@ -78,4 +78,9 @@ export interface IConfigCommand {
    * Maximum time for the command to run, in milliseconds. Default is undefined.
    */
   timeout?: string;
+  /**
+   * Icon of the template. Used in the UI instead of the generic "play" button.
+   * @ref https://developer.microsoft.com/en-us/fluentui#/styles/web/icons
+   */
+  icon?: string;
 }

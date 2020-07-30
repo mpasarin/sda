@@ -77,8 +77,19 @@ export default (props: ICommandEditorProps) => {
           setCommand(command);
         }}
       />
+      <TextField
+        key={`textField-icon-${command.id}`}
+        label='Icon name'
+        disabled={!!command.restriction}
+        defaultValue={command.icon}
+        onChange={(ev, value) => {
+          command.icon = value;
+          command.hasChanged = true;
+          setCommand(command);
+        }}
+      />
       <DefaultButton
-        style={{ width: '100%', marginTop: '20px' }}
+        style={{ width: '100%', marginTop: '15px' }}
         key={`button-removeCmd-${command.id}`}
         text={`Remove command "${getCommandDisplayId(command)}"`}
         disabled={!!command.restriction}

@@ -84,30 +84,28 @@ const ConfigDialog = (props: IConfigDialogProps) => {
         type: DialogType.normal,
         title: getTitle(props.operation, env, template),
       }}
-      minWidth={600}
+      minWidth={800}
       modalProps={{
         isBlocking: false,
       }}
     >
-      <div style={{ height: isEnv ? '200px' : '580px', overflowY: 'auto' }}>
-        {isEnv ? (
-          <EnvironmentEditor
-            isNew={isNew}
-            env={env}
-            setEnv={setEnv}
-            config={props.config}
-          />
-        ) : (
-          <TemplateEditor
-            isNew={isNew}
-            template={template}
-            setTemplate={setTemplate}
-            commands={commands}
-            setCommands={setCommands}
-            config={props.config}
-          />
-        )}
-      </div>
+      {isEnv ? (
+        <EnvironmentEditor
+          isNew={isNew}
+          env={env}
+          setEnv={setEnv}
+          config={props.config}
+        />
+      ) : (
+        <TemplateEditor
+          isNew={isNew}
+          template={template}
+          setTemplate={setTemplate}
+          commands={commands}
+          setCommands={setCommands}
+          config={props.config}
+        />
+      )}
 
       <DialogFooter>
         <PrimaryButton

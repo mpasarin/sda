@@ -1,8 +1,8 @@
-import { DefaultButton, TextField } from 'office-ui-fabric-react';
+import { TextField } from 'office-ui-fabric-react';
 import * as React from 'react';
-import { useState } from 'react';
 import { INamed } from 'sda/lib/interfaces';
 import { IConfig, IConfigTemplate } from 'sda/lib/interfaces/IConfig';
+import CommandListEditor from './CommandListEditor';
 import { IEditableCommand } from './ConfigDialog';
 
 type setTemplateType = React.Dispatch<
@@ -21,13 +21,9 @@ interface ITemplateEditorProps {
 
 export default (props: ITemplateEditorProps) => {
   const template = props.template;
-  const commands = props.commands;
-  const [openCommandId, setOpenCommandId] = useState<string | undefined>(
-    undefined
-  );
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '580px' }}>
       <TextField
         label='Template id'
         disabled={!props.isNew}
@@ -51,127 +47,9 @@ export default (props: ITemplateEditorProps) => {
         }}
       />
       <h3>Commands</h3>
-      {commands
-        .filter((cmd) => !cmd.hasBeenRemoved)
-        .map((cmd) =>
-          renderCommand(
-            cmd,
-            openCommandId === cmd.id,
-            props.setCommands,
-            setOpenCommandId
-          )
-        )}
-      {renderAddCommand(props.setCommands, setOpenCommandId)}
+      <div style={{ overflowY: 'hidden' }}>
+        <CommandListEditor {...props} />;
+      </div>
     </div>
   );
 };
-
-function renderCommand(
-  command: IEditableCommand,
-  isOpen: boolean,
-  setCommands: setCommandsType,
-  setOpenCommandId: (id?: string) => void
-) {
-  return (
-    <div key={`div-${command.id}`}>
-      <DefaultButton
-        key={`button-open-${command.id}`}
-        text={isOpen ? `Hide "${getCommandDisplayId(command)}"` : `Show "${getCommandDisplayId(command)}"`}
-        onClick={() => setOpenCommandId(!isOpen ? command.id : undefined)}
-      />
-      {isOpen ? (
-        <div key={`div-expanded-${command.id}`}>
-          <TextField
-            key={`textField-id-${command.id}`}
-            label='Id'
-            disabled={!!command.restriction}
-            defaultValue={command.id}
-            onChange={(ev, value) => {
-              command.newId = value || '';
-              command.hasChanged = true;
-              setCommands((cmds) => [...cmds]);
-            }}
-            onGetErrorMessage={(text) => {
-              if (!text) { return 'Id must not be empty'; }
-              if (text.startsWith('TODO')) { return 'Id must not start with TODO'; }
-              if (text.includes(' ')) { return 'Id must not have white space'; }
-              return '';
-            }}
-          />
-          <TextField
-            key={`textField-desc-${command.id}`}
-            label='Description'
-            disabled={!!command.restriction}
-            defaultValue={command.description}
-            onChange={(ev, value) => {
-              command.description = value;
-              command.hasChanged = true;
-              setCommands((cmds) => [...cmds]);
-            }}
-          />
-          <TextField
-            key={`textField-cmd-${command.id}`}
-            label='Command'
-            disabled={!!command.restriction}
-            defaultValue={command.cmd}
-            onChange={(ev, value) => {
-              command.cmd = value || '';
-              command.hasChanged = true;
-              setCommands((cmds) => [...cmds]);
-            }}
-            onGetErrorMessage={(text) => {
-              if (!text) { return 'Command must not be empty'; }
-              if (text.startsWith('TODO')) { return 'Command must not start with TODO'; }
-              return '';
-            }}
-          />
-          <TextField
-            key={`textField-cwd-${command.id}`}
-            label='Working directory (relative to environment root)'
-            disabled={!!command.restriction}
-            defaultValue={command.cwd}
-            onChange={(ev, value) => {
-              command.cwd = value;
-              command.hasChanged = true;
-              setCommands((cmds) => [...cmds]);
-            }}
-          />
-          <DefaultButton
-            key={`button-removeCmd-${command.id}`}
-            text={`Remove command "${getCommandDisplayId(command)}"`}
-            disabled={!!command.restriction}
-            onClick={() => {
-              command.hasBeenRemoved = true;
-              setCommands((cmds) => [...cmds]);
-            }}
-          />
-          <hr />
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function renderAddCommand(
-  setCommands: setCommandsType,
-  setOpenCommandId: (id: string) => void
-) {
-  return (
-    <DefaultButton
-      text={'Add new command'}
-      onClick={() => {
-        const newCmd: IEditableCommand = {
-          id: 'TODO: Write the command id',
-          hasChanged: true,
-          cmd: 'TODO: Write the command to execute',
-        };
-        setOpenCommandId(newCmd.id);
-        setCommands((cmds) => [...cmds, newCmd]);
-      }}
-    />
-  );
-}
-
-function getCommandDisplayId(command: IEditableCommand) {
-  return command.newId || command.id;
-}

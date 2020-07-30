@@ -12,7 +12,7 @@ interface IEnvironmentEditorProps {
 
 export default (props: IEnvironmentEditorProps) => {
     const env = props.env;
-    return <div>
+    return <div style={{ display: 'flex', flexDirection: 'column', height: '200px' }}>
         <TextField
             label='Environment id'
             disabled={!props.isNew}

@@ -14,7 +14,8 @@ const cfg = getConfig(getHomeFolder()!);
 
 ipcMain.on('request-update-config', (event) => {
   const newCfg = getConfig(getHomeFolder()!);
-  event.sender.send('response-update-config', newCfg);
+  const sortedEnvIds = Object.keys(newCfg.environments);
+  event.sender.send('response-update-config', newCfg, sortedEnvIds);
 });
 
 // tslint:disable-next-line: no-unnecessary-initializer
@@ -23,5 +24,5 @@ let tray = undefined;
 app.on('ready', () => {
   (global as any).sdaconfig = cfg;
   tray = createTray(cfg);
-  createMainWindow(cfg);
+  createMainWindow();
 });

@@ -38,6 +38,11 @@ export interface IConfigTemplate {
    * Description of the template. Used when listing environments and templates.
    */
   description?: string;
+  /**
+   * Icon of the template. Used in the UI to distinguish environments.
+   * @ref https://developer.microsoft.com/en-us/fluentui#/styles/web/icons
+   */
+  icon?: string;
 }
 
 /**

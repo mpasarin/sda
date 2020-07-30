@@ -3,7 +3,7 @@ import * as path from 'path';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
-export function createMainWindow(config: IConfig) {
+export function createMainWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 1000,

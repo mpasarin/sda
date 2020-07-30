@@ -7,6 +7,7 @@ import {
   START_COMMAND,
   UPDATE_CONFIG,
 } from './actions';
+import addAllEnvironment from './addAllEnvironment';
 import getEnvsById from './getEnvsById';
 import IState from './IState';
 
@@ -18,6 +19,7 @@ export default function reducer(
     case UPDATE_CONFIG:
       const config: IConfig = action.config;
       const envsById = getEnvsById(config);
+      addAllEnvironment(config, envsById);
 
       let selectedEnvId = state!.selectedEnvId;
       if (!selectedEnvId || !envsById[selectedEnvId]) {

@@ -93,6 +93,7 @@ class MainComponent extends React.Component<IMainComponentProps> {
         name: this.props.branchNames[envId]
           ? `${envId} (${this.props.branchNames[envId]})`
           : envId,
+        icon: this.props.envsById[envId].template.icon,
         url: '',
         key: envId,
       });

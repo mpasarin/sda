@@ -2,6 +2,7 @@ import { app, Menu, MenuItem, Tray } from 'electron';
 import * as path from 'path';
 import { IConfig } from 'sda/lib/interfaces/IConfig';
 import exec from 'sda/lib/utils/exec';
+import getAllCommandIds from './getAllCommandIds';
 
 export function createTray(config: IConfig): Tray {
   const tray = new Tray(path.join(__dirname, '../assets/logo24.png'));
@@ -21,7 +22,14 @@ function getMenuItems(config: IConfig): MenuItem[] {
   menuItems.push(getAllMenuItem(config));
 
   menuItems.push(new MenuItem({ type: 'separator' }));
-  menuItems.push(new MenuItem({ label: 'Exit', click: () => { app.quit(); } }));
+  menuItems.push(
+    new MenuItem({
+      label: 'Exit',
+      click: () => {
+        app.quit();
+      },
+    })
+  );
 
   return menuItems;
 }
@@ -31,35 +39,34 @@ function getEnvMenuItem(config: IConfig, envId: string): MenuItem {
   const template = config.templates[env.templateId];
   const subItems: MenuItem[] = [];
   for (const cmdId of Object.keys(template.commands)) {
-    subItems.push(new MenuItem({
-      label: cmdId,
-      click: () => {
-        exec(`sda ${envId} ${cmdId}`);
-      }
-    }));
+    subItems.push(
+      new MenuItem({
+        label: cmdId,
+        click: () => {
+          exec(`sda ${envId} ${cmdId}`);
+        },
+      })
+    );
   }
-  return new MenuItem({ label: envId, submenu: Menu.buildFromTemplate(subItems) });
+  return new MenuItem({
+    label: envId,
+    submenu: Menu.buildFromTemplate(subItems),
+  });
 }
 
 function getAllMenuItem(config: IConfig): MenuItem {
-  const subItems: MenuItem[] = [];
-  const allCmdIds: Set<string> = new Set();
+  const subItems = getAllCommandIds(config).map(
+    (cmdId) =>
+      new MenuItem({
+        label: cmdId,
+        click: () => {
+          exec(`sda -a ${cmdId}`);
+        },
+      })
+  );
 
-  for (const templateId of Object.keys(config.templates)) {
-    const template = config.templates[templateId];
-    for (const cmdId of Object.keys(template.commands)) {
-      allCmdIds.add(cmdId);
-    }
-  }
-
-  allCmdIds.forEach((cmdId) => {
-    subItems.push(new MenuItem({
-      label: cmdId,
-      click: () => {
-        exec(`sda -a ${cmdId}`);
-      }
-    }));
+  return new MenuItem({
+    label: 'all',
+    submenu: Menu.buildFromTemplate(subItems),
   });
-
-  return new MenuItem({ label: 'all', submenu: Menu.buildFromTemplate(subItems) });
 }

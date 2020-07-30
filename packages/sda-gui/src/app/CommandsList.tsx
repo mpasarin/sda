@@ -46,7 +46,7 @@ class CommandsList extends React.Component<ICommandsListProps> {
       id: this.getItemId(env, id),
       title: id,
       description: (env.template.commands[id] as IConfigCommand).description,
-      execCommand: `sda ${env.id} ${id}`,
+      execCommand: env.id === 'all' ? `sda -a ${id}` : `sda ${env.id} ${id}`,
       isRunning: !!this.props.commandsRunning[this.getItemId(env, id)]
     }));
   }

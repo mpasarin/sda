@@ -16,6 +16,10 @@ class EnvironmentDashboard extends React.Component<IEnvironmentDashboardProps> {
       return null;
     }
     const env = this.props.env;
+
+    const templateDisplayText: string = !!env.template.description
+      ? `Template: ${env.templateId} - ${env.template.description}`
+      : `Template: ${env.templateId}`;
     return (
       <div style={{ margin: '10px', flexGrow: 1 }}>
         <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -24,12 +28,16 @@ class EnvironmentDashboard extends React.Component<IEnvironmentDashboardProps> {
           </div>
           <div>
             <ul style={{ listStyle: 'none' }}>
-              <li>Template: {env.templateId}</li>
-              <li>
-                <Link href='#' onClick={() => exec(`start ${env.path}`)}>
-                  <Icon iconName='FolderHorizontal' /> {env.path}
-                </Link>
-              </li>
+              <li>{templateDisplayText}</li>
+              {
+                /* Do not show for "all" environment */ env.path.length > 0 ? (
+                  <li>
+                    <Link href='#' onClick={() => exec(`start ${env.path}`)}>
+                      <Icon iconName='FolderHorizontal' /> {env.path}
+                    </Link>
+                  </li>
+                ) : null
+              }
               {env.template.gitRepo ? (
                 <div>
                   <li>
@@ -62,7 +70,7 @@ function mapStateToProps(state: IState) {
   return {
     env: {
       ...currentEnv,
-      branchName
+      branchName,
     },
   };
 }

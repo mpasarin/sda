@@ -17,6 +17,7 @@ export default function addAllEnvironment(config: IConfig, envsById: { [envId: s
     templateId: 'all',
     template: {
       id: 'all',
+      description: 'Run commands in all environments at once',
       icon: 'AllApps',
       commands
     }

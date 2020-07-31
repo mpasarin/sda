@@ -18,6 +18,7 @@ interface IMainComponentProps {
   branchNames: { [envId: string]: string };
   selectEnv: (envId: string) => void;
   setBranchName: (envId: string, branchName: string) => void;
+  numberOfCommandsRunning: number;
 }
 
 class MainComponent extends React.Component<IMainComponentProps> {
@@ -69,23 +70,33 @@ class MainComponent extends React.Component<IMainComponentProps> {
     );
   }
 
+  public componentDidUpdate(prevProps: IMainComponentProps) {
+    if (prevProps.numberOfCommandsRunning !== this.props.numberOfCommandsRunning ||
+      prevProps.selectedEnvId !== this.props.selectedEnvId) {
+        const selectedEnv = this.props.envsById[this.props.selectedEnvId];
+        this.updateBranchName(selectedEnv);
+      }
+  }
+
   public componentWillUnmount() {
     clearInterval(this.timerId);
   }
 
   private async updateBranchNames(envsById: { [envId: string]: IEnvironment }) {
-    const promises = Object.values(envsById).map((env) => {
-      if (!env.template.gitRepo) {
-        return Promise.resolve();
-      } else {
-        return this.getBranchName(env).then((branchName) => {
-          this.props.setBranchName(env.id, branchName);
-        });
-      }
-    });
+    const promises = Object.values(envsById).map(this.updateBranchName.bind(this));
   }
 
-  private getNavLinks(): INavLink[] {
+  private async updateBranchName(env: IEnvironment) {
+    if (!env.template.gitRepo) {
+      return Promise.resolve();
+    } else {
+      return this.getBranchName(env).then((branchName) => {
+        this.props.setBranchName(env.id, branchName);
+      });
+    }
+  }
+
+  private getNavLinks() {
     const links: INavLink[] = [];
 
     for (const envId of Object.keys(this.props.envsById)) {
@@ -120,6 +131,7 @@ function mapStateToProps(state: IState) {
     selectedEnvId: state.selectedEnvId,
     branchNames: state.branchNameByEnvId,
     lastBranchUpdate: state.lastBranchUpdate, // Used to update the branch info when updated
+    numberOfCommandsRunning: state.numberOfCommandsRunning,
   };
 }
 

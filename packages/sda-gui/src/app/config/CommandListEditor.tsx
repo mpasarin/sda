@@ -67,7 +67,15 @@ export default (props: ICommandListEditorProps) => {
         {!!selectedCmdId ? (
           <CommandEditor
             command={commands.find((cmd) => cmd.id === selectedCmdId)!}
-            setCommand={(cmd) => setCommand(cmd, commands, props.setCommands)}
+            setCommand={(cmd) =>
+              setCommand(
+                cmd,
+                commands,
+                props.setCommands,
+                selectedCmdId,
+                setSelectedCmdId
+              )
+            }
           />
         ) : null}
       </div>
@@ -78,7 +86,9 @@ export default (props: ICommandListEditorProps) => {
 function setCommand(
   command: IEditableCommand,
   commands: IEditableCommand[],
-  setCommands: setCommandsType
+  setCommands: setCommandsType,
+  selectedCmdId: string,
+  setSelectedCmdId: (cmdId: string | undefined) => void
 ) {
   for (let i = 0; i < commands.length; i++) {
     if (commands[i].id === command.id) {
@@ -87,6 +97,11 @@ function setCommand(
   }
   // We are modifying the existing array in-place, so the setter just leaves it as is
   setCommands((cmds) => [...cmds]);
+  const selectedCmd = commands.find((cmd) => cmd.id === selectedCmdId);
+  if (selectedCmd && selectedCmd.hasBeenRemoved) {
+    const firstNonRemovedCmd = commands.find((cmd) => !cmd.hasBeenRemoved);
+    setSelectedCmdId(!!firstNonRemovedCmd ? firstNonRemovedCmd.id : undefined);
+  }
 }
 
 function getNavLinks(commands: IEditableCommand[]): INavLink[] {

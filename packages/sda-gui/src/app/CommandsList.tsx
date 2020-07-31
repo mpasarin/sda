@@ -1,4 +1,9 @@
-import { DefaultButton, IContextualMenuProps, List, TooltipHost } from 'office-ui-fabric-react';
+import {
+  DefaultButton,
+  IContextualMenuProps,
+  List,
+  TooltipHost,
+} from 'office-ui-fabric-react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -33,36 +38,43 @@ class CommandsList extends React.Component<ICommandsListProps> {
 
   public render() {
     const items = this.getCommandItems(this.props.env);
-    return <List
-      items={items}
-      getPageSpecification={() => ({
-        itemCount: items.length
-      })}
-      onRenderCell={this.onRenderCell} />;
+    return (
+      <List
+        items={items}
+        getPageSpecification={() => ({
+          itemCount: items.length,
+        })}
+        onRenderCell={this.onRenderCell}
+      />
+    );
   }
 
   private getCommandItems(env: IEnvironment): ICommandItem[] {
     const cmdIds = Object.keys(env.template.commands);
-    return cmdIds.map((id) => ({
+    return cmdIds.sort().map((id) => ({
       id: this.getItemId(env, id),
       title: id,
       description: (env.template.commands[id] as IConfigCommand).description,
       icon: (env.template.commands[id] as IConfigCommand).icon,
       execCommand: env.id === 'all' ? `sda -a ${id}` : `sda ${env.id} ${id}`,
-      isRunning: !!this.props.commandsRunning[this.getItemId(env, id)]
+      isRunning: !!this.props.commandsRunning[this.getItemId(env, id)],
     }));
   }
 
   private onRenderCell(item?: ICommandItem) {
-    if (!item) { return null; }
+    if (!item) {
+      return null;
+    }
 
     const menuProps: IContextualMenuProps = {
-      items: [{
-        key: 'runInConsole',
-        text: 'Run in console',
-        iconProps: { iconName: 'CommandPrompt' }
-      }],
-      onItemClick: () => this.executeInConsole(item)
+      items: [
+        {
+          key: 'runInConsole',
+          text: 'Run in console',
+          iconProps: { iconName: 'CommandPrompt' },
+        },
+      ],
+      onItemClick: () => this.executeInConsole(item),
     };
     return (
       <div style={{ float: 'left', marginRight: '15px', marginBottom: '15px' }}>
@@ -74,14 +86,19 @@ class CommandsList extends React.Component<ICommandsListProps> {
           <DefaultButton
             style={{ width: '200px' }}
             disabled={item.isRunning}
-            iconProps={item.isRunning ? { iconName: 'SyncStatus' } : { iconName: item.icon || 'Play' }}
+            iconProps={
+              item.isRunning
+                ? { iconName: 'SyncStatus' }
+                : { iconName: item.icon || 'Play' }
+            }
             split
             menuProps={menuProps}
             text={`Run "${item.title}"`}
             onClick={() => this.executeCommand(item)}
           />
         </TooltipHost>
-      </div>);
+      </div>
+    );
   }
 
   private executeInConsole(item: ICommandItem) {
@@ -105,14 +122,14 @@ function mapStateToProps(state: IState) {
   return {
     env: state.envsById[state.selectedEnvId],
     commandsRunning: state.commandsRunning,
-    numberOfCommandsRunning: state.numberOfCommandsRunning
+    numberOfCommandsRunning: state.numberOfCommandsRunning,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     startCommand: (cmdId: string) => dispatch(startCommand(cmdId)),
-    endCommand: (cmdId: string) => dispatch(endCommand(cmdId))
+    endCommand: (cmdId: string) => dispatch(endCommand(cmdId)),
   };
 }
 
